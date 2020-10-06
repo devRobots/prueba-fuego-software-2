@@ -1,0 +1,12 @@
+.input-error{
+     border: 1px solid red;
+     color: red;
+     background: white ;
+     height: 35px;
+     width: 100%;
+     padding: 0 10px 0 20px;
+     box-sizing: border-box;
+     margin-bottom: 10px;
+     font-size: 14px;
+     outline: none;
+}

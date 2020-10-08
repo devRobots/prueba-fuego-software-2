@@ -1,69 +1,67 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 
-export default class Login extends React.Component {
+const Login = () => {
 
-    state = {
-        'user': '',
-        'password': '',
-        'passwordError': false
-    }
+    const [user, setUser] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
 
-    handleChange(name, value) {
+    function handleChange(name, value) {
         if (name === 'usuario') {
-            this.setState('user', value);
-        } else {
+            setUser(value)
+        }
+        else {
             if (value.length < 6) {
-                this.setState('passwordError', true);
-            } else {
-                this.setState('passwordError', false);
-                this.setState('password', value);
+                setPasswordError(true);
+            }
+            else {
+                setPasswordError(false);
+                setPassword(value)
             }
         }
     };
 
-    handleSubmit(params) {
-        const user = this.state.user
-        const password = this.state.password
-        const account = { user, password }
+    function handleSubmit(params) {
+        let account = { user, password }
 
         if (account) {
             console.log('account:', account)
         }
     };
 
-    render() {
-        return (
-            <div className='login-container'>
-                <label className='title-label'>Registrarse</label>
-                <label>Usuario</label>
-                <input
-                    id="usuario"
-                    name="usuario"
-                    placeholder="Ingrese su usuario"
-                    type="text"
-                    onChange={(e) => this.handleChange(e.target.name, e.target.value)}
-                    className={'regular-style'}
-                />
-                <label>Contraseña</label>
-                <input
-                    id="contraseña"
-                    name="contraseña"
-                    placeholder="Ingrese su contraseña"
-                    type="password"
-                    onChange={(e) => this.handleChange(e.target.name, e.target.value)}
-                    className={'input-error'}
-                />
-                {
-                    this.state.passwordError &&
-                    <label className='label-error'>
-                        Contraseña invalida o incompleta
-                    </label>
-                }
-                <button onClick={this.handleSubmit}>
-                    Registrarse
+    return (
+        <div className='login-container'>
+            <label>Registrarse</label>
+            <label>Usuario</label>
+            <input
+                id='usuario'
+                name='usuario'
+                placeholder='Ingrese su usuario'
+                type='text'
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                className='regular-style'
+            />
+            <label>Contraseña</label>
+            <input
+                id='contraseña'
+                name='contraseña'
+                placeholder='Ingrese su contraseña'
+                type='password'
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                className='input-error'
+            />
+            {
+                passwordError &&
+                <label className='label-error'>
+                    contraseña invalida o incompleta
+                </label>
+            }
+            <button onClick={(e) => handleSubmit()}>
+                Registrarse
              </button>
-            </div>
-        )
-    }
+        </div>
+    )
 }
+
+export default Login;

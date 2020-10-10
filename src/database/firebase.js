@@ -28,6 +28,14 @@ class Firebase {
     });
   }
 
+  RegisterUser(email, password){
+    this.auth.createUserWithEmailAndPassword(email, password).then((res)=> alert('Registro exitoso'))
+    .catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
+  }
+
   write(path, object) {
     var key = this.db.ref(path).push().key;
     this.db.ref(path).child(key).set(object);

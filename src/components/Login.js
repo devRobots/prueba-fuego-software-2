@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
-import Firebase, {auth} from '../database/firebase';
+import Firebase from '../database/firebase';
 
 const Login = () => {
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import Login from "./components/Login";
+//import Login from "./components/Login";
 import HeaderMaster from "./components/HeaderMaster";
-import CreateUser from "./components/CreateUser";
+import CreateUser from "./components/CreateTherapist";
 
 
 export default class App extends React.Component {

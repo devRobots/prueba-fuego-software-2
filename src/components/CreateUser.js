@@ -152,6 +152,7 @@ const CreateUser = () => {
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                 className='input-error'
             />
+            <hr></hr>
             <Button onClick={(e) => handleSubmit()}>
                 Registrarse
              </Button>

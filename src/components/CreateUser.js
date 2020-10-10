@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
+import {Segment, Header, Input, Button} from 'semantic-ui-react';
 import firebase from '../database/firebase';
 
 const CreateUser = () => {
@@ -71,7 +71,7 @@ const CreateUser = () => {
     function handleSubmit(params) {
         let account = { phone, email, direccion, birthDate, id, nombre }
         
-        var db= new firebase
+        var db= new firebase()
 
         db.write("Clientes",account)
 

@@ -3,10 +3,30 @@ import Firebase from "../database/firebase";
 
 const Home = () => {
 
+    const state ={
+        sesiones: [
+            {
+                cancelada: "si",
+                cobrada: "",
+                fecha: "",
+                hora: "",
+                id: "",
+                importe:"",
+                observacion: ""
+            },
+            {
+                cancelada: "si",
+                cobrada: "",
+                fecha: "",
+                hora: "",
+                id: "",
+                importe:"",
+                observacion: ""
+            }
+        ]
+    }
 
-    /**
-     * mañana sin falta karnal
-     */
+
     return (
         <table>
             <thead><tr>
@@ -18,10 +38,21 @@ const Home = () => {
                 <th>importe</th>
                 <th>observacion</th>
                 </tr></thead>
-            <body>
-                
-            </body>
-            
+            <tbody>
+                {
+                state.sesiones.map((objeto, id) =>{
+                        return<tr key = {id}>
+                            <td>{objeto.cancelada}</td>
+                            <td>{objeto.cobrada}</td>
+                            <td>{objeto.fecha}</td>
+                            <td>{objeto.hora}</td>
+                            <td>{objeto.id}</td>
+                            <td>{objeto.importe}</td>
+                            <td>{objeto.observacion}</td>
+                        </tr>
+                    })
+                }
+            </tbody>
         </table>
     )
 }

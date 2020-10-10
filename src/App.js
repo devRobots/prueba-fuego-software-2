@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-//import Login from "./components/Login";
 import HeaderMaster from "./components/HeaderMaster";
-import CreateUser from "./components/CreateUser";
 import Home from "./components/Home"
 
 

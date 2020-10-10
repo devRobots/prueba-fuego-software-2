@@ -1,57 +1,66 @@
 import React, { useState } from 'react';
 import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
+import firebase from '../database/firebase';
 
 const CreateUser = () => {
 
 
-    const [username, setUsername ] = useState('');
-    const [ firstName, setFirstName ] = useState('');
-    const [ lastName, setLastName ] = useState('');
-    const [ password, setPassword ] = useState('');
-    const [ passwordAgain, setPasswordAgain ] = useState('');
-
+    const [phone, setPhone ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ direccion, setDireccion ] = useState('');
+    const [ birthDate, setbirthDate ] = useState('');
+    const [ id, setId ] = useState('');
+    const [ nombre, setNombre ] = useState('');
+     
 
     function handleChange(name, value) {
         switch(name) {
-            case 'username':
+            case 'phone':
                 if(value < 1) {
-                    console.log("Error :v?")
+                    console.log(value)
                 } else {
-                    console.log("Error :v?")
-                    setUsername(value)
+                    console.log(value)
+                    setPhone(value)
                 }
                 break;
-            case 'firstName':
+            case 'email':
                 if(value < 1) {
-                    console.log("Error :v?")
+                    console.log(value)
                 } else {
-                    console.log("Error :v?")
-                    setFirstName(value)
+                    console.log(value)
+                    setEmail(value)
                 }
                 break;
-            case 'lastName':
+            case 'direccion':
                 if(value < 1) {
-                    console.log("Error :v?")
+                    console.log(value)
                 } else {
-                    console.log("Error :v?")
-                    setLastName(value)
+                    console.log(value)
+                    setDireccion(value)
                 }
                 break;
-            case 'password':
+            case 'birthDate':
                 if(value < 1) {
-                    console.log("Error :v?")
+                    console.log(value)
                 } else {
-                    console.log("Error :v?")
-                    setPassword(value)
+                    console.log(value)
+                    setbirthDate(value)
                 }
                 break;
-            case 'passwordAgain':
-                if(password.length < 6) {
-                    console.log("Error :v?")
-                } else if( password === value ) {
-                    setPasswordAgain(value)
+            case 'id':
+                if(value < 1) {
+                    console.log(value)
                 } else {
-                    console.log("Error :v")
+                    console.log(value)
+                    setId(value)
+                }
+                break;
+            case 'nombre':
+                if(value < 1) {
+                    console.log(value)
+                } else {
+                    console.log(value)
+                    setNombre(value)
                 }
                 break;
             default:
@@ -60,7 +69,11 @@ const CreateUser = () => {
     }
 
     function handleSubmit(params) {
-        let account = { username, firstName, lastName, password, passwordAgain }
+        let account = { phone, email, direccion, birthDate, id, nombre }
+        
+        var db= new firebase
+
+        db.write("Clientes",account)
 
         if (account) {
             console.log('account:', account)
@@ -73,66 +86,78 @@ const CreateUser = () => {
      */
     return (
         <Segment color="teal" className='login-container'>
-            <Header.Subheader>Usuario</Header.Subheader>
+            <Header.Subheader>Telefono</Header.Subheader>
+            <Input 
+                focus
+                id='telefono'
+                name='phone'
+                placeholder='Ingrese su telefono'
+                type='text'
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                className='regular-style'
+
+            />
+            
+            <Header.Subheader>Correo</Header.Subheader>
             <Input 
                 focus
                 icon="user"
-                id='usuario'
-                name='usuario'
-                placeholder='Ingrese su usuario'
+                id='correo'
+                name='email'
+                placeholder='Ingrese su correo'
                 type='text'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                 className='regular-style'
             />
             
-            <Header.Subheader>FirstName</Header.Subheader>
+            <Header.Subheader>Direccion</Header.Subheader>
             <Input 
                 focus
-                icon="user"
-                id='usuario'
-                name='usuario'
-                placeholder='Ingrese su usuario'
-                type='text'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                className='regular-style'
-            />
-            
-            <Header.Subheader>LastName</Header.Subheader>
-            <Input 
-                focus
-                icon="user"
-                id='usuario'
-                name='usuario'
-                placeholder='Ingrese su usuario'
+                id='direccion'
+                name='direccion'
+                placeholder='Ingrese su direccion'
                 type='text'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                 className='regular-style'
             />
 
-            <Header.Subheader>password</Header.Subheader>
+            <Header.Subheader>Fecha Nacimiento</Header.Subheader>
             <Input
                 focus
-                icon="key"
-                id='contraseña'
-                name='contraseña'
-                placeholder='Ingrese su contraseña'
-                type='password'
+                id='Fecha_Nacimiento'
+                name='birthDate'
+                placeholder='Fecha Nacimiento'
+                type='text'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                 className='input-error'
             />
             
-            <Header.Subheader>passwordAgain</Header.Subheader>
+            <Header.Subheader>Cedula</Header.Subheader>
             <Input
                 focus
-                icon="key"
-                id='contraseña'
-                name='contraseña'
-                placeholder='Ingrese su contraseña'
-                type='password'
+                id='cedula'
+                name='id'
+                placeholder='Ingrese su cedula'
+                type='text'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                 className='input-error'
             />
+            <Header.Subheader>Nombre Completo</Header.Subheader>
+            <Input
+                focus
+                id='nombre'
+                name='nombre'
+                placeholder='Ingrese su nombre'
+                type='text'
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                className='input-error'
+            />
+            <Button onClick={(e) => handleSubmit()}>
+                Registrarse
+             </Button>
         </Segment>
+
+    
     )
 };
 

@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import 'firebase/auth';
 
 class Firebase {
   constructor() {
@@ -14,7 +15,17 @@ class Firebase {
     };
 
     this.app = firebase.initializeApp(firebaseConfig);
+    this.auth = this.app.auth();
     this.db = this.app.database();
+    
+  }
+
+  authenticationUser(email, password){
+    this.auth.signInWithEmailAndPassword(email, password).then((res)=> alert('Usuario registrado'))
+    .catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
   }
 
   write(path, object) {

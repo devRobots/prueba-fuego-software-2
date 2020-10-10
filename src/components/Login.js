@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
+import Firebase, {auth} from '../database/firebase';
 
 const Login = () => {
 
@@ -25,10 +26,13 @@ const Login = () => {
 
     function handleSubmit(params) {
         let account = { user, password }
-
+        const db = new Firebase()
+        db.authenticationUser(user, password)
+    
         if (account) {
             console.log('account:', account)
         }
+        
     };
 
     return (

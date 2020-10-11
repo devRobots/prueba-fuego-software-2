@@ -21,7 +21,8 @@ class Firebase {
   }
 
   authenticationUser(email, password){
-    this.auth.signInWithEmailAndPassword(email, password).then((res)=> alert('Usuario registrado'))
+    this.auth.signInWithEmailAndPassword(email, password)
+    .then((res)=> alert(res))
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -41,8 +42,19 @@ class Firebase {
     this.db.ref(path).child(key).set(object);
   }
 
-  read(path, method) {
-    this.db.ref(path).once('value').then((snapshot) => method(snapshot.val()));
+  async read(path, method) {
+    await this.db.ref(path).once('value').then((snapshot) => method(snapshot.val()));
+  }
+
+  async readList(path, method) {
+    await this.db.ref(path).once('value', function(snapshot) {
+      var list = []
+      snapshot.forEach(function(childsnapshot) {
+        var childData = childsnapshot.val();
+        list.push(childData)
+      });
+      method(list)
+    })
   }
 
 }

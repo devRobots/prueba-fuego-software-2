@@ -5,12 +5,7 @@ const Home = () => {
     var saludar = () => {
         alert("Hola mundo");
     };
-    /**
-     * <Button onClick={(e) => handleSubmit()}>
-                Registrarse
-             </Button>
-     */
-
+    
     var db = new Firebase();
     var metodo = function(data) {
         data.map((o, i) => {

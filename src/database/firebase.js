@@ -22,15 +22,21 @@ class Firebase {
 
   authenticationUser(email, password){
     this.auth.signInWithEmailAndPassword(email, password)
-    .then((res)=> alert(res))
+    .then((res)=> alert('Usuario registrado'))
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
     });
+   this.auth.onAuthStateChanged(function(user){
+      if(user){
+        console.log(user.email);
+      }
+    });
   }
 
   RegisterUser(email, password){
-    this.auth.createUserWithEmailAndPassword(email, password).then((res)=> alert('Registro exitoso'))
+    this.auth.createUserWithEmailAndPassword(email, password)
+    .then((res)=> alert('Registro exitoso'))
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;

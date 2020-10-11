@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './CreateTherapist.css';
 import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
-import firebase from '../database/firebase';
+import Firebase from '../database/firebase';
+
+import { Redirect } from "react-router-dom";
 
 const CreateTherapist = () => {
 
@@ -15,6 +17,11 @@ const CreateTherapist = () => {
     const [ nombre, setNombre ] = useState('');
     const [ usuario, setUser ] = useState('');
      
+    const[isCreateTherapist, setCreateTherapist]= useState(true); 
+    
+    if(!isCreateTherapist){
+        return <Redirect to = "/login"/>
+    }
 
     function handleChange(name, value) {
         switch(name) {
@@ -81,9 +88,10 @@ const CreateTherapist = () => {
     }
 
     function handleSubmit(params) {
+
         let account = { celular, password, email, estado, id, nombre, usuario }
         
-        var db= new firebase
+        var db= new Firebase
 
         db.write("Terapeutas",account)
         db.RegisterUser(email, password);
@@ -93,15 +101,44 @@ const CreateTherapist = () => {
         }
     };
 
+    function onChangeValue(params) {
+        console.log(params.target.value);
+    };
+
     /**
      * ingresar usuario a la base de datos
      * pues falta eso, no es que lo haga lo que hay abajo :v
      */
     return (
         <Segment color="teal" className='CreateTherapist-container'>
+            <Header.Subheader>Nombre Completo</Header.Subheader>
+            <Input
+                focus
+                icon = "user"
+                id='nombre'
+                name='nombre'
+                placeholder='Ingrese su nombre'
+                type='text'
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                className='input-error'
+            />
+            
+            <Header.Subheader>Cedula</Header.Subheader>
+            <Input 
+                focus
+                icon = "id card"
+                id='cedula'
+                name='id'
+                placeholder='Ingrese su identificación'
+                type='text'
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                className='regular-style'
+            />
+
             <Header.Subheader>Telefono</Header.Subheader>
             <Input 
                 focus
+                icon = "phone"
                 id='telefono'
                 name='celular'
                 placeholder='Ingrese su numero celular'
@@ -114,21 +151,10 @@ const CreateTherapist = () => {
             <Header.Subheader>Correo</Header.Subheader>
             <Input 
                 focus
-                icon="user"
+                icon="envelope"
                 id='correo'
                 name='email'
                 placeholder='Ingrese su correo'
-                type='text'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                className='regular-style'
-            />
-            
-            <Header.Subheader>Cedula</Header.Subheader>
-            <Input 
-                focus
-                id='cedula'
-                name='id'
-                placeholder='Ingrese su identificación'
                 type='text'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                 className='regular-style'
@@ -137,33 +163,15 @@ const CreateTherapist = () => {
             <Header.Subheader>Nombre de usuario</Header.Subheader>
             <Input
                 focus
+                icon = "user circle"
                 id='usuario'
                 name='usuario'
-                placeholder='Ingresa nombre de usuario'
+                placeholder='Ingresa username'
                 type='text'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                 className='input-error'
             />
-            <Header.Subheader>Nombre Completo</Header.Subheader>
-            <Input
-                focus
-                id='nombre'
-                name='nombre'
-                placeholder='Ingrese su nombre'
-                type='text'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                className='input-error'
-            />
-            <Header.Subheader>Estado</Header.Subheader>
-            <Input
-                focus
-                id='estado'
-                name='estado'
-                placeholder='Ingrese su estado'
-                type='text'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                className='input-error'
-            />
+            
             <Header.Subheader>Contraseña</Header.Subheader>
             <Input
                 focus
@@ -181,6 +189,12 @@ const CreateTherapist = () => {
                     contraseña invalida o incompleta
                 </Label>
             }
+            
+            <Header.Subheader>Estado</Header.Subheader>
+                <div onChange={(e) => onChangeValue()}>
+                <input type="radio" value="Activo" name="estado" /> Activo
+                <input type="radio" value="Inactivo" name="estado" /> Inactivo
+                </div>
             <hr></hr>
             <Button onClick={(e) => handleSubmit()}>
                 Registrarse

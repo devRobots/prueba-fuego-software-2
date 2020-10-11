@@ -89,6 +89,7 @@ const CreateUser = () => {
             <Header.Subheader>Telefono</Header.Subheader>
             <Input 
                 focus
+                icon = 'phone'
                 id='telefono'
                 name='phone'
                 placeholder='Ingrese su telefono'
@@ -101,7 +102,7 @@ const CreateUser = () => {
             <Header.Subheader>Correo</Header.Subheader>
             <Input 
                 focus
-                icon="user"
+                icon="envelope"
                 id='correo'
                 name='email'
                 placeholder='Ingrese su correo'
@@ -113,6 +114,7 @@ const CreateUser = () => {
             <Header.Subheader>Direccion</Header.Subheader>
             <Input 
                 focus
+                icon = 'home'
                 id='direccion'
                 name='direccion'
                 placeholder='Ingrese su direccion'
@@ -124,6 +126,7 @@ const CreateUser = () => {
             <Header.Subheader>Fecha Nacimiento</Header.Subheader>
             <Input
                 focus
+                icon = 'calendar'
                 id='Fecha_Nacimiento'
                 name='birthDate'
                 placeholder='Fecha Nacimiento'
@@ -135,6 +138,7 @@ const CreateUser = () => {
             <Header.Subheader>Cedula</Header.Subheader>
             <Input
                 focus
+                icon = 'id card'
                 id='cedula'
                 name='id'
                 placeholder='Ingrese su cedula'
@@ -145,6 +149,7 @@ const CreateUser = () => {
             <Header.Subheader>Nombre Completo</Header.Subheader>
             <Input
                 focus
+                icon = 'user'
                 id='nombre'
                 name='nombre'
                 placeholder='Ingrese su nombre'

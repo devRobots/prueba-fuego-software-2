@@ -22,6 +22,30 @@ export default class App extends Component {
           </div>
         </Switch>
       </Routers>
+      
     );
   }
 }
+
+/**
+ * 
+ * 
+ 
+ <div className="App">
+        <HeaderMaster name={"Centro de Masajes y Terapias Alternativas"} />
+        <Home />
+      </div>
+
+ * Todo esto va dentro del return
+ <Routers>
+        <Switch>
+          <div className="App">
+            <HeaderMaster name={"Centro de Masajes y Terapias Alternativas"} />
+            <Route exact path = "/" component = {Login}/>
+            <Route path = "/login" component = {Login}/>
+            <Route path = "/createTherapist" component = {CreateTherapist}/>
+            <Route path = "/home" component = {Home}/>
+          </div>
+        </Switch>
+      </Routers>
+ */

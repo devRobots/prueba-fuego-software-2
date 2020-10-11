@@ -63,6 +63,22 @@ class Firebase {
     })
   }
 
+  remove(path,objeto){
+    var hola = this.db
+    var meth = function(snapshot){
+      var cosa = function(childsnapshot){
+        var key = childsnapshot.key;
+          var childData = childsnapshot.val();
+          if(childData.id == objeto.id){
+            console.log(key)
+            hola.ref(path).child(key).remove()
+          }
+      }
+      snapshot.forEach(cosa)
+    }
+    hola.ref(path).once('value', meth)
+  }
+
 }
 
 export default Firebase;

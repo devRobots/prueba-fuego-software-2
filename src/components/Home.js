@@ -1,38 +1,13 @@
 import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import Firebase from "../database/firebase";
 
 const Home = () => {
-    var saludar = () => {
-        alert("Hola mundo");
-    };
-    /**
-     * <Button onClick={(e) => handleSubmit()}>
-                Registrarse
-             </Button>
-     */
-
-    var db = new Firebase();
-    var metodo = function(data) {
-        data.map((o, i) => {
-            document.getElementById("listaSesiones").innerHTML += "<tr key='" + i+ "'>" +
-                        "<td>" + o.cancelada + "</td>" + 
-                        "<td>" + o.cobrada + "</td>" +
-                        "<td>" + o.fecha + "</td>" +
-                        "<td>" + o.hora + "</td>" +
-                        "<td>" + o.id + "</td>" +
-                        "<td>" + o.importe + "</td>" +
-                        "<td>" + o.observacion + "</td>" +
-                        "<td> <input type='button' value='editar' onClick='alert(\"Hola mundo\")' /> </td>"+ 
-                    "</tr>"
-            
-        })
-    }
-    db.readList("Sesiones",  metodo)
-
-    return (
-        <center>
-        <table>
-            <thead><tr>
+    new Firebase().readList("Sesiones", function(data) {
+        var element = (
+        <div>
+            <thead>
+                <tr>
                 <th>cancelada</th>
                 <th>cobrada</th>
                 <th>fecha</th>
@@ -40,13 +15,32 @@ const Home = () => {
                 <th>id</th>
                 <th>importe</th>
                 <th>observacion</th>
-                <th>editar</th>
-                </tr></thead>
-            <tbody id="listaSesiones">
-            </tbody>
-        </table>
+                </tr>
+            </thead>
+            <tbody>{
+                data.map((objeto, id) => {
+                return (
+                <tr key = {id}>
+                    <td>{objeto.cancelada ? "Si" : "No"}</td>
+                    <td>{objeto.cobrada ? "Si" : "No"}</td>
+                    <td>{objeto.fecha}</td>
+                    <td>{objeto.hora}</td>
+                    <td>{objeto.id}</td>
+                    <td>{objeto.importe}</td>
+                    <td>{objeto.observacion}</td>
+                </tr>
+                )
+        })}</tbody>
+        </div>
+        )
+        ReactDOM.render(element, document.getElementById('tablaSesiones'))
+    })
+
+    return (
+        <center>
+            <table id="tablaSesiones"></table>
         </center>
     )
 }
 
-export default Home;
+export default Home

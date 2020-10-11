@@ -42,12 +42,12 @@ class Firebase {
     this.db.ref(path).child(key).set(object);
   }
 
-  async read(path, method) {
-    await this.db.ref(path).once('value').then((snapshot) => method(snapshot.val()));
+  read(path, method) {
+    this.db.ref(path).once('value').then((snapshot) => method(snapshot.val()));
   }
 
-  async readList(path, method) {
-    await this.db.ref(path).once('value', function(snapshot) {
+  readList(path, method) {
+    this.db.ref(path).on('value', function(snapshot) {
       var list = []
       snapshot.forEach(function(childsnapshot) {
         var childData = childsnapshot.val();

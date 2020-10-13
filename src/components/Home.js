@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 import Firebase from "../database/firebase";
 import {Input, Button} from 'semantic-ui-react';
 
@@ -12,6 +13,16 @@ const Home = () => {
     const [ importe, setImporte ] = useState('');
     const [ cancelada, setCancelada ] = useState('');
     const [ observacion, setObservacion] = useState('');
+    const [modalIsOpen,setIsOpen] = React.useState(false);
+
+    Modal.setAppElement()
+
+    function openModal() {
+        setIsOpen(true);
+    }
+    function closeModal(){
+        setIsOpen(false);
+    }
 
     Firebase.readList("Sesiones", function(data) {
         var element = (
@@ -38,8 +49,53 @@ const Home = () => {
                     <td>{objeto.hora}</td>
                     <td>{objeto.importe}</td>
                     <td>{objeto.observacion}</td>
-                    <button>Editar</button>
                     <button onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</button>
+                    <button onClick={openModal}>Editar</button>
+
+                    <Modal isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        contentLabel="Example Modal"
+                        >
+                        <button onClick={closeModal}>close</button>
+                        <div>Editar</div>
+                        <form>
+
+                        <center>
+                            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
+                                <input type="radio" value= "true" name="cancelada" /> Cancelada
+                                <input type="radio" value= "false" name="cancelada" /> No Cancelada
+                            </div>
+                            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
+                                <input type="radio" value= "true" name="cobrada" /> Cobrada
+                                <input type="radio" value= "false" name="cobrada" /> No Cobrada
+                            </div>
+                            <Input id='fecha' name='fecha' 
+                                placeholder='fecha' type='text' className='regular-style' 
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            /> 
+                            <Input id='hora' name='hora' 
+                                placeholder='hora' type='text' className='regular-style' 
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            /> 
+                            <Input id='id' name='id' 
+                                placeholder='id' type='text' className='regular-style' 
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            /> 
+                            <Input id='importe' name='importe' 
+                                placeholder='importe' type='text' className='regular-style' 
+                                onChange={(e) => setImporte(e.target.value)}
+                            /> 
+                            <Input id='observacion' name='observacion' 
+                                placeholder='observacion' type='text' className='regular-style' 
+                                onChange={(e) => handleChange(e.target.name, e.target.value)}
+                            /> 
+                            <hr></hr>
+                            <Button>
+                                Registrarse
+                            </Button>
+                        </center>
+                        </form>
+                    </Modal>
                 </tr>
                 )
         })}</tbody>
@@ -124,6 +180,7 @@ const Home = () => {
         }
     };
 
+
     return (
         <center>
             <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
@@ -161,6 +218,8 @@ const Home = () => {
 
             <hr></hr>
             <table id="tablaSesiones"></table> 
+
+            
 
         </center>
     )

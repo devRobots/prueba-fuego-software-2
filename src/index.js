@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import 'semantic-ui-css/semantic.min.css';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 firebase.initializeApp({
   apiKey: "AIzaSyCRDX9KkLo9u2GbpXr50mH0QbobAwU4Cno",

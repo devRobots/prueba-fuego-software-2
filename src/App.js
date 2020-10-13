@@ -11,17 +11,17 @@ export default class App extends Component {
   render() {
     // var loggedIn = sessionStorage.getItem("usuario") != null;
     return (
-      <Routers>
-        <Switch>
-          <div className="App">
+      <div className="App">
+        <Routers>
+          <Switch>
             <HeaderMaster name={"Centro de Masajes y Terapias Alternativas"} />
             <Route exact path = "/" component = {Login}/>
             <Route path = "/login" component = {Login}/>
             <Route path = "/createTherapist" component = {CreateTherapist}/>
             <Route path = "/home" component = {Home}/>
-          </div>
-        </Switch>
-      </Routers>
+          </Switch>
+        </Routers>
+      </div>
       
     );
   }

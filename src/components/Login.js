@@ -25,7 +25,12 @@ const Login = () => {
             return <Redirect to = "/createUser"/>
         }
         
-    } 
+    }
+
+    if(!isHome)
+    {
+        return <Redirect to = "/Home"/>
+    }
 
     function handleChange(name, value) {
         if (name === 'usuario') {

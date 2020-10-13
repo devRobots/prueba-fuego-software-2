@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import Firebase from "../database/firebase";
-import {Input, Button} from 'semantic-ui-react';
+import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody} from 'semantic-ui-react';
 
 const Home = () => {
     
@@ -26,31 +26,31 @@ const Home = () => {
 
     Firebase.readList("Sesiones", function(data) {
         var element = (
-        <div>
-            <thead>
-                <tr>
-                <th>id</th>
-                <th>cancelada</th>
-                <th>cobrada</th>
-                <th>fecha</th>
-                <th>hora</th>
-                <th>importe</th>
-                <th>observacion</th>
-                </tr>
-            </thead>
-            <tbody>{
+        <Table celled>
+            <TableHeader>
+                <TableRow>
+                <TableHeaderCell>ID</TableHeaderCell>
+                <TableHeaderCell>Cancelada</TableHeaderCell>
+                <TableHeaderCell>Cobrada</TableHeaderCell>
+                <TableHeaderCell>Fecha</TableHeaderCell>
+                <TableHeaderCell>Hora</TableHeaderCell>
+                <TableHeaderCell>Importe</TableHeaderCell>
+                <TableHeaderCell>Observación</TableHeaderCell>
+                </TableRow>
+            </TableHeader>
+            <TableBody>{
                 data.map((objeto, id) => {
                 return (
                 <tr key = {id}>
-                    <td>{objeto.id}</td>
-                    <td>{objeto.cancelada ? "Si" : "No"}</td>
-                    <td>{objeto.cobrada ? "Si" : "No"}</td>
-                    <td>{objeto.fecha}</td>
-                    <td>{objeto.hora}</td>
-                    <td>{objeto.importe}</td>
-                    <td>{objeto.observacion}</td>
-                    <button onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</button>
-                    <button onClick={openModal}>Editar</button>
+                    <Table.Cell>{objeto.id}</Table.Cell>
+                    <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                    <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
+                    <Table.Cell>{objeto.fecha}</Table.Cell>
+                    <Table.Cell>{objeto.hora}</Table.Cell>
+                    <Table.Cell>{objeto.importe}</Table.Cell>
+                    <Table.Cell>{objeto.observacion}</Table.Cell>
+                    <Button onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</Button>
+                    <Button onClick={openModal}>Editar</Button>
 
                     <Modal isOpen={modalIsOpen}
                         onRequestClose={closeModal}
@@ -98,8 +98,8 @@ const Home = () => {
                     </Modal>
                 </tr>
                 )
-        })}</tbody>
-        </div>
+        })}</TableBody>
+        </Table>
         )
         ReactDOM.render(element, document.getElementById('tablaSesiones'))
     })

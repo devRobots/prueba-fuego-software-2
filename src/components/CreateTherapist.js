@@ -187,10 +187,11 @@ const CreateTherapist = () => {
                 <input type="radio" value="Inactivo" name="estado" /> Inactivo
                 </div>
             <hr></hr>
-            <Button onClick={(e) => handleSubmit()}>
+            <Button color="blue" onClick={(e) => handleSubmit()}>
                 Registrarse
              </Button>
-             <Button onClick={(e) => setCreateTherapist(false)}>
+             <br></br>
+             <Button color="red" onClick={(e) => setCreateTherapist(false)}>
                 Atrás
              </Button>
         </Segment>

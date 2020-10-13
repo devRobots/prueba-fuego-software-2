@@ -126,61 +126,33 @@ const Home = () => {
 
     return (
         <center>
-            <Input 
-            id='cancelada' 
-            name='cancelada'  
-            placeholder='cancelada' 
-            type='text' 
-            onChange = {(e) => handleChange(e.target.name, e.target.value)}
-            className='regular-style' 
+            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
+                <input type="radio" value= "true" name="cancelada" /> Cancelada
+                <input type="radio" value= "false" name="cancelada" /> No Cancelada
+            </div>
+            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
+                <input type="radio" value= "true" name="cobrada" /> Cobrada
+                <input type="radio" value= "false" name="cobrada" /> No Cobrada
+            </div>
+            <Input id='fecha' name='fecha' 
+                placeholder='fecha' type='text' className='regular-style' 
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
             /> 
-            <Input 
-            id='cobrada' 
-            name='cobrada'  
-            placeholder='cobrada' 
-            type='text' 
-            onChange = {(e) => handleChange(e.target.name, e.target.value)}
-            className='regular-style' 
+            <Input id='hora' name='hora' 
+                placeholder='hora' type='text' className='regular-style' 
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
             /> 
-            <Input 
-            id='fecha'
-            name='fecha' 
-            placeholder='fecha' 
-            type='text' 
-            onChange = {(e) => handleChange(e.target.name, e.target.value)}
-            className='regular-style' 
+            <Input id='id' name='id' 
+                placeholder='id' type='text' className='regular-style' 
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
             /> 
-            <Input 
-            id='hora'
-            name='hora' 
-            placeholder='hora' 
-            type='text' 
-            onChange = {(e) => handleChange(e.target.name, e.target.value)}
-            className='regular-style' 
+            <Input id='importe' name='importe' 
+                placeholder='importe' type='text' className='regular-style' 
+                onChange={(e) => setImporte(e.target.value)}
             /> 
-            <Input 
-            id='id' 
-            name='id' 
-            placeholder='id' 
-            type='text'
-            onChange = {(e) => handleChange(e.target.name, e.target.value)} 
-            className='regular-style' 
-            /> 
-            <Input 
-            id='importe' 
-            name='importe' 
-            placeholder='importe' 
-            type='text' 
-            onChange = {(e) => handleChange(e.target.name, e.target.value)}
-            className='regular-style' 
-            /> 
-            <Input 
-            id='observacion' 
-            name='observacion' 
-            placeholder='observacion' 
-            type='text'
-            onChange = {(e) => handleChange(e.target.name, e.target.value)}
-            className='regular-style' 
+            <Input id='observacion' name='observacion' 
+                placeholder='observacion' type='text' className='regular-style' 
+                onChange={(e) => handleChange(e.target.name, e.target.value)}
             /> 
             <hr></hr>
             <Button onClick={(e) => handleSubmit()}>

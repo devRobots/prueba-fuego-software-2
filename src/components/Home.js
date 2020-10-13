@@ -4,9 +4,7 @@ import Firebase from "../database/firebase";
 import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
 
 const Home = () => {
-    var db = new Firebase(); 
- 
-    db.readList("Sesiones", function(data) {
+    Firebase.readList("Sesiones", function(data) {
         var element = (
         <div>
             <thead>
@@ -32,7 +30,7 @@ const Home = () => {
                     <td>{objeto.importe}</td>
                     <td>{objeto.observacion}</td>
                     <button>Editar</button>
-                    <button onClick={(e) => db.remove("Sesiones",objeto)}>Eliminar</button>
+                    <button onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</button>
                 </tr>
                 )
         })}</tbody>

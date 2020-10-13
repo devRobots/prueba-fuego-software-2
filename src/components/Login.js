@@ -34,15 +34,14 @@ const Login = () => {
     };
 
     function handleSubmit(params) {
-
-        let account = { user, password }
-        const db = new Firebase()
-        db.authenticationUser(user, password)
-    
-        if (account) {
-            sessionStorage.setItem("usuario", account)
+        var method = function (flag) {
+            if (flag) {
+                console.log("Entró")
+            } else {
+                console.log("Nel prro")
+            }
         }
-       
+        Firebase.login(user, password, method) 
     };
 
     return (

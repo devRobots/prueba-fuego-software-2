@@ -6,8 +6,6 @@ import Firebase from '../database/firebase';
 import { Redirect } from "react-router-dom";
 
 const CreateTherapist = () => {
-
-
     const [celular, setPhone ] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
@@ -88,13 +86,9 @@ const CreateTherapist = () => {
     }
 
     function handleSubmit(params) {
-
         let account = { celular, password, email, estado, id, nombre, usuario }
         
-        var db= new Firebase
-
-        db.write("Terapeutas",account)
-        db.RegisterUser(email, password);
+        Firebase.write("Terapeutas",account)
 
         if (account) {
             console.log('account:', account)

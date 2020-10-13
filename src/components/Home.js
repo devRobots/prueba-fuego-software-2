@@ -111,57 +111,50 @@ const Home = () => {
         switch(name) {
             case 'id':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setId(value)
                 }
                 break;
             case 'hora':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setHora(value)
                 }
                 break;
             case 'fecha':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setFecha(value)
                 }
                 break;
             case 'cobrada':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setCobro(value)
                 }
                 break;
             case 'importe':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setImporte(value)
                 }
                 break;
             case 'cancelada':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setCancelada(value)
                 }
                 break;
             case 'observacion':
                     if(value < 1) {
-                        console.log(value)
+
                     } else {
-                        console.log(value)
                         setObservacion(value)
                     }
                 break;
@@ -213,7 +206,7 @@ const Home = () => {
             /> 
             <hr></hr>
             <Button onClick={(e) => handleSubmit()}>
-                Registrarse
+                Registrar sesión
              </Button>
 
             <hr></hr>

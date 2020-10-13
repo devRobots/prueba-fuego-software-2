@@ -23,49 +23,43 @@ const CreateUser = () => {
         switch(name) {
             case 'phone':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setPhone(value)
                 }
                 break;
             case 'email':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setEmail(value)
                 }
                 break;
             case 'direccion':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setDireccion(value)
                 }
                 break;
             case 'birthDate':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setbirthDate(value)
                 }
                 break;
             case 'id':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setId(value)
                 }
                 break;
             case 'nombre':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setNombre(value)
                 }
                 break;

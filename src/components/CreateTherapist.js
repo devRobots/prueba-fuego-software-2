@@ -26,49 +26,42 @@ const CreateTherapist = () => {
         switch(name) {
             case 'celular':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setPhone(value)
                 }
                 break;
             case 'usuario':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
-                    setUser(value)
                 }
                 break;
             case 'email':
                 if(value < 1) {
-                    console.log(value)
+                    
                 } else {
-                    console.log(value)
                     setEmail(value)
                 }
                 break;
             case 'estado':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setEstado(value)
                 }
                 break;
             case 'id':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setId(value)
                 }
                 break;
             case 'nombre':
                 if(value < 1) {
-                    console.log(value)
+
                 } else {
-                    console.log(value)
                     setNombre(value)
                 }
                 break;

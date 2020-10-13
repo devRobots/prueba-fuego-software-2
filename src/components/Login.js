@@ -98,9 +98,7 @@ const Login = () => {
                 </Button>
 
             </Grid.Column>
-
             <Grid.Column>
-
                 <Header Icon>
                 <Icon name='user plus'/>
                 Realizar Registros

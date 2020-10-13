@@ -177,7 +177,7 @@ const CreateTherapist = () => {
             {
                 passwordError &&
                 <Label pointing="above" className='label-error'>
-                    contraseña invalida o incompleta
+                    contraseña invalida
                 </Label>
             }
             
@@ -189,6 +189,9 @@ const CreateTherapist = () => {
             <hr></hr>
             <Button onClick={(e) => handleSubmit()}>
                 Registrarse
+             </Button>
+             <Button onClick={(e) => setCreateTherapist(false)}>
+                Atrás
              </Button>
         </Segment>
     )

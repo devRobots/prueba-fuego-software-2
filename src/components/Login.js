@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
+import {Segment, Header, Label, Input, Button, Grid, Divider, Icon} from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom"
 import Firebase from '../database/firebase';
 
@@ -50,51 +50,68 @@ const Login = () => {
 
     return (
         <Router exact path="/login" basename="/login">
+        <Segment  color="teal" className='login-container'>
+        <Grid columns={2} stackable textAlign='center'>
+        <Divider vertical>Or</Divider>
+        <Grid.Row verticalAlign='middle'>
+            <Grid.Column>
+                <Header Icon>
+                <Icon name='user'/>
+                Ingresar
+                </Header>
+                <Header.Subheader>Usuario</Header.Subheader>
+                <Input 
+                    focus
+                    icon="envelope"
+                    id='usuario'
+                    name='usuario'
+                    placeholder='Ingrese su correo'
+                    type='text'
+                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    className='regular-style'
+                />
+                <Header.Subheader>Contraseña</Header.Subheader>
+                <Input
+                    focus
+                    icon="key"
+                    id='contraseña'
+                    name='contraseña'
+                    placeholder='Ingrese su contraseña'
+                    type='password'
+                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    className='input-error'
+                />
+                {
+                    passwordError &&
+                    <Label pointing="above" className='label-error'>
+                        contraseña invalida o incompleta
+                    </Label>
+                }
 
-        <Segment color="teal" className='login-container'>
-            <Header as="h3">Ingresar</Header>
-            <Header.Subheader>Usuario</Header.Subheader>
-            <Input 
-                focus
-                icon="envelope"
-                id='usuario'
-                name='usuario'
-                placeholder='Ingrese su correo'
-                type='text'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                className='regular-style'
-            />
-            <Header.Subheader>Contraseña</Header.Subheader>
-            <Input
-                focus
-                icon="key"
-                id='contraseña'
-                name='contraseña'
-                placeholder='Ingrese su contraseña'
-                type='password'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                className='input-error'
-            />
-            {
-                passwordError &&
-                <Label pointing="above" className='label-error'>
-                    contraseña invalida o incompleta
-                </Label>
-            }
-            <hr></hr>
-            <Button onClick={(e) => handleSubmit()}>
-                Iniciar Sesión
-             </Button>
+            </Grid.Column>
 
-             <hr></hr>
-             <Button onClick={() => setLogin(false)}>
-                Registrar Terapeuta
-             </Button>
+            <Grid.Column>
 
-             <hr></hr>
-             <Button onClick={() => handleSubmit()}>
-                Registrar Secretario
-             </Button>
+                <Header Icon>
+                <Icon name='user plus'/>
+                Realizar Registros
+                </Header>
+                <Button onClick={(e) => handleSubmit()}>
+                    Iniciar Sesión
+                    </Button>
+
+                    <br></br>
+                    <Button onClick={() => setLogin(false)}>
+                    Registrar Terapeuta
+                    </Button>
+
+                    <br></br>
+                    <Button onClick={() => handleSubmit()}>
+                    Registrar Secretario
+                    </Button>
+             </Grid.Column>
+         </Grid.Row>
+         </Grid>
         </Segment>
         </Router>
     )

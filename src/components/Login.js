@@ -50,8 +50,8 @@ const Login = () => {
 
     return (
         <Router exact path="/login" basename="/login">
-        <Segment  color="teal" className='login-container'>
-        <Grid columns={2} stackable textAlign='center'>
+        <Segment relaxed color="teal" className='login-container'>
+        <Grid stretched padded="horizontally" relaxed columns={2} stackable textAlign='center'>
         <Divider vertical>Or</Divider>
         <Grid.Row verticalAlign='middle'>
             <Grid.Column>
@@ -87,6 +87,10 @@ const Login = () => {
                         contraseña invalida o incompleta
                     </Label>
                 }
+                <br></br>
+                <Button onClick={(e) => handleSubmit()}>
+                Iniciar Sesión
+                </Button>
 
             </Grid.Column>
 
@@ -96,11 +100,7 @@ const Login = () => {
                 <Icon name='user plus'/>
                 Realizar Registros
                 </Header>
-                <Button onClick={(e) => handleSubmit()}>
-                    Iniciar Sesión
-                    </Button>
-
-                    <br></br>
+                <br></br>
                     <Button onClick={() => setLogin(false)}>
                     Registrar Terapeuta
                     </Button>

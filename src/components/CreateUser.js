@@ -4,7 +4,6 @@ import firebase from '../database/firebase';
 
 const CreateUser = () => {
 
-
     const [phone, setPhone ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ direccion, setDireccion ] = useState('');

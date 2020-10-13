@@ -17,7 +17,7 @@ const CreateTherapist = () => {
      
     // eslint-disable-next-line
     const[isCreateTherapist, setCreateTherapist]= useState(true); 
-    
+
     if(!isCreateTherapist){
         return <Redirect to = "/login"/>
     }
@@ -94,10 +94,6 @@ const CreateTherapist = () => {
         if (account) {
             console.log('account:', account)
         }
-    };
-
-    function onChangeValue(params) {
-        console.log(params.target.value);
     };
 
     /**
@@ -186,7 +182,7 @@ const CreateTherapist = () => {
             }
             
             <Header.Subheader>Estado</Header.Subheader>
-                <div onChange={(e) => onChangeValue()}>
+                <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
                 <input type="radio" value="Activo" name="estado" /> Activo
                 <input type="radio" value="Inactivo" name="estado" /> Inactivo
                 </div>

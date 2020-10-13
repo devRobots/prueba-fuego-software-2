@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import Firebase from "../database/firebase";
-import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
+import {Input} from 'semantic-ui-react';
 
 const Home = () => {
     Firebase.readList("Sesiones", function(data) {

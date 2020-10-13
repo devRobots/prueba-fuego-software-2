@@ -9,7 +9,7 @@ import { BrowserRouter as Routers, Route, Switch } from 'react-router-dom';
 
 export default class App extends Component {
   render() {
-    var loggedIn = sessionStorage.getItem("usuario") != null;
+    // var loggedIn = sessionStorage.getItem("usuario") != null;
     return (
       <Routers>
         <Switch>

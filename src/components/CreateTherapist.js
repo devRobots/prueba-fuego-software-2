@@ -15,6 +15,7 @@ const CreateTherapist = () => {
     const [ nombre, setNombre ] = useState('');
     const [ usuario, setUser ] = useState('');
      
+    // eslint-disable-next-line
     const[isCreateTherapist, setCreateTherapist]= useState(true); 
     
     if(!isCreateTherapist){

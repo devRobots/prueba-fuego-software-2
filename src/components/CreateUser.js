@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import {Segment, Header, Input, Button} from 'semantic-ui-react';
 import firebase from '../database/firebase';
 
+import { Redirect } from "react-router-dom";
+
 const CreateUser = () => {
 
     const [phone, setPhone ] = useState('');
@@ -11,6 +13,11 @@ const CreateUser = () => {
     const [ id, setId ] = useState('');
     const [ nombre, setNombre ] = useState('');
      
+    const[isCreateUser, setCreateUser]= useState(true); 
+
+    if(!isCreateUser){
+        return <Redirect to = "/login"/>
+    }
 
     function handleChange(name, value) {
         switch(name) {
@@ -159,6 +166,9 @@ const CreateUser = () => {
             <hr></hr>
             <Button onClick={(e) => handleSubmit()}>
                 Registrarse
+             </Button>
+             <Button color="red" onClick={(e) => setCreateUser(false)}>
+                Atrás
              </Button>
         </Segment>
 

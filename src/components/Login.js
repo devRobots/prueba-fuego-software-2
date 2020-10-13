@@ -12,14 +12,19 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
 
-    const[isLogin, setLogin]= useState(true);
+    const[isLogin, setLogin]= useState(1);
     const[isHome, setHome]= useState(true);
 
-    if(!isLogin){
-        return <Redirect to = "/createTherapist"/>
-    } 
-    if(!isHome){
-        return <Redirect to = "/home"/>
+    if(isLogin!==1){
+        if(isLogin===2)
+        {
+            return <Redirect to = "/createTherapist"/>
+        }
+        if(isLogin===3)
+        {
+            return <Redirect to = "/createUser"/>
+        }
+        
     } 
 
     function handleChange(name, value) {
@@ -101,12 +106,12 @@ const Login = () => {
                 Realizar Registros
                 </Header>
                 <br></br>
-                    <Button onClick={() => setLogin(false)}>
+                    <Button onClick={() => setLogin(2)}>
                     Registrar Terapeuta
                     </Button>
 
                     <br></br>
-                    <Button onClick={() => handleSubmit()}>
+                    <Button onClick={() => setLogin(3)}>
                     Registrar Secretario
                     </Button>
              </Grid.Column>

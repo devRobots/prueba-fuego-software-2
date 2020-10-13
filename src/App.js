@@ -3,6 +3,7 @@ import './App.css';
 import HeaderMaster from "./components/HeaderMaster";
 import Login from "./components/Login";
 import CreateTherapist from "./components/CreateTherapist";
+import CreateUser from "./components/CreateUser";
 import Home from "./components/Home";
 
 import { BrowserRouter as Routers, Route, Switch } from 'react-router-dom';
@@ -19,6 +20,7 @@ export default class App extends Component {
             <Route path = "/login" component = {Login}/>
             <Route path = "/createTherapist" component = {CreateTherapist}/>
             <Route path = "/home" component = {Home}/>
+            <Route path = "/createUser" component = {CreateUser}/>
       </div>
           </Switch>
         </Routers>

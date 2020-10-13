@@ -13,9 +13,13 @@ const Login = () => {
     const [passwordError, setPasswordError] = useState(false);
 
     const[isLogin, setLogin]= useState(true);
+    const[isHome, setHome]= useState(true);
 
     if(!isLogin){
         return <Redirect to = "/createTherapist"/>
+    } 
+    if(!isHome){
+        return <Redirect to = "/home"/>
     } 
 
     function handleChange(name, value) {
@@ -36,7 +40,7 @@ const Login = () => {
     function handleSubmit(params) {
         var method = function (flag) {
             if (flag) {
-                console.log("Entró")
+                setHome(false)
             } else {
                 console.log("Nel prro")
             }

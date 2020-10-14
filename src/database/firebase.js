@@ -55,6 +55,22 @@ class Firebase {
     hola.ref(path).once('value', meth)
   }
 
+  static put(path,objeto){
+    var hola = firebase.database()
+    var meth = function(snapshot){
+      var cosa = function(childsnapshot){
+        var key = childsnapshot.key;
+          var childData = childsnapshot.val();
+          // eslint-disable-next-line
+          if(childData.id == objeto.id){
+            hola.ref(path).child(key).set(objeto)
+          }
+      }
+      snapshot.forEach(cosa)
+    }
+    hola.ref(path).once('value', meth)
+  }
+
   static obtenerSesion(method) {
     var db = new Firebase()
     db.read("Clientes", method) 

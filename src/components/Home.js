@@ -6,23 +6,26 @@ import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeade
 
 const Home = () => {
     
-    const [id, setId ] = useState('');
+    const [ id, setId ] = useState('');
     const [ hora, setHora ] = useState('');
     const [ fecha, setFecha ] = useState('');
     const [ cobrada, setCobro ] = useState('');
     const [ importe, setImporte ] = useState('');
     const [ cancelada, setCancelada ] = useState('');
     const [ observacion, setObservacion] = useState('');
-    const [modalIsOpen,setIsOpen] = React.useState(false);
+    const [ modalIsOpen,setIsOpen] = React.useState(false);
+    const [ objetoEdit, setObjetoEdit] = useState('')
 
     Modal.setAppElement()
 
-    function openModal() {
+    function openModal(value) {
+        setObjetoEdit(value)
         setIsOpen(true);
     }
     function closeModal(){
         setIsOpen(false);
     }
+
 
     Firebase.readList("Sesiones", function(data) {
         var element = (
@@ -50,38 +53,35 @@ const Home = () => {
                     <Table.Cell>{objeto.importe}</Table.Cell>
                     <Table.Cell>{objeto.observacion}</Table.Cell>
                     <Button onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</Button>
-                    <Button onClick={openModal}>Editar</Button>
+                    <Button onClick={(e) => openModal(objeto)} id = "modal-create-thanks-you">Editar</Button>
 
                     <Modal isOpen={modalIsOpen}
                         onRequestClose={closeModal}
                         contentLabel="Example Modal"
                         >
+                        <modalBody>
                         <button onClick={closeModal}>close</button>
-                        <div>Editar</div>
+                        <div >Editar</div>
                         <form>
-
                         <center>
+                        <div className="form-group"> 
                             <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
-                                <input type="radio" value= "true" name="cancelada" /> Cancelada
-                                <input type="radio" value= "false" name="cancelada" /> No Cancelada
+                                <input type="radio"  name="cancelada" /> Cancelada
+                                <input type="radio" name="cancelada" /> No Cancelada
                             </div>
                             <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
-                                <input type="radio" value= "true" name="cobrada" /> Cobrada
-                                <input type="radio" value= "false" name="cobrada" /> No Cobrada
+                                <input type="radio"  name="cobrada" /> Cobrada
+                                <input type="radio" name="cobrada" /> No Cobrada
                             </div>
-                            <Input id='fecha' name='fecha' 
-                                placeholder='fecha' type='text' className='regular-style' 
+                            <Input id='fecha' name='fecha' className="form-control"
+                                placeholder='fecha' type='text' 
                                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                             /> 
-                            <Input id='hora' name='hora' 
+                            <Input id='hora' name='hora'
                                 placeholder='hora' type='text' className='regular-style' 
                                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                             /> 
-                            <Input id='id' name='id' 
-                                placeholder='id' type='text' className='regular-style' 
-                                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                            /> 
-                            <Input id='importe' name='importe' 
+                            <Input id='importe' name='importe'
                                 placeholder='importe' type='text' className='regular-style' 
                                 onChange={(e) => setImporte(e.target.value)}
                             /> 
@@ -90,11 +90,13 @@ const Home = () => {
                                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                             /> 
                             <hr></hr>
-                            <Button>
-                                Registrarse
+                            <Button onClick = {(e) => handleEdit()}>
+                                Editar
                             </Button>
+                            </div>
                         </center>
                         </form>
+                        </modalBody>
                     </Modal>
                 </tr>
                 )
@@ -173,6 +175,16 @@ const Home = () => {
         }
     };
 
+    function handleEdit(params) {
+        setId(objetoEdit.id)
+        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion}
+
+        Firebase.put("Sesiones", account)
+
+        if (account) {
+            console.log('account:', account)
+        }
+    };
 
     return (
         <center>
@@ -211,9 +223,6 @@ const Home = () => {
 
             <hr></hr>
             <table id="tablaSesiones"></table> 
-
-            
-
         </center>
     )
 }

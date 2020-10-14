@@ -14,18 +14,23 @@ const Home = () => {
     const [ cancelada, setCancelada ] = useState('');
     const [ observacion, setObservacion] = useState('');
     const [ modalIsOpen,setIsOpen] = React.useState(false);
-    const [ objetoEdit, setObjetoEdit] = useState('')
 
     Modal.setAppElement()
 
-    function openModal(value) {
-        setObjetoEdit(value)
+    function openModal(objeto) {
+        setId(objeto.id)
+        setHora(objeto.hora)
+        setFecha(objeto.fecha)
+        setCobro(objeto.cobrada)
+        setImporte(objeto.importe)
+        setCancelada(objeto.cancelada)
+        setObservacion(objeto.observacion)
         setIsOpen(true);
     }
     function closeModal(){
+        handleChange('vaciar',null)
         setIsOpen(false);
     }
-
 
     Firebase.readList("Sesiones", function(data) {
         var element = (
@@ -65,27 +70,27 @@ const Home = () => {
                         <form>
                         <center>
                         <div className="form-group"> 
-                            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
-                                <input type="radio"  name="cancelada" /> Cancelada
-                                <input type="radio" name="cancelada" /> No Cancelada
-                            </div>
-                            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
-                                <input type="radio"  name="cobrada" /> Cobrada
-                                <input type="radio" name="cobrada" /> No Cobrada
-                            </div>
+                        <div >
+                            <input type="radio" value= "true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
+                            <input type="radio" value= "false" name="cancelada" onChange={(e) => handleChange(e.target.name, false)} /> No Cancelada
+                        </div>
+                        <div>
+                            <input type="radio" value= "true" name="cobrada" onChange={(e) => handleChange(e.target.name, true)} /> Cobrada
+                            <input type="radio" value= "false" name="cobrada" onChange={(e) => handleChange(e.target.name, false)} /> No Cobrada
+                        </div>
                             <Input id='fecha' name='fecha' className="form-control"
-                                placeholder='fecha' type='text' 
+                                placeholder='fecha' type='text' value = {fecha}
                                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                             /> 
-                            <Input id='hora' name='hora'
+                            <Input id='hora' name='hora' value = {hora}
                                 placeholder='hora' type='text' className='regular-style' 
                                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                             /> 
-                            <Input id='importe' name='importe'
+                            <Input id='importe' name='importe' value = {importe}
                                 placeholder='importe' type='text' className='regular-style' 
                                 onChange={(e) => setImporte(e.target.value)}
                             /> 
-                            <Input id='observacion' name='observacion' 
+                            <Input id='observacion' name='observacion' value = {observacion}
                                 placeholder='observacion' type='text' className='regular-style' 
                                 onChange={(e) => handleChange(e.target.name, e.target.value)}
                             /> 
@@ -112,53 +117,34 @@ const Home = () => {
     function handleChange(name, value) {
         switch(name) {
             case 'id':
-                if(value < 1) {
-
-                } else {
-                    setId(value)
-                }
+                setId(value)
                 break;
             case 'hora':
-                if(value < 1) {
-
-                } else {
-                    setHora(value)
-                }
+                setHora(value)
                 break;
             case 'fecha':
-                if(value < 1) {
-
-                } else {
-                    setFecha(value)
-                }
+                setFecha(value)
                 break;
             case 'cobrada':
-                if(value < 1) {
-
-                } else {
-                    setCobro(value)
-                }
+                setCobro(value)
                 break;
             case 'importe':
-                if(value < 1) {
-
-                } else {
-                    setImporte(value)
-                }
+                setImporte(value)
                 break;
             case 'cancelada':
-                if(value < 1) {
-
-                } else {
-                    setCancelada(value)
-                }
+                setCancelada(value)
                 break;
             case 'observacion':
-                    if(value < 1) {
-
-                    } else {
-                        setObservacion(value)
-                    }
+                setObservacion(value)
+                break;
+            case 'vaciar':
+                setId('')
+                setHora('')
+                setFecha('')
+                setCobro('')
+                setImporte('')
+                setCancelada('')
+                setObservacion('')
                 break;
             default:
                 console.log('no hay valores.')
@@ -176,25 +162,21 @@ const Home = () => {
     };
 
     function handleEdit(params) {
-        setId(objetoEdit.id)
         let account = {id, hora, fecha, cobrada, cancelada, importe, observacion}
 
         Firebase.put("Sesiones", account)
-
-        if (account) {
-            console.log('account:', account)
-        }
+        handleChange('vaciar',null)
     };
 
     return (
         <center>
-            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
-                <input type="radio" value= "true" name="cancelada" /> Cancelada
-                <input type="radio" value= "false" name="cancelada" /> No Cancelada
+            <div >
+                <input type="radio" value= "true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
+                <input type="radio" value= "false" name="cancelada" onChange={(e) => handleChange(e.target.name, false)} /> No Cancelada
             </div>
-            <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
-                <input type="radio" value= "true" name="cobrada" /> Cobrada
-                <input type="radio" value= "false" name="cobrada" /> No Cobrada
+            <div>
+                <input type="radio" value= "true" name="cobrada" onChange={(e) => handleChange(e.target.name, true)} /> Cobrada
+                <input type="radio" value= "false" name="cobrada" onChange={(e) => handleChange(e.target.name, false)} /> No Cobrada
             </div>
             <Input id='fecha' name='fecha' 
                 placeholder='fecha' type='text' className='regular-style' 

@@ -27,6 +27,7 @@ const Home = () => {
         setObservacion(objeto.observacion)
         setIsOpen(true);
     }
+    
     function closeModal(){
         handleChange('vaciar',null)
         setIsOpen(false);

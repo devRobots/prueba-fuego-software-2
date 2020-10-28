@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import './CreateTherapist.css';
+import './CreateSecretary.css';
 import {Segment, Header, Label, Input, Button} from 'semantic-ui-react';
 import Firebase from '../database/firebase';
 
 import { Redirect } from "react-router-dom";
 
-const CreateTherapist = () => {
+const CreateSecretary = () => {
+
     const [celular, setPhone ] = useState('');
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
@@ -14,11 +15,10 @@ const CreateTherapist = () => {
     const [ id, setId ] = useState('');
     const [ nombre, setNombre ] = useState('');
     const [ usuario, setUser ] = useState('');
-     
-    // eslint-disable-next-line
-    const[isCreateTherapist, setCreateTherapist]= useState(true); 
 
-    if(!isCreateTherapist){
+    const[isCreateSecretary, setCreateSecretary]= useState(true); 
+
+    if(!isCreateSecretary){
         return <Redirect to = "/login"/>
     }
 
@@ -83,19 +83,15 @@ const CreateTherapist = () => {
     function handleSubmit(params) {
         let account = { celular, password, email, estado, id, nombre, usuario }
         
-        Firebase.write("Terapeutas",account)
+        Firebase.write("Secretario",account)
 
         if (account) {
             console.log('account:', account)
         }
     };
 
-    /**
-     * ingresar usuario a la base de datos
-     * pues falta eso, no es que lo haga lo que hay abajo :v
-     */
     return (
-        <Segment color="teal" className='CreateTherapist-container'>
+        <Segment color="teal" className='CreateSecretary-container'>
             <Header.Subheader>Nombre Completo</Header.Subheader>
             <Input
                 focus
@@ -185,11 +181,10 @@ const CreateTherapist = () => {
                 Registrarse
              </Button>
              <br></br>
-             <Button color="red" onClick={(e) => setCreateTherapist(false)}>
+             <Button color="red" onClick={(e) => setCreateSecretary(false)}>
                 Atrás
              </Button>
         </Segment>
     )
 };
-
-export default CreateTherapist;
+export default CreateSecretary;

@@ -5,7 +5,8 @@ import Login from "./components/Login";
 import CreateTherapist from "./components/CreateTherapist";
 import Home from "./components/Home";
 import CreateSecretary from "./components/CreateSecretary";
-import Citas from "./components/Citas"
+import Citas from "./components/Citas";
+import SearchUser from "./components/SearchUser";
 
 import { BrowserRouter as Routers, Route, Switch } from 'react-router-dom';
 
@@ -22,6 +23,7 @@ export default class App extends Component {
             <Route path = "/createSecretary" component = {CreateSecretary}/>
             <Route path = "/Citas" component = {Citas}/>
             <Route path = "/home" component = {Home}/>
+            <Route path = "/searchUser" component = {SearchUser}/>
           </Switch>
         </Routers>
       </div>

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import Firebase from "../database/firebase";
-import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody} from 'semantic-ui-react';
+import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, 
+    TableHeaderCell, Table, TableBody,Grid,Divider} from 'semantic-ui-react';
 
 const Home = () => {
     
@@ -172,7 +173,7 @@ const Home = () => {
                 <label>
                     Clientes
                 </label>
-                <select name = "Clientes" id = "Clientes">
+                <select name = "Cliente" id = "Cliente">
                     {
                         data.map((objeto, id) => {
                             return(
@@ -227,13 +228,15 @@ const Home = () => {
     }
 
     function handleSubmit(params) {
-        var sTerapeuta = document.getElementById('Terapeuta')
-        var sTerapia = document.getElementById('Terapia')
+        var sTerapeuta = document.getElementById('Terapeuta').value
+        var sTerapia = document.getElementById('Terapia').value
+        var sCliente = document.getElementById('Cliente').value
 
         setIdTerapeuta(sTerapeuta)
         setIdTerapia(sTerapia)
+        setIdCliente(sCliente)
 
-        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion}
+        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
         //var selected = cod.option[cod.selectedIndex].text
 
         Firebase.write("Sesiones", account)

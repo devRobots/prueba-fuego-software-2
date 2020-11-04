@@ -46,9 +46,48 @@ const SearchUser = () => {
     ReactDOM.render(element, document.getElementById('tablaClientes'))
     })
 
+    /**
+     * Sesiones
+     */
+    Firebase.readList("Sesiones", function(data) {
+        var element = (
+        <Table celled>
+            <TableHeader>
+                <TableRow>
+                <TableHeaderCell>ID</TableHeaderCell>
+                <TableHeaderCell>Cancelada</TableHeaderCell>
+                <TableHeaderCell>Cobrada</TableHeaderCell>
+                <TableHeaderCell>Fecha</TableHeaderCell>
+                <TableHeaderCell>Hora</TableHeaderCell>
+                <TableHeaderCell>Importe</TableHeaderCell>
+                <TableHeaderCell>Observación</TableHeaderCell>
+                </TableRow>
+            </TableHeader>
+            <TableBody>{
+                data.map((objeto, id) => {
+                return (
+                <tr key = {id}>
+                    <Table.Cell>{objeto.id}</Table.Cell>
+                    <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                    <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
+                    <Table.Cell>{objeto.fecha}</Table.Cell>
+                    <Table.Cell>{objeto.hora}</Table.Cell>
+                    <Table.Cell>{objeto.importe}</Table.Cell>
+                    <Table.Cell>{objeto.observacion}</Table.Cell>
+                </tr>
+                )
+        })}</TableBody>
+        </Table>
+        )
+        ReactDOM.render(element, document.getElementById('tablaSesiones'))
+    })
+   
+
     return (
         <center>
             <table id="tablaClientes"></table> 
+            <label>SESIONES</label>
+            <table id="tablaSesiones"></table> 
         </center>
     )
 }

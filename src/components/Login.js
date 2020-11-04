@@ -14,6 +14,7 @@ const Login = () => {
 
     const[isLogin, setLogin]= useState(1);
     const[isHome, setHome]= useState(true);
+    const[isTerapeuta, setTerapeuta]= useState(true);
 
     if(isLogin!==1){
         if(isLogin===2)
@@ -30,6 +31,10 @@ const Login = () => {
     if(!isHome)
     {
         return <Redirect to = "/Home"/>
+    }
+    if(!isTerapeuta)
+    {
+        return <Redirect to = "/SearchUser"/>
     }
 
     function handleChange(name, value) {
@@ -48,10 +53,12 @@ const Login = () => {
     };
 
     function handleSubmit(params) {
-        var method = function (flag) {
-            if (flag) {
+        var method = function (terapeuta ,secretario) {
+            if (terapeuta) {
+                setTerapeuta(false)
+            } else if(secretario){
                 setHome(false)
-            } else {
+            } else{
                 console.log("Nel prro")
             }
         }

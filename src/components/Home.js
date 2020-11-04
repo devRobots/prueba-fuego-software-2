@@ -21,9 +21,9 @@ const Home = () => {
     
 
     //Id de las otras tablas relacionadas
-    const [ idTerapeuta, setIdTerapeuta ] = useState('');
-    const [ idTerapia, setIdTerapia ] = useState('');
-    const [ idCliente, setIdCliente ] = useState('');
+    //const [ idTerapeuta, setIdTerapeuta ] = useState('');
+    //const [ idTerapia, setIdTerapia ] = useState('');
+    //const [ idCliente, setIdCliente ] = useState('');
 
     const [ refresh, setRefresh ] = useState(false);
 
@@ -80,19 +80,24 @@ const Home = () => {
                 setCancelada('')
                 setObservacion('')
                 break;
+            case 'vaciar':
+                setId('')
+                setHora('')
+                setFecha('')
+                setCobro('')
+                setImporte('')
+                setCancelada('')
+                setObservacion('')
+                break;
             default:
                 console.log('no hay valores.')
         }
     }
 
     function handleSubmit(params) {
-        var sTerapeuta = document.getElementById('Terapeuta').value
-        var sTerapia = document.getElementById('Terapia').value
-        var sCliente = document.getElementById('Cliente').value
-
-        setIdTerapeuta(sTerapeuta)
-        setIdTerapia(sTerapia)
-        setIdCliente(sCliente)
+        var idTerapeuta = document.getElementById('Terapeuta').value
+        var idTerapia = document.getElementById('Terapia').value
+        var idCliente = document.getElementById("Cliente").value
 
         let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
         //var selected = cod.option[cod.selectedIndex].text
@@ -304,24 +309,6 @@ const Home = () => {
         }
     }
 
-    function handleSubmit(params) {
-        var sTerapeuta = document.getElementById('Terapeuta').value
-        var sTerapia = document.getElementById('Terapia').value
-        var sCliente = document.getElementById('Cliente').value
-
-        setIdTerapeuta(sTerapeuta)
-        setIdTerapia(sTerapia)
-        setIdCliente(sCliente)
-
-        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
-        //var selected = cod.option[cod.selectedIndex].text
-
-        Firebase.write("Sesiones", account)
-
-        if (account) {
-            console.log('account:', account)
-        }
-    };
     function handleRedirect(params) {
         
         setRefresh(true)
@@ -330,12 +317,6 @@ const Home = () => {
     {
        return <Redirect to = "/Citas"/>
     }
-    function handleEdit(params) {
-        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion}
-
-        Firebase.put("Sesiones", account)
-        handleChange('vaciar',null)
-    };
 
     return (
         <Router exact path="/home" basename="/home">

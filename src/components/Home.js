@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, 
     TableHeaderCell, Table, TableBody,Grid,Divider} from 'semantic-ui-react';
+import { BrowserRouter as Router } from "react-router-dom"
+import { Redirect } from "react-router-dom";
+
 
 const Home = () => {
     
@@ -15,11 +18,14 @@ const Home = () => {
     const [ cancelada, setCancelada ] = useState('');
     const [ observacion, setObservacion] = useState('');
     const [ modalIsOpen,setIsOpen] = React.useState(false);
+    
 
     //Id de las otras tablas relacionadas
     const [ idTerapeuta, setIdTerapeuta ] = useState('');
     const [ idTerapia, setIdTerapia ] = useState('');
     const [ idCliente, setIdCliente ] = useState('');
+
+    const [ refresh, setRefresh ] = useState(false);
 
     Modal.setAppElement()
 
@@ -106,29 +112,7 @@ const Home = () => {
     };
 
     
-    /**
-     * Lista de Terapias
-     */
-    Firebase.readList("Terapias", function(data) {
-        var element = (
-            <div>
-                <label>
-                    Terapia
-                </label>
-                <select name = "Terapia" id = "Terapia">
-                    {
-                        data.map((objeto, id) => {
-                            return(
-                            <option value = {objeto.id}>{objeto.nombre}</option>
-                            )
-                        })
-                    }
-                </select>
-            </div>
-        )
-        ReactDOM.render(element, document.getElementById('listaTerapias'))
-    })
-    setInterval(1000)
+    
 
     /**
      * Lista de Clientes
@@ -265,8 +249,149 @@ setInterval(terapeutas,1000)
     })
     setInterval(1000)
 
-    
+    /**
+     * Lista de Terapeutas
+     */
+    Firebase.readList("Terapeutas", function(data) {
+        var element = (
+            <div>
+                <label>
+                    Terapeuta
+                </label>
+                <select name = "Terapeuta" id = "Terapeuta">
+                    {
+                        data.map((objeto, id) => {
+                            return(
+                            <option value = {objeto.id} >{objeto.nombre}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        )
+        ReactDOM.render(element, document.getElementById('listaTerapeuta'))
+    })
+    /**
+     * Lista de Terapias
+     */
+    Firebase.readList("Terapias", function(data) {
+        var element = (
+            <div>
+                <label>
+                    Terapia
+                </label>
+                <select name = "Terapia" id = "Terapia">
+                    {
+                        data.map((objeto, id) => {
+                            return(
+                            <option value = {objeto.id}>{objeto.nombre}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        )
+        ReactDOM.render(element, document.getElementById('listaTerapias'))
+    })
+
+    /**
+     * Lista de Clientes
+     */
+    Firebase.readList("Clientes", function(data) {
+        var element = (
+            <div>
+                <label>
+                    Clientes
+                </label>
+                <select name = "Cliente" id = "Cliente">
+                    {
+                        data.map((objeto, id) => {
+                            return(
+                            <option value = {objeto.id}>{objeto.nombreCompleto}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        )
+        ReactDOM.render(element, document.getElementById('listaClientes'))
+    })
+
+    /**
+     * Registrar sesiones
+     */
+    function handleChange(name, value) {
+        switch(name) {
+            case 'id':
+                setId(value)
+                break;
+            case 'hora':
+                setHora(value)
+                break;
+            case 'fecha':
+                setFecha(value)
+                break;
+            case 'cobrada':
+                setCobro(value)
+                break;
+            case 'importe':
+                setImporte(value)
+                break;
+            case 'cancelada':
+                setCancelada(value)
+                break;
+            case 'observacion':
+                setObservacion(value)
+                break;
+            case 'vaciar':
+                setId('')
+                setHora('')
+                setFecha('')
+                setCobro('')
+                setImporte('')
+                setCancelada('')
+                setObservacion('')
+                break;
+            default:
+                console.log('no hay valores.')
+        }
+    }
+
+    function handleSubmit(params) {
+        var sTerapeuta = document.getElementById('Terapeuta').value
+        var sTerapia = document.getElementById('Terapia').value
+        var sCliente = document.getElementById('Cliente').value
+
+        setIdTerapeuta(sTerapeuta)
+        setIdTerapia(sTerapia)
+        setIdCliente(sCliente)
+
+        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
+        //var selected = cod.option[cod.selectedIndex].text
+
+        Firebase.write("Sesiones", account)
+
+        if (account) {
+            console.log('account:', account)
+        }
+    };
+    function handleRedirect(params) {
+        
+        setRefresh(true)
+    }
+    if(refresh)
+    {
+       return <Redirect to = "/Citas"/>
+    }
+    function handleEdit(params) {
+        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion}
+
+        Firebase.put("Sesiones", account)
+        handleChange('vaciar',null)
+    };
+
     return (
+        <Router exact path="/home" basename="/home">
         <center>
             <div >
                 <input type="radio" value= "true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
@@ -308,10 +433,14 @@ setInterval(terapeutas,1000)
             <Button onClick={(e) => handleSubmit()}>
                 Registrar sesión
              </Button>
+             <Button onClick={(e) => handleRedirect()}>
+                 Gestionar Citas
+            </Button>
 
             <hr></hr>
             <table id="tablaSesiones"></table> 
         </center>
+        </Router>
     )
 }
 

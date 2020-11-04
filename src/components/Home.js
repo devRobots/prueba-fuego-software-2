@@ -134,13 +134,11 @@ const Home = () => {
         )
         ReactDOM.render(element, document.getElementById('listaClientes'))
     })
-    setInterval(1000)
 
     /**
      * Lista de Terapeutas
      */
-    function terapeutas(){
-        Firebase.readList("Terapeutas", function(data) {
+    Firebase.readList("Terapeutas", function(data) {
         var element = (
             <div>
                 <label>
@@ -159,9 +157,6 @@ const Home = () => {
             )
             ReactDOM.render(element, document.getElementById('listaTerapeuta'))
         })
-    }
-    
-    setInterval(terapeutas,1000)
     
     /**
      * Sesiones
@@ -267,29 +262,6 @@ const Home = () => {
             </div>
         )
         ReactDOM.render(element, document.getElementById('listaTerapias'))
-    })
-
-    /**
-     * Lista de Clientes
-     */
-    Firebase.readList("Clientes", function(data) {
-        var element = (
-            <div>
-                <label>
-                    Clientes
-                </label>
-                <select name = "Cliente" id = "Cliente">
-                    {
-                        data.map((objeto, id) => {
-                            return(
-                            <option value = {objeto.id}>{objeto.nombreCompleto}</option>
-                            )
-                        })
-                    }
-                </select>
-            </div>
-        )
-        ReactDOM.render(element, document.getElementById('listaClientes'))
     })
 
     /**

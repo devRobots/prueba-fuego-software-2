@@ -29,7 +29,6 @@ const Citas = () => {
         handleChange('vaciar',null)
         setIsOpen(false);
     }
-    function listClient(){
 
     Firebase.readList("Terapias", function(data) {
         var element = (
@@ -97,8 +96,7 @@ const Citas = () => {
         )
         ReactDOM.render(element, document.getElementById('tablaTerapias'))
     })
-    }
-    setInterval(listClient,1000);
+    
     /**
      * Registrar sesiones
      */
@@ -144,7 +142,7 @@ const Citas = () => {
     function handleEdit(params) {
         let account = {id, descripcion, duracion, nombre, precio}
 
-        Firebase.put("Terapias", account)
+        Firebase.put("Citas", account)
         handleChange('vaciar',null)
     };
 

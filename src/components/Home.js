@@ -15,6 +15,11 @@ const Home = () => {
     const [ observacion, setObservacion] = useState('');
     const [ modalIsOpen,setIsOpen] = React.useState(false);
 
+    //Id de las otras tablas relacionadas
+    const [ idTerapeuta, setIdTerapeuta ] = useState('');
+    const [ idTerapia, setIdTerapia ] = useState('');
+    const [ idCliente, setIdCliente ] = useState('');
+
     Modal.setAppElement()
 
     function openModal(objeto) {
@@ -32,6 +37,7 @@ const Home = () => {
         handleChange('vaciar',null)
         setIsOpen(false);
     }
+    
 
     Firebase.readList("Sesiones", function(data) {
         var element = (
@@ -113,6 +119,74 @@ const Home = () => {
     })
 
     /**
+     * Lista de Terapeutas
+     */
+    Firebase.readList("Terapeutas", function(data) {
+        var element = (
+            <div>
+                <label>
+                    Terapeuta
+                </label>
+                <select name = "Terapeuta" id = "Terapeuta">
+                    {
+                        data.map((objeto, id) => {
+                            return(
+                            <option value = {objeto.id} >{objeto.nombre}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        )
+        ReactDOM.render(element, document.getElementById('listaTerapeuta'))
+    })
+    /**
+     * Lista de Terapias
+     */
+    Firebase.readList("Terapias", function(data) {
+        var element = (
+            <div>
+                <label>
+                    Terapia
+                </label>
+                <select name = "Terapia" id = "Terapia">
+                    {
+                        data.map((objeto, id) => {
+                            return(
+                            <option value = {objeto.id}>{objeto.nombre}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        )
+        ReactDOM.render(element, document.getElementById('listaTerapias'))
+    })
+
+    /**
+     * Lista de Clientes
+     */
+    Firebase.readList("Clientes", function(data) {
+        var element = (
+            <div>
+                <label>
+                    Clientes
+                </label>
+                <select name = "Clientes" id = "Clientes">
+                    {
+                        data.map((objeto, id) => {
+                            return(
+                            <option value = {objeto.id}>{objeto.nombreCompleto}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        )
+        ReactDOM.render(element, document.getElementById('listaClientes'))
+    })
+
+    /**
      * Registrar sesiones
      */
     function handleChange(name, value) {
@@ -153,7 +227,14 @@ const Home = () => {
     }
 
     function handleSubmit(params) {
+        var sTerapeuta = document.getElementById('Terapeuta')
+        var sTerapia = document.getElementById('Terapia')
+
+        setIdTerapeuta(sTerapeuta)
+        setIdTerapia(sTerapia)
+
         let account = {id, hora, fecha, cobrada, cancelada, importe, observacion}
+        //var selected = cod.option[cod.selectedIndex].text
 
         Firebase.write("Sesiones", account)
 
@@ -199,6 +280,15 @@ const Home = () => {
                 placeholder='observacion' type='text' className='regular-style' 
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
             /> 
+            <div id="listaTerapeuta">
+            </div>
+
+            <div id="listaTerapias">
+            </div>
+
+            <div id="listaClientes">
+            </div>
+
             <hr></hr>
             <Button onClick={(e) => handleSubmit()}>
                 Registrar sesión

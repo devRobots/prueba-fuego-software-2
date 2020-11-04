@@ -7,6 +7,7 @@ import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeade
 const Citas = () => {
     
     const [ id, setId ] = useState('');
+    const [ idCliente, setIdCliente ] = useState('');
     const [ descripcion, setDescripcion ] = useState('');
     const [ duracion, setDuracion ] = useState('');
     const [ nombre, setNombre ] = useState('');

@@ -13,6 +13,7 @@ const SearchUser = () => {
     const [ fechaNacimiento, setFechaNacimiento ] = useState('');
     const [ id, setId ] = useState('');
     const [ nombreCompleto, setNombreCompleto ] = useState('');
+    const [ buscar, setbuscar] = useState('') 
 
     
     Firebase.readList("Clientes", function(data) {
@@ -30,19 +31,36 @@ const SearchUser = () => {
                 </TableRow>
             </TableHeader>
             <TableBody>{
+                
                 data.map((objeto, id) => {
-                return (
-                <tr key = {id}>
-                    <Table.Cell>{objeto.id}</Table.Cell>
-                    <Table.Cell>{objeto.nombreCompleto}</Table.Cell>
-                    <Table.Cell>{objeto.correo}</Table.Cell>
-                    <Table.Cell>{objeto.direccion}</Table.Cell>
-                    <Table.Cell>{objeto.fechaNacimiento}</Table.Cell>
-                    <Table.Cell>{objeto.celular}</Table.Cell>
-                    <Table.Cell>{objeto.sesiones} <Button onClick={(e) => seeSessions(objeto)}>Ver Sesiones</Button></Table.Cell>
+                    if(buscar.length>0){
+                        if(
+                            (objeto.nombreCompleto + "").toLowerCase().includes(buscar.toLowerCase()) ||  
+                            (objeto.id+"").toLowerCase().includes(buscar.toLowerCase())){
+                            return (
+                                <tr key = {id}>
+                                    <Table.Cell>{objeto.id}</Table.Cell>
+                                    <Table.Cell>{objeto.nombreCompleto}</Table.Cell>
+                                    <Table.Cell>{objeto.correo}</Table.Cell>
+                                    <Table.Cell>{objeto.direccion}</Table.Cell>
+                                    <Table.Cell>{objeto.fechaNacimiento}</Table.Cell>
+                                    <Table.Cell>{objeto.celular}</Table.Cell>
+                                    <Table.Cell>{objeto.sesiones} <Button onClick={(e) => seeSessions(objeto)}>Ver Sesiones</Button></Table.Cell>
+                                </tr>)
+                        }
+                    }else{
+                    return (
+                    <tr key = {id}>
+                        <Table.Cell>{objeto.id}</Table.Cell>
+                        <Table.Cell>{objeto.nombreCompleto}</Table.Cell>
+                        <Table.Cell>{objeto.correo}</Table.Cell>
+                        <Table.Cell>{objeto.direccion}</Table.Cell>
+                        <Table.Cell>{objeto.fechaNacimiento}</Table.Cell>
+                        <Table.Cell>{objeto.celular}</Table.Cell>
+                        <Table.Cell>{objeto.sesiones} <Button onClick={(e) => seeSessions(objeto)}>Ver Sesiones</Button></Table.Cell>
 
-                </tr>
-                )
+                    </tr>
+                )}
         })}</TableBody>
         </Table>
         )
@@ -94,6 +112,9 @@ const SearchUser = () => {
 
     return (
         <center>
+            <Input id='Buscar' name='Buscar' className='regular-style' 
+            placeholder='Buscar' onChange={(e) => setbuscar(e.target.value)}
+            /> 
             <table id="tablaClientes"></table> 
             <label>SESIONES</label>
             <table id="tablaSesiones"></table> 

@@ -17,7 +17,8 @@ const Home = () => {
     const [ importe, setImporte ] = useState('');
     const [ cancelada, setCancelada ] = useState('');
     const [ observacion, setObservacion] = useState('');
-    const [ modalIsOpen,setIsOpen] = React.useState(false);
+    const [ modalIsOpen, setIsOpen] = React.useState(false);
+    const [ modalCobrar, setModalCobro ] = React.useState(false);
     
 
     //Id de las otras tablas relacionadas
@@ -39,10 +40,21 @@ const Home = () => {
         setObservacion(objeto.observacion)
         setIsOpen(true);
     }
+    function openCobro(objeto) {
+        setId(objeto.id)
+        setHora(objeto.hora)
+        setFecha(objeto.fecha)
+        setCobro(objeto.cobrada)
+        setImporte(objeto.importe)
+        setCancelada(objeto.cancelada)
+        setObservacion(objeto.observacion)
+        setModalCobro(true);
+    }
     
     function closeModal(){
         handleChange('vaciar',null)
         setIsOpen(false);
+        setModalCobro(false);
     }
 
     /**
@@ -193,6 +205,7 @@ const Home = () => {
                     <Table.Cell>{objeto.observacion}</Table.Cell>
                     <Button onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</Button>
                     <Button onClick={(e) => openModal(objeto)} id = "modal-create-thanks-you">Editar</Button>
+                    <Button onClick={(e) => openCobro(objeto)} id = "modal-create-cobrar">Cobrar</Button>
 
                     <Modal isOpen={modalIsOpen}
                         onRequestClose={closeModal}
@@ -233,6 +246,23 @@ const Home = () => {
                                 Editar
                             </Button>
                             </div>
+                        </center>
+                        </form>
+                        </modalBody>
+                    </Modal>
+
+                    <Modal isOpen={modalCobrar}
+                        onRequestClose={closeModal}
+                        contentLabel="Example Modal"
+                        >
+                        <modalBody>
+                        <button onClick={closeModal}>close</button>
+                        <div >Cobrar</div>
+                        <form>
+                        <center>
+                        <div className="form-group"> 
+                           //Tati aqui pon lo que quieres usar :v
+                        </div>
                         </center>
                         </form>
                         </modalBody>

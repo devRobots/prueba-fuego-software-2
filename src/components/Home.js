@@ -6,7 +6,6 @@ import {Input, Button, TableHeader, TableRow, TableColumn, TableCell,
     TableHeaderCell, Table, TableBody,Grid,Divider} from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom"
 import { Redirect } from "react-router-dom";
-import Calendar from 'react-calendar';
 
 
 const Home = () => {

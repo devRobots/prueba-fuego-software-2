@@ -6,6 +6,7 @@ import {Input, Button, TableHeader, TableRow, TableColumn, TableCell,
     TableHeaderCell, Table, TableBody,Grid,Divider} from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom"
 import { Redirect } from "react-router-dom";
+import Calendar from 'react-calendar';
 
 
 const Home = () => {
@@ -19,12 +20,9 @@ const Home = () => {
     const [ observacion, setObservacion] = useState('');
     const [ modalIsOpen, setIsOpen] = React.useState(false);
     const [ modalCobrar, setModalCobro ] = React.useState(false);
-    
-
-    //Id de las otras tablas relacionadas
-    //const [ idTerapeuta, setIdTerapeuta ] = useState('');
-    //const [ idTerapia, setIdTerapia ] = useState('');
-    //const [ idCliente, setIdCliente ] = useState('');
+    const [ idCliente, setIdCliente ] = useState('');
+    const [ idTerapeuta, setIdTerapeuta ] = useState('');
+    const [ idTerapia, setIdTerapia ] = useState('');
 
     const [ refresh, setRefresh ] = useState(false);
 
@@ -38,17 +36,24 @@ const Home = () => {
         setImporte(objeto.importe)
         setCancelada(objeto.cancelada)
         setObservacion(objeto.observacion)
+        setIdCliente(objeto.idCliente)
+        setIdTerapeuta(objeto.idTerapeuta)
+        setIdTerapia(objeto.idTerapia)
         setIsOpen(true);
     }
     function openCobro(objeto) {
         setId(objeto.id)
         setHora(objeto.hora)
         setFecha(objeto.fecha)
-        setCobro(objeto.cobrada)
+        setCobro(true)
         setImporte(objeto.importe)
         setCancelada(objeto.cancelada)
         setObservacion(objeto.observacion)
+        setIdCliente(objeto.idCliente)
+        setIdTerapeuta(objeto.idTerapeuta)
+        setIdTerapia(objeto.idTerapia)
         setModalCobro(true);
+       
     }
     
     function closeModal(){
@@ -56,6 +61,8 @@ const Home = () => {
         setIsOpen(false);
         setModalCobro(false);
     }
+
+   
 
     /**
      * Registrar sesiones
@@ -107,9 +114,9 @@ const Home = () => {
     }
 
     function handleSubmit(params) {
-        var idTerapeuta = document.getElementById('Terapeuta').value
-        var idTerapia = document.getElementById('Terapia').value
-        var idCliente = document.getElementById("Cliente").value
+        setIdTerapeuta (document.getElementById('Terapeuta').value)
+        setIdTerapia (document.getElementById('Terapia').value)
+        setIdCliente (document.getElementById("Cliente").value)
 
         let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
         //var selected = cod.option[cod.selectedIndex].text
@@ -122,12 +129,19 @@ const Home = () => {
     };
 
     function handleEdit(params) {
-        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion}
+        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
 
         Firebase.put("Sesiones", account)
         handleChange('vaciar',null)
     };
 
+    function handlePagar(params) {
+        
+        let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
+
+        Firebase.put("Sesiones", account)
+        handleChange('vaciar',null)
+    };
 
     /**
      * Lista de Clientes
@@ -261,8 +275,29 @@ const Home = () => {
                         <form>
                         <center>
                         <div className="form-group"> 
-                           //Tati aqui pon lo que quieres usar :v
+                        <label>Id Cliente</label>
+                        <Input name='Id Cliente' id='fecha'  className="form-control"
+                                placeholder='fecha' type='text' value = {idCliente}
+                                
+                        />
                         </div>
+                        <div>
+                        <label>Id Sesion</label>
+                        <Input name='Id sesion' id='fecha'  className="form-control"
+                                placeholder='fecha' type='text' value = {id}
+                                
+                        />
+                        </div>
+                        <div>
+                        <label>Valor a Pagar</label>
+                        <Input name='Importe' id='fecha'  className="form-control"
+                                placeholder='fecha' type='text' value = {importe}
+                                
+                        />
+                        </div>
+                        <Button onClick = {(e) => handlePagar()}>
+                                Pagar
+                        </Button>
                         </center>
                         </form>
                         </modalBody>

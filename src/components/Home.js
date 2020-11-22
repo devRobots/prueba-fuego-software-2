@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import Firebase from "../database/firebase";
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, 
-    TableHeaderCell, Table, TableBody,Grid,Divider} from 'semantic-ui-react';
+import {Input, Button, TableHeader, TableRow,Segment, TableColumn, TableCell, 
+    TableHeaderCell, Table, TableBody,Grid, Header, Label,Divider, Icon} from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom"
 import { Redirect } from "react-router-dom";
-
+import TextField from '@material-ui/core/TextField';
 
 const Home = () => {
     
     const [ id, setId ] = useState('');
-    const [ hora, setHora ] = useState('');
-    const [ fecha, setFecha ] = useState('');
+    const [ hora, setHora ] = useState("");
+    const [ fecha, setFecha ] = useState(new Date());
     const [ cobrada, setCobro ] = useState(false);
     const [ importe, setImporte ] = useState('');
     const [ cancelada, setCancelada ] = useState('');
@@ -113,9 +113,9 @@ const Home = () => {
     }
 
     function handleSubmit(params) {
-        setIdTerapeuta (document.getElementById('Terapeuta').value)
-        setIdTerapia (document.getElementById('Terapia').value)
-        setIdCliente (document.getElementById("Cliente").value)
+        setIdTerapeuta (document.getElementById('Terapeuta').value )
+        setIdTerapia (document.getElementById('Terapia').value )
+        setIdCliente (document.getElementById("Cliente").value )
 
         let account = {id, hora, fecha, cobrada, cancelada, importe, observacion,idTerapeuta,idTerapia,idCliente}
         //var selected = cod.option[cod.selectedIndex].text
@@ -150,8 +150,8 @@ const Home = () => {
             <div>
                 <label>
                     Clientes
-                </label>
-                <select name = "Cliente" id = "Cliente">
+                </label> <br></br>
+                <select name = "Cliente" id = "Cliente" class ="ui fluid selection dropdown">
                     {
                         data.map((objeto, id) => {
                             return(
@@ -170,11 +170,11 @@ const Home = () => {
      */
     Firebase.readList("Terapeutas", function(data) {
         var element = (
-            <div>
+            <div >
                 <label>
                     Terapeuta
-                </label>
-                <select name = "Terapeuta" id = "Terapeuta">
+                </label> <br></br>
+                <select name = "Terapeuta" id = "Terapeuta" class ="ui fluid selection dropdown">
                     {
                         data.map((objeto, id) => {
                             return(
@@ -203,6 +203,7 @@ const Home = () => {
                 <TableHeaderCell>Hora</TableHeaderCell>
                 <TableHeaderCell>Importe</TableHeaderCell>
                 <TableHeaderCell>Observación</TableHeaderCell>
+                <TableHeaderCell>Gestionar</TableHeaderCell>
                 </TableRow>
             </TableHeader>
             <TableBody>{
@@ -216,10 +217,14 @@ const Home = () => {
                     <Table.Cell>{objeto.hora}</Table.Cell>
                     <Table.Cell>{objeto.importe}</Table.Cell>
                     <Table.Cell>{objeto.observacion}</Table.Cell>
-                    <Button onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</Button>
-                    <Button onClick={(e) => openModal(objeto)} id = "modal-create-thanks-you">Editar</Button>
-                    <Button onClick={(e) => openCobro(objeto)} id = "modal-create-cobrar">Cobrar</Button>
-
+                    <Table.Cell>
+                    <div class="ui buttons">
+                    <Button class ="ui buttons" onClick={(e) => Firebase.remove("Sesiones",objeto)}>Eliminar</Button>
+                    <Button class ="ui buttons" onClick={(e) => openModal(objeto)} id = "modal-create-thanks-you">Editar</Button>
+                    <Button class ="ui buttons" onClick={(e) => openCobro(objeto)} id = "modal-create-cobrar">Cobrar</Button>
+                    </div>
+                    </Table.Cell>
+                    
                     <Modal isOpen={modalIsOpen}
                         onRequestClose={closeModal}
                         contentLabel="Example Modal"
@@ -317,8 +322,8 @@ const Home = () => {
             <div>
                 <label>
                     Terapia
-                </label>
-                <select name = "Terapia" id = "Terapia">
+                </label> <br></br>
+                <select name = "Terapia" id = "Terapia" class ="ui fluid selection dropdown">
                     {
                         data.map((objeto, id) => {
                             return(
@@ -383,50 +388,89 @@ const Home = () => {
 
     return (
         <Router exact path="/home" basename="/home">
-        <center>
-            <div >
-                <input type="radio" value= "true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
-                <input type="radio" value= "false" name="cancelada" onChange={(e) => handleChange(e.target.name, false)} /> No Cancelada
+        <div class="ui grid">
+            <div class="six wide column">
+            <Header Icon>
+                <Icon name='user'/>
+                Gestionar Sesion
+                </Header>
+                <Header.Subheader>Ingrese los parametros de una Sesion</Header.Subheader>
+                <div >
+                    <input type="radio" value= "true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
+                    <input type="radio" value= "false" name="cancelada" onChange={(e) => handleChange(e.target.name, false)} /> No Cancelada
+                </div>
+                <div >
+                    <label>Fecha</label> <br></br>
+                    <TextField
+                        id="date"
+                        type="date"
+                        defaultValue= {new Date()}
+                        InputLabelProps={{
+                        shrink: true,
+                        }}
+                        onChange={(event) => setFecha(event.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Hora</label> <br></br>
+                    <TextField
+                        id="time"
+                        type="time"
+                        defaultValue="09:00"
+                        InputLabelProps={{
+                        shrink: true,
+                        }}
+                        inputProps={{
+                        step: 300, // 5 min
+                        }}
+                        onChange={(event) => setHora(event.target.value)}
+                    />
+                </div>
+                <label>Id</label>
+                <div class = "ui fluid input">
+                    <input id='id' name='id' 
+                        placeholder='id' type='text' className='regular-style' 
+                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    /> 
+                </div>
+                <label>Importe</label>
+                <div class = "ui fluid input">
+                    <input id='importe' name='importe' 
+                        placeholder='importe' type='text' className='regular-style' 
+                        onChange={(e) => setImporte(e.target.value)}
+                    /> 
+                </div>
+                <label>Observacion</label>
+                <div class = "ui fluid input">
+                    <input id='observacion' name='observacion' 
+                        placeholder='observacion' type='text' className='regular-style' 
+                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                    /> 
+                </div>
+                
+                <div class = "ui fluid imput" id="listaTerapeuta" defer > </div>
+
+                <div class = "ui fluid imput" id="listaTerapias" defer> 
+                </div>
+
+                <div class = "ui fluid imput" id="listaClientes"> 
+                </div>
+
+                <hr></hr>
+                <Button onClick={(e) => handleSubmit()}>
+                    Registrar sesión
+                </Button>
+                <Button onClick={(e) => handleRedirect()}>
+                    Gestionar Citas
+                </Button>
             </div>
-            <Input id='fecha' name='fecha' 
-                placeholder='fecha' type='text' className='regular-style' 
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            /> 
-            <Input id='hora' name='hora' 
-                placeholder='hora' type='text' className='regular-style' 
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            /> 
-            <Input id='id' name='id' 
-                placeholder='id' type='text' className='regular-style' 
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            /> 
-            <Input id='importe' name='importe' 
-                placeholder='importe' type='text' className='regular-style' 
-                onChange={(e) => setImporte(e.target.value)}
-            /> 
-            <Input id='observacion' name='observacion' 
-                placeholder='observacion' type='text' className='regular-style' 
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            /> 
-            <div id="listaTerapeuta" defer > </div>
+            <Divider vertical> </Divider>
 
-            <div id="listaTerapias" defer> 
+            <div class="ten wide column">
+            <table id="tablaSesiones"></table>
             </div>
 
-            <div id="listaClientes"> 
-            </div>
-
-            <hr></hr>
-            <Button onClick={(e) => handleSubmit()}>
-                Registrar sesión
-             </Button>
-             <Button onClick={(e) => handleRedirect()}>
-                 Gestionar Citas
-            </Button>
-
-            <hr></hr>
-            <table id="tablaSesiones"></table> 
-        </center>
+        </div>
         </Router>
     )
 }

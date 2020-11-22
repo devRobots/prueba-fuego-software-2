@@ -170,20 +170,15 @@ const CreateSecretary = () => {
                     contraseña invalida
                 </Label>
             }
-            
-            <Header.Subheader>Estado</Header.Subheader>
-                <div onChange={(e) => handleChange(e.target.name, e.target.value)}>
-                <input type="radio" value="Activo" name="estado" /> Activo
-                <input type="radio" value="Inactivo" name="estado" /> Inactivo
-                </div>
             <hr></hr>
-            <Button color="blue" onClick={(e) => handleSubmit()}>
+            <div>
+            <button class="ui primary button" onClick={(e) => handleSubmit()}>
                 Registrarse
-             </Button>
-             <br></br>
-             <Button color="red" onClick={(e) => setCreateSecretary(false)}>
-                Atrás
-             </Button>
+             </button>
+             <button class="ui button" onClick={(e) => setCreateSecretary(false)}>
+                Cancelar
+             </button>
+            </div>
         </Segment>
     )
 };

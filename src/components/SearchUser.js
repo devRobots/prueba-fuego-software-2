@@ -17,6 +17,9 @@ const SearchUser = () => {
     const { usuario } = useContext(userContext)
 
     console.log(usuario)
+    if (usuario.length == 0) {
+        return <Redirect to="/Login" />
+    }
 
     Firebase.readList("Clientes", function (data) {
         var element = (

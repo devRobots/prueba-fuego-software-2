@@ -24,9 +24,16 @@ const Login = () => {
         }
         if(isLogin===3)
         {
-            return <Redirect to = "/createUser"/>
+            return <Redirect to = "/createSecretary"/>
         }
-        
+        if(isLogin===4)
+        {
+            return <Redirect to = "/Home"/>
+        }
+        if(isLogin===5)
+        {
+            return <Redirect to = "/SearchUser"/>
+        }
     }
 
     if(!isHome)
@@ -56,25 +63,23 @@ const Login = () => {
     function handleSubmit(params) {
         var method = function (terapeuta ,secretario) {
             if (terapeuta) {
-                setTerapeuta(false)
+                setLogin(5)
             } else if(secretario){
-                setHome(false)
-            } else{
-                console.log("Nel prro")
+                setLogin(4)
             }
         }
-        Firebase.login(user, password, method,setUsuario)
+        Firebase.login(user, password, method, setUsuario)
     };
-
+    handleSubmit()
+    
     return (
         <Router exact path="/login" basename="/login">
         <Segment relaxed color="teal" className='login-container'>
-        <Grid stretched padded="horizontally" relaxed columns={2} stackable textAlign='center'>
-        <Divider vertical>Or</Divider>
-        <Grid.Row verticalAlign='middle'>
+        <Grid stretched padded="horizontally" relaxed stackable textAlign='center'>
+        <Grid.Row horizontalAlign='middle'>
             <Grid.Column>
                 <Header Icon>
-                <Icon name='user'/>
+                    <Icon name='user'/>
                 Ingresar
                 </Header>
                 <Header.Subheader>Usuario</Header.Subheader>
@@ -105,26 +110,16 @@ const Login = () => {
                         contraseña invalida o incompleta
                     </Label>
                 }
-                <br></br>
-                <Button onClick={(e) => handleSubmit()}>
-                Iniciar Sesión
-                </Button>
-
             </Grid.Column>
-            <Grid.Column>
-                <Header Icon>
-                <Icon name='user plus'/>
-                Realizar Registros
-                </Header>
-                <br></br>
-                    <Button onClick={() => setLogin(2)}>
-                    Registrar Terapeuta
-                    </Button>
-
-                    <br></br>
-                    <Button onClick={() => setLogin(3)}>
+         </Grid.Row>
+         <Divider horizontal>Or</Divider>
+         <Grid.Row>
+             <Grid.Column>
+        
+                <Button onClick={() => setLogin(3)}>
+                    <Icon name='user plus'/>
                     Registrar Secretario
-                    </Button>
+                </Button>
              </Grid.Column>
          </Grid.Row>
          </Grid>

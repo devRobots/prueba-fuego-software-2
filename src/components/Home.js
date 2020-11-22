@@ -13,7 +13,7 @@ const Home = () => {
     const [ id, setId ] = useState('');
     const [ hora, setHora ] = useState('');
     const [ fecha, setFecha ] = useState('');
-    const [ cobrada, setCobro ] = useState('');
+    const [ cobrada, setCobro ] = useState(false);
     const [ importe, setImporte ] = useState('');
     const [ cancelada, setCancelada ] = useState('');
     const [ observacion, setObservacion] = useState('');
@@ -102,7 +102,7 @@ const Home = () => {
                 setId('')
                 setHora('')
                 setFecha('')
-                setCobro('')
+                setCobro(false)
                 setImporte('')
                 setCancelada('')
                 setObservacion('')
@@ -277,7 +277,6 @@ const Home = () => {
                         <label>Id Cliente</label>
                         <Input name='Id Cliente' id='fecha'  className="form-control"
                                 placeholder='fecha' type='text' value = {idCliente}
-                                
                         />
                         </div>
                         <div>
@@ -388,10 +387,6 @@ const Home = () => {
             <div >
                 <input type="radio" value= "true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
                 <input type="radio" value= "false" name="cancelada" onChange={(e) => handleChange(e.target.name, false)} /> No Cancelada
-            </div>
-            <div>
-                <input type="radio" value= "true" name="cobrada" onChange={(e) => handleChange(e.target.name, true)} /> Cobrada
-                <input type="radio" value= "false" name="cobrada" onChange={(e) => handleChange(e.target.name, false)} /> No Cobrada
             </div>
             <Input id='fecha' name='fecha' 
                 placeholder='fecha' type='text' className='regular-style' 

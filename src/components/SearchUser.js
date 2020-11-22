@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Firebase from '../database/firebase';
 import ReactDOM from 'react-dom';
 import { Redirect } from "react-router-dom";
 import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody} from 'semantic-ui-react';
-
+import userContext from './userContext'
 
 const SearchUser = () => {
 
@@ -14,7 +14,9 @@ const SearchUser = () => {
     const [ id, setId ] = useState('');
     const [ nombreCompleto, setNombreCompleto ] = useState('');
     const [ buscar, setbuscar] = useState('') 
+    const {usuario} = useContext(userContext)
 
+    console.log(usuario)
     
     Firebase.readList("Clientes", function(data) {
         var element = (

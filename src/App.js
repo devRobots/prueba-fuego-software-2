@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component,useContext} from 'react';
 import './App.css';
 import HeaderMaster from "./components/HeaderMaster";
 import Login from "./components/Login";
@@ -8,12 +8,13 @@ import CreateSecretary from "./components/CreateSecretary";
 import Citas from "./components/Citas";
 import SearchUser from "./components/SearchUser";
 import Gestionar from "./components/Gestionar"
-
+import {UserContextProvider} from './components/userContext'
 import { BrowserRouter as Routers, Route, Switch } from 'react-router-dom';
 
 export default class App extends Component {
   render() {
     return (
+      <UserContextProvider>
       <div className="App">
       <HeaderMaster name={"Centro de Masajes y Terapias Alternativas"} />
         <Routers>
@@ -29,6 +30,7 @@ export default class App extends Component {
           </Switch>
         </Routers>
       </div>
+      </UserContextProvider>
     );
   }
 }

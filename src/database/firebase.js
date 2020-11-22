@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 
 class Firebase {
-  static login(email, password, method) {
+  static login(email, password, method, meth) {
     var flagTerapeuta = false;
     var flagSecretario = false;
     firebase.database().ref('Terapeutas').on('value', function(snapshot) {
@@ -13,6 +13,7 @@ class Firebase {
           if (childData.password == password) { 
             flagTerapeuta = true;
             sessionStorage.setItem('user', childData)
+            meth(childData)
           }
         }
       });
@@ -26,6 +27,7 @@ class Firebase {
           if (childData.password == password) { 
             flagSecretario = true;
             sessionStorage.setItem('user', childData)
+            meth(childData)
           }
         }
       });
@@ -78,6 +80,22 @@ class Firebase {
           // eslint-disable-next-line
           if(childData.id == objeto.id){
             hola.ref(path).child(key).set(objeto)
+          }
+      }
+      snapshot.forEach(cosa)
+    }
+    hola.ref(path).once('value', meth)
+  }
+
+  static getObjectById(path,id,method){
+    var hola = firebase.database()
+    var meth = function(snapshot){
+      var cosa = function(childsnapshot){
+        var key = childsnapshot.key;
+          var childData = childsnapshot.val();
+          // eslint-disable-next-line
+          if(childData.id == id){
+            method(childData)
           }
       }
       snapshot.forEach(cosa)

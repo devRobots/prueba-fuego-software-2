@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Login.css';
 import {Segment, Header, Label, Input, Button, Grid, Divider, Icon} from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom"
 import Firebase from '../database/firebase';
-
+import userContext from './userContext'
 import { Redirect } from "react-router-dom";
 
 const Login = () => {
@@ -15,6 +15,7 @@ const Login = () => {
     const[isLogin, setLogin]= useState(1);
     const[isHome, setHome]= useState(true);
     const[isTerapeuta, setTerapeuta]= useState(true);
+    const {usuario, setUsuario} = useContext(userContext)
 
     if(isLogin!==1){
         if(isLogin===2)
@@ -62,7 +63,7 @@ const Login = () => {
                 console.log("Nel prro")
             }
         }
-        Firebase.login(user, password, method) 
+        Firebase.login(user, password, method,setUsuario)
     };
 
     return (

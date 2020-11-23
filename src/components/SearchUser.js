@@ -2,41 +2,27 @@ import React, { useContext, useState } from 'react';
 import Firebase from '../database/firebase';
 import ReactDOM from 'react-dom';
 import { Redirect } from "react-router-dom";
-import { Input,Icon,Modal, Segment, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody, Header } from 'semantic-ui-react';
+import { Input, Icon, Modal, Segment, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody, Header } from 'semantic-ui-react';
 import userContext from './userContext'
 
 const SearchUser = () => {
-
-    const [ id, setId ] = useState('');
-    const [ hora, setHora ] = useState("");
-    const [ fecha, setFecha ] = useState(new Date());
-    const [ cobrada, setCobro ] = useState(false);
-    const [ importe, setImporte ] = useState('');
-    const [ cancelada, setCancelada ] = useState('');
-    const [ observacion, setObservacion] = useState('');
-    const [ modalCobrar, setModalCobro ] = React.useState(false);
-
-    const [ idCliente, setIdCliente ] = useState('');
-    const [ idTerapeuta, setIdTerapeuta ] = useState('');
-    const [ idTerapia, setIdTerapia ] = useState('');
-
     const [cliente, setCliente] = useState([]);
 
     const [buscar, setbuscar] = useState('')
     const { usuario } = useContext(userContext)
-    
-    const [ open, setIsOpen] = React.useState(false);
+
+    const [open, setIsOpen] = React.useState(false);
 
     console.log(usuario)
     if (usuario.length == 0) {
-        //return <Redirect to="/Login" />
+        return <Redirect to="/Login" />
     }
 
-    function closeModal(){
+    function closeModal() {
         setIsOpen(false);
     }
-    function openModal(idObjeto){
-        Firebase.getObjectById('Clientes',idObjeto, setCliente)
+    function openModal(idObjeto) {
+        Firebase.getObjectById('Clientes', idObjeto, setCliente)
         console.log(cliente)
         setIsOpen(true);
     }
@@ -61,68 +47,68 @@ const SearchUser = () => {
                 <TableBody>{
 
                     data.map((objeto, id) => {
-                        if ( (objeto.idTerapeuta+"").includes(usuario.id+"")) {
-                            
-                            return (
-                                    <tr key={id}>
-                                        <Table.Cell>{objeto.id}</Table.Cell>
-                                        <Table.Cell>{objeto.fecha}</Table.Cell>
-                                        <Table.Cell>{objeto.hora}</Table.Cell>
-                                        <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
-                                        <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
-                                        <Table.Cell>{objeto.importe}</Table.Cell>
-                                        <Table.Cell>{objeto.observacion}</Table.Cell>
-                                        <Table.Cell>{objeto.idCliente}</Table.Cell>
-                                        <Table.Cell> 
-                                            <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
-                                        </Table.Cell>
-                                        <Table.Cell>
-                                            <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
-                                        </Table.Cell>
+                        if ((objeto.idTerapeuta + "").includes(usuario.id + "")) {
 
-                                        <Modal
+                            return (
+                                <tr key={id}>
+                                    <Table.Cell>{objeto.id}</Table.Cell>
+                                    <Table.Cell>{objeto.fecha}</Table.Cell>
+                                    <Table.Cell>{objeto.hora}</Table.Cell>
+                                    <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                                    <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
+                                    <Table.Cell>{objeto.importe}</Table.Cell>
+                                    <Table.Cell>{objeto.observacion}</Table.Cell>
+                                    <Table.Cell>{objeto.idCliente}</Table.Cell>
+                                    <Table.Cell>
+                                        <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
+                                    </Table.Cell>
+
+                                    <Modal
                                         onClose={() => closeModal}
-                                        size = "mini"
+                                        size="mini"
                                         onOpen={() => setIsOpen(true)}
                                         open={open}
-                                        >
-                                            <Modal.Header>
-                                                <Header icon='user' content='Informacion Del Cliente' />
-                                            </Modal.Header>
-                                            <Modal.Content>
-                                                <Header>
-                                                    ID Cliente
+                                    >
+                                        <Modal.Header>
+                                            <Header icon='user' content='Informacion Del Cliente' />
+                                        </Modal.Header>
+                                        <Modal.Content>
+                                            <Header>
+                                                ID Cliente
                                                 </Header>
-                                                {cliente.id}
-                                                <Header>
-                                                    Nombre
+                                            {cliente.id}
+                                            <Header>
+                                                Nombre
                                                 </Header>
-                                                {cliente.nombreCompleto}
-                                                <Header>
-                                                    Celular
+                                            {cliente.nombreCompleto}
+                                            <Header>
+                                                Celular
                                                 </Header>
-                                                {cliente.celular}
-                                                <Header>
-                                                    Correo
+                                            {cliente.celular}
+                                            <Header>
+                                                Correo
                                                 </Header>
-                                                {cliente.correo}
-                                                <Header>
-                                                    Direccion
+                                            {cliente.correo}
+                                            <Header>
+                                                Direccion
                                                 </Header>
-                                                {cliente.direccion}
-                                                <Header>
-                                                    Fecha De Nacimiento
+                                            {cliente.direccion}
+                                            <Header>
+                                                Fecha De Nacimiento
                                                 </Header>
-                                                {cliente.fechaNacimiento}
-                                            </Modal.Content>
-                                            <Modal.Actions>
-                                                <Button color='red' onClick={closeModal}>
+                                            {cliente.fechaNacimiento}
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='red' onClick={closeModal}>
                                                 <Icon name='remove' /> Cerrar
                                                 </Button>
-                                            </Modal.Actions>
-                                        </Modal>
-                                    </tr>)
-                        } 
+                                        </Modal.Actions>
+                                    </Modal>
+                                </tr>)
+                        }
 
                     })}</TableBody>
             </Table>
@@ -144,10 +130,10 @@ const SearchUser = () => {
                             <TableRow>
                                 <TableHeaderCell>ID</TableHeaderCell>
                                 <TableHeaderCell>IdCliente</TableHeaderCell>
-                                <TableHeaderCell>Cancelada</TableHeaderCell>
-                                <TableHeaderCell>Cobrada</TableHeaderCell>
                                 <TableHeaderCell>Fecha</TableHeaderCell>
                                 <TableHeaderCell>Hora</TableHeaderCell>
+                                <TableHeaderCell>Cancelada</TableHeaderCell>
+                                <TableHeaderCell>Cobrada</TableHeaderCell>
                                 <TableHeaderCell>Importe</TableHeaderCell>
                                 <TableHeaderCell>Observación</TableHeaderCell>
                             </TableRow>
@@ -176,7 +162,7 @@ const SearchUser = () => {
             ReactDOM.render(element, document.getElementById('tablaSesiones'))
         })
     }
-    
+
 
     return (
         <Segment color="teal">

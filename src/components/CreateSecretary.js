@@ -14,6 +14,11 @@ const CreateSecretary = () => {
     const [id, setId] = useState('');
     const [nombre, setNombre] = useState('');
     const [usuario, setUser] = useState('');
+    const [isCreateSecretary, setCreateSecretary] = useState(true);
+
+    if (!isCreateSecretary) {
+        return <Redirect to="/login" />
+    }
 
     function handleChange(name, value) {
         switch (name) {
@@ -85,11 +90,28 @@ const CreateSecretary = () => {
     function handleSubmit(params) {
         let account = { celular, password, email, estado, id, nombre, usuario }
 
-        Firebase.write("Secretario", account)
-
         if (account) {
-            console.log('account:', account)
-        }
+            console.log("account", account)
+            if(celular.length >0){
+                console.log('registrado 0')
+                if(password.length >0){
+                    console.log('registrado 1')
+                    if(email.length >0){
+                        console.log('registrado 2')
+                           if(id.length>0){
+                            console.log('registrado 3')
+                             if(nombre.length>0){
+                                console.log('registrado 4')
+                                  if(nombre.length >0){
+                                    console.log('registrado 5')
+                                     Firebase.write("Secretario", account)
+                                     handleChange("vaciar",null)
+                                    }
+                                }else{console.log('no registrado 4')}
+                            }else{console.log('no registrado 3')}
+                    }else{console.log('no registrado 2')}
+                }else{console.log('no registrado 1')}
+            }else{console.log('no registrado 0')}        }
     };
 
     return (

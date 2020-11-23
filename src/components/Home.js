@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Firebase from "../database/firebase";
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
 import {
     Input, Button, TableHeader, TableRow, Segment, TableColumn, TableCell,
-    TableHeaderCell, Table, TableBody, Grid, Header, Label, Divider, Icon,
-    Checkbox
+    TableHeaderCell, Table, TableBody, Grid, Header, Label, Icon,
+    Checkbox, Modal
 } from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom"
 import { Redirect } from "react-router-dom";
@@ -25,8 +24,6 @@ const Home = () => {
     const [idCliente, setIdCliente] = useState('');
     const [idTerapeuta, setIdTerapeuta] = useState('');
     const [idTerapia, setIdTerapia] = useState('');
-
-    Modal.setAppElement()
 
     function openModal(objeto) {
         setId(objeto.id)
@@ -184,11 +181,17 @@ const Home = () => {
                                     </Button.Group>
                                 </Table.Cell>
 
-                                <Modal isOpen={modalIsOpen}
-                                    onRequestClose={closeModal}
-                                    contentLabel="Example Modal"
-                                >
-                                    <modalBody>
+                                <Modal
+                                        onClose={() => closeModal}
+                                        size = "mini"
+                                        onOpen={() => setIsOpen(true)}
+                                        open={modalIsOpen} 
+                                        >
+                                    <Modal.Header>
+                                            <Header icon='user' content='Editar Sesion' />
+                                    </Modal.Header>
+                                    
+                                    <Modal.Content>
                                         <button onClick={closeModal}>close</button>
                                         <div >Editar</div>
                                         <form>
@@ -225,44 +228,43 @@ const Home = () => {
                                                 </div>
                                             </center>
                                         </form>
-                                    </modalBody>
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                    <Button color='red' onClick={closeModal}>
+                                        <Icon name='remove' /> Cerrar
+                                        </Button>
+                                        <Button color='green' onClick={() => handleEdit()}>
+                                        <Icon name='checkmark' /> Editar
+                                        </Button>
+                                    </Modal.Actions>
                                 </Modal>
 
-                                <Modal isOpen={modalCobrar}
-                                    onRequestClose={closeModal}
-                                    contentLabel="Example Modal"
-                                >
-                                    <modalBody>
-                                        <button onClick={closeModal}>close</button>
-                                        <div >Cobrar</div>
-                                        <form>
-                                            <center>
-                                                <div className="form-group">
-                                                    <label>Id Cliente</label>
-                                                    <Input name='Id Cliente' id='fecha' className="form-control"
-                                                        placeholder='fecha' type='text' value={idCliente}
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label>Id Sesion</label>
-                                                    <Input name='Id sesion' id='fecha' className="form-control"
-                                                        placeholder='fecha' type='text' value={id}
-
-                                                    />
-                                                </div>
-                                                <div>
-                                                    <label>Valor a Pagar</label>
-                                                    <Input name='Importe' id='fecha' className="form-control"
-                                                        placeholder='fecha' type='text' value={importe}
-
-                                                    />
-                                                </div>
-                                                <Button onClick={(e) => handlePagar()}>
-                                                    Pagar
-                        </Button>
-                                            </center>
-                                        </form>
-                                    </modalBody>
+                                <Modal
+                                        onClose={() => closeModal}
+                                        size = "mini"
+                                        onOpen={() => setModalCobro}
+                                        open={modalCobrar} 
+                                    >
+                                    <Modal.Header>
+                                        <Header icon color='green' content='Gestionar Cobro ' />
+                                            <Icon name="money bill alternate outline" />
+                                    </Modal.Header>
+                                    <Modal.Content>
+                                        <Header> Id Cliente</Header>
+                                        {idCliente}
+                                        <Header> Id Sesion</Header>
+                                        {id}
+                                        <Header> Valor A Pagar</Header>
+                                        {importe}
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                    <Button color='red' onClick={closeModal}>
+                                        <Icon name='remove' /> Cerrar
+                                        </Button>
+                                        <Button color='green' onClick={() => handlePagar()}>
+                                        <Icon name='checkmark' /> Pagar
+                                        </Button>
+                                    </Modal.Actions>
                                 </Modal>
                             </tr>
                         )
@@ -335,6 +337,7 @@ const Home = () => {
                 console.log('no hay valores.')
         }
     }
+
 
     return (
         <Router exact path="/home" basename="/home">
@@ -414,7 +417,6 @@ const Home = () => {
                         Registrar sesión
                     </Button>
                 </div>
-                <Divider vertical> </Divider>
 
                 <div class="eleven wide column">
                     <table id="tablaSesiones"></table>

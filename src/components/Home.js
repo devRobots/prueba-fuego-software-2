@@ -188,7 +188,7 @@ const Home = () => {
                                         open={modalIsOpen} 
                                         >
                                     <Modal.Header>
-                                            <Header icon='user' content='Editar Sesion' />
+                                            <Header icon='user' content='Editar Cita' />
                                     </Modal.Header>
                                     
                                     <Modal.Content>
@@ -347,8 +347,8 @@ const Home = () => {
                     <Header Icon>
                         <Icon name='user' />
                         <Header.Content>
-                            Gestionar Sesion
-                            <Header.Subheader>Ingrese los parametros de una Sesion</Header.Subheader>
+                            Gestionar Cita
+                            <Header.Subheader>Ingrese los parametros de una Cita</Header.Subheader>
                         </Header.Content>
                     </Header>
                     <div >

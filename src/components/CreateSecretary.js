@@ -107,11 +107,12 @@ const CreateSecretary = () => {
                                      Firebase.write("Secretario", account)
                                      handleChange("vaciar",null)
                                     }
-                                }else{console.log('no registrado 4')}
-                            }else{console.log('no registrado 3')}
-                    }else{console.log('no registrado 2')}
-                }else{console.log('no registrado 1')}
-            }else{console.log('no registrado 0')}        }
+                                }
+                            }
+                    }
+                }
+            }        
+        }
     };
 
     return (

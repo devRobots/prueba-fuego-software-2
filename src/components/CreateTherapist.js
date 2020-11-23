@@ -81,6 +81,15 @@ const CreateTherapist = () => {
                     setNombre(value)
                 }
                 break;
+            case 'vaciar':
+                    setEmail('')
+                    setEstado('')
+                    setId('')
+                    setNombre('')
+                    setPassword('')
+                    setPhone('')
+                    setUser('')
+                break;
             case 'password':
                 if (value.length < 6) {
                     setPasswordError(true);

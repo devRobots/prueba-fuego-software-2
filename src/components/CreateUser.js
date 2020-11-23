@@ -79,6 +79,14 @@ const CreateUser = () => {
                     setNombre(value)
                 }
                 break;
+            case 'vaciar':
+                setPhone('')
+                setEmail('')
+                setDireccion('')
+                setbirthDate('')
+                setId('')
+                setNombre('')
+                break;
             default:
                 console.log('no hay valores.')
         }

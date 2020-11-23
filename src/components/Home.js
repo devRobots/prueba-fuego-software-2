@@ -70,10 +70,27 @@ const Home = () => {
         let account = { id, hora, fecha, cobrada, cancelada, importe, observacion, idTerapeuta, idTerapia, idCliente }
         //var selected = cod.option[cod.selectedIndex].text
 
-        Firebase.write("Sesiones", account)
+       
 
+        
         if (account) {
-            console.log('account:', account)
+
+            console.log("account", account)
+            if(id.length >0){
+                console.log('registrado 0')
+                if(fecha.length >0){
+                    console.log('registrado 1')
+                    if(importe.length >0){
+                        console.log('registrado 2')
+                       if(observacion.length >0){
+                           console.log('registrado 3')
+                           Firebase.write("Sesiones", account)
+    
+                        }
+                    }else{console.log('no registrado 2')}
+                }else{console.log('no registrado 1')}
+            }else{console.log('no registrado 0')}
+
         }
     };
 

@@ -95,6 +95,8 @@ class Firebase {
           var childData = childsnapshot.val();
           // eslint-disable-next-line
           if(childData.id == id){
+            console.log(childData)
+            console.log(childData.nombreCompleto)
             method(childData)
           }
       }

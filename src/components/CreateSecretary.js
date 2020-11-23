@@ -15,12 +15,6 @@ const CreateSecretary = () => {
     const [nombre, setNombre] = useState('');
     const [usuario, setUser] = useState('');
 
-    const [isCreateSecretary, setCreateSecretary] = useState(true);
-
-    if (!isCreateSecretary) {
-        return <Redirect to="/login" />
-    }
-
     function handleChange(name, value) {
         switch (name) {
             case 'celular':
@@ -64,6 +58,15 @@ const CreateSecretary = () => {
                 } else {
                     setNombre(value)
                 }
+                break;
+            case 'vaciar':
+                setEmail('')
+                setEstado('')
+                setId('')
+                setNombre('')
+                setPassword('')
+                setPhone('')
+                setUser('')
                 break;
             case 'password':
                 if (value.length < 6) {

@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import {
     Input, Button, TableHeader, TableRow, Segment, TableColumn, TableCell,
-    TableHeaderCell, Table, TableBody, Grid, Header, Label, Divider, Icon
+    TableHeaderCell, Table, TableBody, Grid, Header, Label, Divider, Icon,
+    Checkbox
 } from 'semantic-ui-react';
 import { BrowserRouter as Router } from "react-router-dom"
 import { Redirect } from "react-router-dom";
@@ -17,7 +18,7 @@ const Home = () => {
     const [fecha, setFecha] = useState(new Date());
     const [cobrada, setCobro] = useState(false);
     const [importe, setImporte] = useState('');
-    const [cancelada, setCancelada] = useState('');
+    const [cancelada, setCancelada] = useState(true);
     const [observacion, setObservacion] = useState('');
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const [modalCobrar, setModalCobro] = React.useState(false);
@@ -61,57 +62,6 @@ const Home = () => {
         handleChange('vaciar', null)
         setIsOpen(false);
         setModalCobro(false);
-    }
-
-
-
-    /**
-     * Registrar sesiones
-     */
-    function handleChange(name, value) {
-        switch (name) {
-            case 'id':
-                setId(value)
-                break;
-            case 'hora':
-                setHora(value)
-                break;
-            case 'fecha':
-                setFecha(value)
-                break;
-            case 'cobrada':
-                setCobro(value)
-                break;
-            case 'importe':
-                setImporte(value)
-                break;
-            case 'cancelada':
-                setCancelada(value)
-                break;
-            case 'observacion':
-                setObservacion(value)
-                break;
-            case 'vaciar':
-                setId('')
-                setHora('')
-                setFecha('')
-                setCobro('')
-                setImporte('')
-                setCancelada('')
-                setObservacion('')
-                break;
-            case 'vaciar':
-                setId('')
-                setHora('')
-                setFecha('')
-                setCobro(false)
-                setImporte('')
-                setCancelada('')
-                setObservacion('')
-                break;
-            default:
-                console.log('no hay valores.')
-        }
     }
 
     function handleSubmit(params) {
@@ -366,7 +316,7 @@ const Home = () => {
                 setImporte(value)
                 break;
             case 'cancelada':
-                setCancelada(value)
+                setCancelada(!cancelada)
                 break;
             case 'observacion':
                 setObservacion(value)
@@ -375,9 +325,9 @@ const Home = () => {
                 setId('')
                 setHora('')
                 setFecha('')
-                setCobro('')
+                setCobro(false)
                 setImporte('')
-                setCancelada('')
+                setCancelada(true)
                 setObservacion('')
                 break;
             default:
@@ -399,18 +349,21 @@ const Home = () => {
                 <div class="five wide column">
                     <Header Icon>
                         <Icon name='user' />
-                Gestionar Sesion
-                </Header>
-                    <Header.Subheader>Ingrese los parametros de una Sesion</Header.Subheader>
+                        <Header.Content>
+                            Gestionar Sesion
+                            <Header.Subheader>Ingrese los parametros de una Sesion</Header.Subheader>
+                        </Header.Content>
+                    </Header>
                     <div >
-                        <input type="radio" value="true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
-                    <input type="radio" value="false" name="cancelada" onChange={(e) => handleChange(e.target.name, false)} /> No Cancelada
-                </div>
+                        Estado
+                    </div>
+                    <Checkbox toggle defaultChecked onClick={(e) => handleChange("cancelada", e.target.value)} />
                     <div >
                         <label>Fecha</label> <br></br>
                         <TextField
                             id="date"
                             type="date"
+                            fullWidth
                             defaultValue={new Date()}
                             InputLabelProps={{
                                 shrink: true,
@@ -423,6 +376,7 @@ const Home = () => {
                         <TextField
                             id="time"
                             type="time"
+                            fullWidth
                             defaultValue="09:00"
                             InputLabelProps={{
                                 shrink: true,
@@ -462,14 +416,10 @@ const Home = () => {
 
                     <div class="ui fluid imput" id="listaClientes">
                     </div>
-
-                    <hr></hr>
-                    <Button onClick={(e) => handleSubmit()}>
+                    <br></br>
+                    <Button primary fluid onClick={(e) => handleSubmit()}>
                         Registrar sesión
-                </Button>
-                    <Button onClick={(e) => handleRedirect()}>
-                        Gestionar Citas
-                </Button>
+                    </Button>
                 </div>
                 <Divider vertical> </Divider>
 

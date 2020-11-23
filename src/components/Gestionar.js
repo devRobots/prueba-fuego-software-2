@@ -1,44 +1,33 @@
-import React, { useState } from 'react';
-import {Segment, Header, Label, Input, Button, Grid, Divider, Icon} from 'semantic-ui-react';
-import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom"
-import Firebase from '../database/firebase';
+import React from 'react';
+import { Tab, Grid } from 'semantic-ui-react';
 
-import { Redirect } from "react-router-dom";
 import Home from "./Home";
 import Citas from "./Citas";
-import Clientes from "./SearchUser";
 
-const Gestionar = () =>{
+const Gestionar = () => {
+    const panes = [
+        {
+            menuItem: 'Sesiones',
+            render: () => <Tab.Pane attached={false}><Home /></Tab.Pane>,
+        },
+        {
+            menuItem: 'Citas',
+            render: () => <Tab.Pane attached={false}><Citas /> </Tab.Pane>,
+        },
+        {
+            menuItem: 'Terapeutas',
+            render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>,
+        },
+    ]
 
-    return(
-        <Router>
-            <div className ="container">
-                <div className="btn-group">
-                    <Link to = "/Home" >
-                        Sesiones
-                    </Link>
-                    <Link to = "/Citas" >
-                        Citas
-                    </Link>
-                    <Link to = "/SearchUser">
-                        Clientes
-                    </Link>
-                </div>
-                <h1>SECRETARIO HOME</h1>
-                <hr/>
-                <Switch>
-                    <Route path = "/Home">
-                        <Home />
-                    </Route>
-                    <Route path = "/Citas">
-                        <Citas />
-                    </Route>
-                    <Route path = "/SearchUser">
-                        <Clientes />
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
+    return (
+        <Grid centered columns={1} container>
+            <Grid.Row centered>
+                <Grid.Column>
+                    <Tab menu={{ attached: false, color: 'blue', secondary: true, pointing: true }} panes={panes} />
+                </Grid.Column>
+            </Grid.Row>
+        </Grid>
     );
 }
 

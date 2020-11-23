@@ -12,6 +12,9 @@ const SearchUser = () => {
     const { usuario } = useContext(userContext)
 
     const [open, setIsOpen] = React.useState(false);
+    const [modalEdit, setEdit ] = useState(false)
+    const [informe, setInforme ] = useState(null)
+    const [observacion, setInfo ] = useState('')
 
     console.log(usuario)
     if (usuario.length == 0) {
@@ -25,6 +28,26 @@ const SearchUser = () => {
         Firebase.getObjectById('Clientes', idObjeto, setCliente)
         console.log(cliente)
         setIsOpen(true);
+    }
+    function openEdit(objeto) {
+        setInforme(objeto)
+        console.log(informe)
+        setInfo(objeto.observacion)
+        setEdit(true);
+    }
+    function handleEdit(){
+        var id = informe.id
+        var hora = informe.hora
+        var fecha = informe.fecha
+        var cobrada = informe.cobrada
+        var cancelada = informe.cancelada
+        var importe = informe.importe
+        var idTerapeuta = informe.idTerapeuta
+        var idTerapia = informe.idTerapeuta
+        var idCliente = informe.idCliente
+        let account = { id, hora, fecha, cobrada, cancelada, importe, observacion, idTerapeuta, idTerapia, idCliente }
+        Firebase.put("Sesiones", account)
+        setEdit(false)
     }
 
     Firebase.readList("Sesiones", function (data) {
@@ -42,6 +65,7 @@ const SearchUser = () => {
                         <TableHeaderCell>Id Cliente</TableHeaderCell>
                         <TableHeaderCell>Detalle</TableHeaderCell>
                         <TableHeaderCell>Sesiones</TableHeaderCell>
+                        <TableHeaderCell>Observacion</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>{
@@ -69,6 +93,41 @@ const SearchUser = () => {
                                             <Table.Cell>
                                                 <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
                                             </Table.Cell>
+                                            <Table.Cell>
+                                                <Button onClick={(e) => openEdit(objeto)}>Observacion</Button>
+                                            </Table.Cell>
+
+
+                                            <Modal
+                                                onClose={() => setEdit(false)}
+                                                size="mini"
+                                                onOpen={() => setEdit(true)}
+                                                open={modalEdit}
+                                            >
+                                                <Modal.Header>
+                                                    <Header icon='user' content='Observacion del Cliente' />
+                                                </Modal.Header>
+                                                <Modal.Content>
+                                                <Header>{informe.idCliente}</Header>
+                                                <Input
+                                                    fluid
+                                                    id='observacion'
+                                                    name='observacion'
+                                                    placeholder='Ingrese una observacion'
+                                                    type='text'
+                                                    value = {observacion}
+                                                    onChange={(e) => setInfo(e.target.value)}
+                                                />
+                                                </Modal.Content>
+                                                <Modal.Actions>
+                                                    <Button color='red' onClick={setEdit(false)}>
+                                                        <Icon name='remove' /> Cancelar
+                                                    </Button>
+                                                    <Button color='green' onClick={handleEdit()}>
+                                                        <Icon name='remove' /> Aceptar
+                                                    </Button>
+                                                </Modal.Actions>
+                                            </Modal>
         
                                             <Modal
                                                 onClose={() => closeModal}
@@ -111,6 +170,8 @@ const SearchUser = () => {
                                                         </Button>
                                                 </Modal.Actions>
                                             </Modal>
+
+                                            
                                         </tr>)
                                 }else{
                                     return (

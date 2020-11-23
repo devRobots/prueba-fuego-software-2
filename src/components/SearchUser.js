@@ -2,71 +2,107 @@ import React, { useContext, useState } from 'react';
 import Firebase from '../database/firebase';
 import ReactDOM from 'react-dom';
 import { Redirect } from "react-router-dom";
+import Modal from 'react-modal';
 import { Input, Segment, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody, Header } from 'semantic-ui-react';
 import userContext from './userContext'
 
 const SearchUser = () => {
 
-    const [celular, setCelular] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [direccion, setDireccion] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('');
-    const [id, setId] = useState('');
-    const [nombreCompleto, setNombreCompleto] = useState('');
+    const [ id, setId ] = useState('');
+    const [ hora, setHora ] = useState("");
+    const [ fecha, setFecha ] = useState(new Date());
+    const [ cobrada, setCobro ] = useState(false);
+    const [ importe, setImporte ] = useState('');
+    const [ cancelada, setCancelada ] = useState('');
+    const [ observacion, setObservacion] = useState('');
+    const [ modalCobrar, setModalCobro ] = React.useState(false);
+
+    const [ idCliente, setIdCliente ] = useState('');
+    const [ idTerapeuta, setIdTerapeuta ] = useState('');
+    const [ idTerapia, setIdTerapia ] = useState('');
+
+    const [cliente, setCliente] = useState([]);
+
     const [buscar, setbuscar] = useState('')
     const { usuario } = useContext(userContext)
+    
+    const [ modalIsOpen, setIsOpen] = React.useState(false);
 
     console.log(usuario)
     if (usuario.length == 0) {
         return <Redirect to="/Login" />
     }
 
-    Firebase.readList("Clientes", function (data) {
+    function closeModal(){
+        setIsOpen(false);
+    }
+    function openModal(idObjeto){
+        Firebase.getObjectById('Clientes',idObjeto, setCliente)
+        console.log(cliente)
+        setIsOpen(true);
+    }
+
+    Firebase.readList("Sesiones", function (data) {
         var element = (
             <Table celled>
                 <TableHeader>
                     <TableRow>
                         <TableHeaderCell>Id</TableHeaderCell>
-                        <TableHeaderCell>Nombre Completo</TableHeaderCell>
-                        <TableHeaderCell>Correo</TableHeaderCell>
-                        <TableHeaderCell>Direccion</TableHeaderCell>
-                        <TableHeaderCell>Fecha Nacimiento</TableHeaderCell>
-                        <TableHeaderCell>Celular</TableHeaderCell>
+                        <TableHeaderCell>Fecha</TableHeaderCell>
+                        <TableHeaderCell>Hora</TableHeaderCell>
+                        <TableHeaderCell>Cancelada</TableHeaderCell>
+                        <TableHeaderCell>Cobrada</TableHeaderCell>
+                        <TableHeaderCell>Importe</TableHeaderCell>
+                        <TableHeaderCell>Observacion</TableHeaderCell>
+                        <TableHeaderCell>Id Cliente</TableHeaderCell>
+                        <TableHeaderCell>Detalle</TableHeaderCell>
                         <TableHeaderCell>Sesiones</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>{
 
                     data.map((objeto, id) => {
-                        if (buscar.length > 0) {
-                            if (
-                                (objeto.nombreCompleto + "").toLowerCase().includes(buscar.toLowerCase()) ||
-                                (objeto.id + "").toLowerCase().includes(buscar.toLowerCase())) {
-                                return (
+                        if ( (objeto.idTerapeuta+"").includes(usuario.id+"")) {
+                            return (
                                     <tr key={id}>
                                         <Table.Cell>{objeto.id}</Table.Cell>
-                                        <Table.Cell>{objeto.nombreCompleto}</Table.Cell>
-                                        <Table.Cell>{objeto.correo}</Table.Cell>
-                                        <Table.Cell>{objeto.direccion}</Table.Cell>
-                                        <Table.Cell>{objeto.fechaNacimiento}</Table.Cell>
-                                        <Table.Cell>{objeto.celular}</Table.Cell>
-                                        <Table.Cell>{objeto.sesiones} <Button onClick={(e) => seeSessions(objeto)}>Ver Sesiones</Button></Table.Cell>
-                                    </tr>)
-                            }
-                        } else {
-                            return (
-                                <tr key={id}>
-                                    <Table.Cell>{objeto.id}</Table.Cell>
-                                    <Table.Cell>{objeto.nombreCompleto}</Table.Cell>
-                                    <Table.Cell>{objeto.correo}</Table.Cell>
-                                    <Table.Cell>{objeto.direccion}</Table.Cell>
-                                    <Table.Cell>{objeto.fechaNacimiento}</Table.Cell>
-                                    <Table.Cell>{objeto.celular}</Table.Cell>
-                                    <Table.Cell>{objeto.sesiones} <Button onClick={(e) => seeSessions(objeto)}>Detalle</Button></Table.Cell>
+                                        <Table.Cell>{objeto.fecha}</Table.Cell>
+                                        <Table.Cell>{objeto.hora}</Table.Cell>
+                                        <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                                        <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
+                                        <Table.Cell>{objeto.importe}</Table.Cell>
+                                        <Table.Cell>{objeto.observacion}</Table.Cell>
+                                        <Table.Cell>{objeto.idCliente}</Table.Cell>
+                                        <Table.Cell> 
+                                            <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
+                                        </Table.Cell>
+                                        <Table.Cell>
+                                            <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
+                                        </Table.Cell>
 
-                                </tr>
-                            )
-                        }
+                                        <Modal isOpen={modalIsOpen}
+                                            onRequestClose={closeModal}
+                                            contentLabel="Example Modal">
+                                                <modalBody>
+                                                        <button onClick={closeModal}>close</button>
+                                                        <div >Editar</div>
+                                                        <form>
+                                                        <div>
+                                                        <label> {cliente.id}</label><br></br>
+                                                        <label> {cliente.nombreCompleto}</label><br></br>
+                                                        <label> {cliente.celular}</label><br></br>
+                                                        <label> {cliente.correo}</label><br></br>
+                                                        <label> {cliente.direccion}</label><br></br>
+                                                        <label> {cliente.fechaNacimiento}</label><br></br>
+                                                        
+                                                        </div>
+                                                        <div>Hola</div>
+                                                </form>
+                                            </modalBody>
+                                        </Modal>
+                                    </tr>)
+                        } 
+
                     })}</TableBody>
             </Table>
         )
@@ -76,7 +112,7 @@ const SearchUser = () => {
     /**
      * Sesiones
      */
-    function seeSessions(cliente) {
+    function seeSessions(cliente_id) {
         Firebase.readList("Sesiones", function (data) {
 
             var element = (
@@ -97,27 +133,29 @@ const SearchUser = () => {
                         </TableHeader>
                         <TableBody>{
                             data.map((objeto, id) => {
-                                if (cliente.id == objeto.idCliente) {
+                                if (cliente_id == objeto.idCliente) {
                                     return (
                                         <tr key={id}>
                                             <Table.Cell>{objeto.id}</Table.Cell>
                                             <Table.Cell>{objeto.idCliente}</Table.Cell>
-                                            <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
-                                            <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
                                             <Table.Cell>{objeto.fecha}</Table.Cell>
                                             <Table.Cell>{objeto.hora}</Table.Cell>
+                                            <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                                            <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
                                             <Table.Cell>{objeto.importe}</Table.Cell>
                                             <Table.Cell>{objeto.observacion}</Table.Cell>
                                         </tr>
                                     )
                                 }
                             })}</TableBody>
+
                     </Table>
                 </div>
             )
             ReactDOM.render(element, document.getElementById('tablaSesiones'))
         })
     }
+    
 
     return (
         <Segment color="teal">
@@ -138,5 +176,8 @@ const SearchUser = () => {
             </div>
         </Segment>
     )
+
+
 }
+
 export default SearchUser;

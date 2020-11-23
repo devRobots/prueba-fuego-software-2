@@ -119,6 +119,9 @@ const Home = () => {
         setIdTerapia(document.getElementById('Terapia').value)
         setIdCliente(document.getElementById("Cliente").value)
 
+        var idTerapeuta = document.getElementById('Terapeuta').value
+        var idTerapia = document.getElementById('Terapia').value
+        var idCliente = document.getElementById("Cliente").value
         let account = { id, hora, fecha, cobrada, cancelada, importe, observacion, idTerapeuta, idTerapia, idCliente }
         //var selected = cod.option[cod.selectedIndex].text
 

@@ -13,7 +13,7 @@ const Gestionar = () => {
             render: () => <Tab.Pane attached={false}><Home /></Tab.Pane>,
         },
         {
-            menuItem: 'Sesiones',
+            menuItem: 'Terapias',
             render: () => <Tab.Pane attached={false}><Citas /> </Tab.Pane>,
         },
         {

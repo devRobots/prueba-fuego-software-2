@@ -70,26 +70,26 @@ const Home = () => {
         let account = { id, hora, fecha, cobrada, cancelada, importe, observacion, idTerapeuta, idTerapia, idCliente }
         //var selected = cod.option[cod.selectedIndex].text
 
-       
 
-        
+
+
         if (account) {
 
             console.log("account", account)
-            if(id.length >0){
+            if (id.length > 0) {
                 console.log('registrado 0')
-                if(fecha.length >0){
+                if (fecha.length > 0) {
                     console.log('registrado 1')
-                    if(importe.length >0){
+                    if (importe.length > 0) {
                         console.log('registrado 2')
-                       if(observacion.length >0){
-                           console.log('registrado 3')
-                           Firebase.write("Sesiones", account)
-    
+                        if (observacion.length > 0) {
+                            console.log('registrado 3')
+                            Firebase.write("Sesiones", account)
+
                         }
-                    }else{console.log('no registrado 2')}
-                }else{console.log('no registrado 1')}
-            }else{console.log('no registrado 0')}
+                    } else { console.log('no registrado 2') }
+                } else { console.log('no registrado 1') }
+            } else { console.log('no registrado 0') }
 
         }
     };
@@ -199,18 +199,18 @@ const Home = () => {
                                 </Table.Cell>
 
                                 <Modal
-                                        onClose={() => closeModal}
-                                        size = "mini"
-                                        onOpen={() => setIsOpen(true)}
-                                        open={modalIsOpen} 
-                                        >
+                                    onClose={() => closeModal}
+                                    size="mini"
+                                    onOpen={() => setIsOpen(true)}
+                                    open={modalIsOpen}
+                                >
                                     <Modal.Header>
-                                            <Header icon='user' content='Editar Cita' />
+                                        <Header icon='user' content='Editar Cita' />
                                     </Modal.Header>
-                                    
+
                                     <Modal.Content>
                                         <Header>Cancelada</Header>
-                                            <Checkbox toggle onClick={(e) => handleChange("cancelada", e.target.value)} />
+                                        <Checkbox toggle onClick={(e) => handleChange("cancelada", e.target.value)} />
                                         <Header>Fecha</Header>
                                         <TextField
                                             id="date"
@@ -238,34 +238,34 @@ const Home = () => {
                                         />
                                         <Header>Importe</Header>
                                         <Input id='importe' name='importe' value={importe}
-                                                        placeholder='importe' type='text' className='regular-style'
-                                                        onChange={(e) => setImporte(e.target.value)}
-                                                    />
+                                            placeholder='importe' type='text' className='regular-style'
+                                            onChange={(e) => setImporte(e.target.value)}
+                                        />
                                         <Header>Observacion</Header>
                                         <Input id='observacion' name='observacion' value={observacion}
-                                                        placeholder='observacion' type='text' className='regular-style'
-                                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                                />
+                                            placeholder='observacion' type='text' className='regular-style'
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        />
                                     </Modal.Content>
                                     <Modal.Actions>
-                                    <Button color='red' onClick={closeModal}>
-                                        <Icon name='remove' /> Cancelar
+                                        <Button color='red' onClick={closeModal}>
+                                            <Icon name='remove' /> Cancelar
                                         </Button>
                                         <Button color='green' onClick={() => handleEdit()}>
-                                        <Icon name='checkmark' /> Editar
+                                            <Icon name='checkmark' /> Editar
                                         </Button>
                                     </Modal.Actions>
                                 </Modal>
 
                                 <Modal
-                                        onClose={() => closeModal}
-                                        size = "mini"
-                                        onOpen={() => setModalCobro}
-                                        open={modalCobrar} 
-                                    >
+                                    onClose={() => closeModal}
+                                    size="mini"
+                                    onOpen={() => setModalCobro}
+                                    open={modalCobrar}
+                                >
                                     <Modal.Header>
                                         <Header icon color='green' content='Gestionar Cobro ' />
-                                            <Icon name="money bill alternate outline" />
+                                        <Icon name="money bill alternate outline" />
                                     </Modal.Header>
                                     <Modal.Content>
                                         <Header> Id Cliente</Header>
@@ -276,11 +276,11 @@ const Home = () => {
                                         {importe}
                                     </Modal.Content>
                                     <Modal.Actions>
-                                    <Button color='red' onClick={closeModal}>
-                                        <Icon name='remove' /> Cancelar
+                                        <Button color='red' onClick={closeModal}>
+                                            <Icon name='remove' /> Cancelar
                                         </Button>
                                         <Button color='green' onClick={() => handlePagar()}>
-                                        <Icon name='checkmark' /> Pagar
+                                            <Icon name='checkmark' /> Pagar
                                         </Button>
                                     </Modal.Actions>
                                 </Modal>
@@ -432,7 +432,7 @@ const Home = () => {
                     </div>
                     <br></br>
                     <Button primary fluid onClick={(e) => handleSubmit()}>
-                        Registrar sesión
+                        Registrar Citas
                     </Button>
                 </div>
 

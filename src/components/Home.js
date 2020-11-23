@@ -24,6 +24,18 @@ const Home = () => {
     const [idCliente, setIdCliente] = useState('');
     const [idTerapeuta, setIdTerapeuta] = useState('');
     const [idTerapia, setIdTerapia] = useState('');
+    
+    const [eliminar, setElimnar] = useState(false)
+    const [obj, setObj] = useState(null)
+
+    function openEliminar(objeto){
+        setObj(objeto)
+        setElimnar(true)
+    }
+    function eliminarObj(objeto){
+        Firebase.remove("Sesiones",objeto)
+        setElimnar(false)
+    }
 
     function openModal(objeto) {
         setId(objeto.id)
@@ -50,7 +62,6 @@ const Home = () => {
         setIdTerapeuta(objeto.idTerapeuta)
         setIdTerapia(objeto.idTerapia)
         setModalCobro(true);
-
     }
 
     function closeModal() {
@@ -196,17 +207,36 @@ const Home = () => {
                                 <Table.Cell>{objeto.observacion}</Table.Cell>
                                 <Table.Cell>
                                     <Button.Group>
-                                        <Button icon color="red" onClick={(e) => Firebase.remove("Sesiones", objeto)}>
+                                        <Button icon color="red" onClick={() => openEliminar(objeto)}>
                                             <Icon name='delete' />
                                         </Button>
-                                        <Button icon color="yellow" onClick={(e) => openModal(objeto)} id="modal-create-thanks-you">
+                                        <Button icon color="yellow" onClick={() => openModal(objeto)} id="modal-create-thanks-you">
                                             <Icon name="edit" />
                                         </Button>
-                                        <Button icon color="green" onClick={(e) => openCobro(objeto)} id="modal-create-cobrar">
+                                        <Button icon color="green" onClick={() => openCobro(objeto)} id="modal-create-cobrar">
                                             <Icon name="money bill alternate outline" />
                                         </Button>
                                     </Button.Group>
                                 </Table.Cell>
+
+                                <Modal
+                                onClose={() => setElimnar(false)}
+                                size="mini"
+                                onOpen={() => setElimnar(true)}
+                                open={eliminar}
+                                >
+                                    <Modal.Header>
+                                        <Header icon='archive' content='Eliminar' />
+                                    </Modal.Header>
+                                    <Modal.Actions>
+                                        <Button color='red' onClick={() => setElimnar(false)}>
+                                            <Icon name='remove' /> Cancelar
+                                        </Button>
+                                        <Button color='red' onClick={() => eliminarObj(obj)}>
+                                            <Icon name='checkmark' /> Eliminar
+                                        </Button>
+                                    </Modal.Actions>
+                                </Modal>
 
                                 <Modal
                                     onClose={() => closeModal}

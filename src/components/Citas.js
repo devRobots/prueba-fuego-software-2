@@ -71,7 +71,7 @@ const Citas = () => {
                                         open={modalIsOpen} 
                                         >
                                     <Modal.Header>
-                                            <Header icon='archive' content='Editar Cita' />
+                                            <Header icon='archive' content='Editar Terapia' />
                                     </Modal.Header>
 
                                     <Modal.Content>
@@ -158,7 +158,7 @@ const Citas = () => {
     function handleEdit(params) {
         let account = { id, descripcion, duracion, nombre, precio }
 
-        Firebase.put("Citas", account)
+        Firebase.put("Terapias", account)
         handleChange('vaciar', null)
     };
 
@@ -168,8 +168,8 @@ const Citas = () => {
                 <Header Icon>
                     <Icon name='user' />
                     <Header.Content>
-                        Gestionar Citas
-                            <Header.Subheader>Ingrese los parametros de la cita</Header.Subheader>
+                        Gestionar Terapias
+                            <Header.Subheader>Ingrese los parametros de la Terapias</Header.Subheader>
                     </Header.Content>
                 </Header>
                     Id
@@ -199,7 +199,7 @@ const Citas = () => {
                 />
                 <br></br>
                 <Button fluid primary onClick={(e) => handleSubmit()}>
-                    Registrar Cita
+                    Registrar Terapia
                     </Button>
             </Grid.Column>
             <Grid.Column width={11}>

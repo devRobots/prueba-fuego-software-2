@@ -70,10 +70,27 @@ const Home = () => {
         let account = { id, hora, fecha, cobrada, cancelada, importe, observacion, idTerapeuta, idTerapia, idCliente }
         //var selected = cod.option[cod.selectedIndex].text
 
-        Firebase.write("Sesiones", account)
+       
 
+        
         if (account) {
-            console.log('account:', account)
+
+            console.log("account", account)
+            if(id.length >0){
+                console.log('registrado 0')
+                if(fecha.length >0){
+                    console.log('registrado 1')
+                    if(importe.length >0){
+                        console.log('registrado 2')
+                       if(observacion.length >0){
+                           console.log('registrado 3')
+                           Firebase.write("Sesiones", account)
+    
+                        }
+                    }else{console.log('no registrado 2')}
+                }else{console.log('no registrado 1')}
+            }else{console.log('no registrado 0')}
+
         }
     };
 
@@ -188,50 +205,51 @@ const Home = () => {
                                         open={modalIsOpen} 
                                         >
                                     <Modal.Header>
-                                            <Header icon='user' content='Editar Sesion' />
+                                            <Header icon='user' content='Editar Cita' />
                                     </Modal.Header>
                                     
                                     <Modal.Content>
-                                        <button onClick={closeModal}>close</button>
-                                        <div >Editar</div>
-                                        <form>
-                                            <center>
-                                                <div className="form-group">
-                                                    <div >
-                                                        <input type="radio" value="true" name="cancelada" onChange={(e) => handleChange(e.target.name, true)} /> Cancelada
-                            <input type="radio" value="false" name="cancelada" onChange={(e) => handleChange(e.target.name, false)} /> No Cancelada
-                        </div>
-                                                    <div>
-                                                        <input type="radio" value="true" name="cobrada" onChange={(e) => handleChange(e.target.name, true)} /> Cobrada
-                            <input type="radio" value="false" name="cobrada" onChange={(e) => handleChange(e.target.name, false)} /> No Cobrada
-                        </div>
-                                                    <Input id='fecha' name='fecha' className="form-control"
-                                                        placeholder='fecha' type='text' value={fecha}
-                                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                                    />
-                                                    <Input id='hora' name='hora' value={hora}
-                                                        placeholder='hora' type='text' className='regular-style'
-                                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                                    />
-                                                    <Input id='importe' name='importe' value={importe}
+                                        <Header>Cancelada</Header>
+                                            <Checkbox toggle onClick={(e) => handleChange("cancelada", e.target.value)} />
+                                        <Header>Fecha</Header>
+                                        <TextField
+                                            id="date"
+                                            type="date"
+                                            fullWidth
+                                            defaultValue={new Date()}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            onChange={(event) => setFecha(event.target.value)}
+                                        />
+                                        <Header>Hora</Header>
+                                        <TextField
+                                            id="time"
+                                            type="time"
+                                            fullWidth
+                                            defaultValue="09:00"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{
+                                                step: 300, // 5 min
+                                            }}
+                                            onChange={(event) => setHora(event.target.value)}
+                                        />
+                                        <Header>Importe</Header>
+                                        <Input id='importe' name='importe' value={importe}
                                                         placeholder='importe' type='text' className='regular-style'
                                                         onChange={(e) => setImporte(e.target.value)}
                                                     />
-                                                    <Input id='observacion' name='observacion' value={observacion}
+                                        <Header>Observacion</Header>
+                                        <Input id='observacion' name='observacion' value={observacion}
                                                         placeholder='observacion' type='text' className='regular-style'
                                                         onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                                    />
-                                                    <hr></hr>
-                                                    <Button onClick={(e) => handleEdit()}>
-                                                        Editar
-                            </Button>
-                                                </div>
-                                            </center>
-                                        </form>
+                                                />
                                     </Modal.Content>
                                     <Modal.Actions>
                                     <Button color='red' onClick={closeModal}>
-                                        <Icon name='remove' /> Cerrar
+                                        <Icon name='remove' /> Cancelar
                                         </Button>
                                         <Button color='green' onClick={() => handleEdit()}>
                                         <Icon name='checkmark' /> Editar
@@ -259,7 +277,7 @@ const Home = () => {
                                     </Modal.Content>
                                     <Modal.Actions>
                                     <Button color='red' onClick={closeModal}>
-                                        <Icon name='remove' /> Cerrar
+                                        <Icon name='remove' /> Cancelar
                                         </Button>
                                         <Button color='green' onClick={() => handlePagar()}>
                                         <Icon name='checkmark' /> Pagar
@@ -346,8 +364,8 @@ const Home = () => {
                     <Header Icon>
                         <Icon name='user' />
                         <Header.Content>
-                            Gestionar Sesion
-                            <Header.Subheader>Ingrese los parametros de una Sesion</Header.Subheader>
+                            Gestionar Cita
+                            <Header.Subheader>Ingrese los parametros de una Cita</Header.Subheader>
                         </Header.Content>
                     </Header>
                     <div >

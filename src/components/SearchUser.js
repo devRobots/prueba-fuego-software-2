@@ -49,65 +49,130 @@ const SearchUser = () => {
                     data.map((objeto, id) => {
                         if ((objeto.idTerapeuta + "").includes(usuario.id + "")) {
 
-                            return (
-                                <tr key={id}>
-                                    <Table.Cell>{objeto.id}</Table.Cell>
-                                    <Table.Cell>{objeto.fecha}</Table.Cell>
-                                    <Table.Cell>{objeto.hora}</Table.Cell>
-                                    <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
-                                    <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
-                                    <Table.Cell>{objeto.importe}</Table.Cell>
-                                    <Table.Cell>{objeto.observacion}</Table.Cell>
-                                    <Table.Cell>{objeto.idCliente}</Table.Cell>
-                                    <Table.Cell>
-                                        <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
-                                    </Table.Cell>
-
-                                    <Modal
-                                        onClose={() => closeModal}
-                                        size="mini"
-                                        onOpen={() => setIsOpen(true)}
-                                        open={open}
-                                    >
-                                        <Modal.Header>
-                                            <Header icon='user' content='Informacion Del Cliente' />
-                                        </Modal.Header>
-                                        <Modal.Content>
-                                            <Header>
-                                                ID Cliente
-                                                </Header>
-                                            {cliente.id}
-                                            <Header>
-                                                Nombre
-                                                </Header>
-                                            {cliente.nombreCompleto}
-                                            <Header>
-                                                Celular
-                                                </Header>
-                                            {cliente.celular}
-                                            <Header>
-                                                Correo
-                                                </Header>
-                                            {cliente.correo}
-                                            <Header>
-                                                Direccion
-                                                </Header>
-                                            {cliente.direccion}
-                                            <Header>
-                                                Fecha De Nacimiento
-                                                </Header>
-                                            {cliente.fechaNacimiento}
-                                        </Modal.Content>
-                                        <Modal.Actions>
-                                            <Button color='red' onClick={closeModal}>
-                                                <Icon name='remove' /> Cerrar
-                                                </Button>
-                                        </Modal.Actions>
-                                    </Modal>
-                                </tr>)
+                            if ( buscar.length > 0 && (
+                                (objeto.id + "").toLowerCase().includes(buscar.toLowerCase()) ||
+                                (objeto.idCliente + "").toLowerCase().includes(buscar.toLowerCase()) )
+                                ) {
+                                    return (
+                                        <tr key={id}>
+                                            <Table.Cell>{objeto.id}</Table.Cell>
+                                            <Table.Cell>{objeto.fecha}</Table.Cell>
+                                            <Table.Cell>{objeto.hora}</Table.Cell>
+                                            <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                                            <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
+                                            <Table.Cell>{objeto.importe}</Table.Cell>
+                                            <Table.Cell>{objeto.observacion}</Table.Cell>
+                                            <Table.Cell>{objeto.idCliente}</Table.Cell>
+                                            <Table.Cell>
+                                                <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
+                                            </Table.Cell>
+        
+                                            <Modal
+                                                onClose={() => closeModal}
+                                                size="mini"
+                                                onOpen={() => setIsOpen(true)}
+                                                open={open}
+                                            >
+                                                <Modal.Header>
+                                                    <Header icon='user' content='Informacion Del Cliente' />
+                                                </Modal.Header>
+                                                <Modal.Content>
+                                                    <Header>
+                                                        ID Cliente
+                                                        </Header>
+                                                    {cliente.id}
+                                                    <Header>
+                                                        Nombre
+                                                        </Header>
+                                                    {cliente.nombreCompleto}
+                                                    <Header>
+                                                        Celular
+                                                        </Header>
+                                                    {cliente.celular}
+                                                    <Header>
+                                                        Correo
+                                                        </Header>
+                                                    {cliente.correo}
+                                                    <Header>
+                                                        Direccion
+                                                        </Header>
+                                                    {cliente.direccion}
+                                                    <Header>
+                                                        Fecha De Nacimiento
+                                                        </Header>
+                                                    {cliente.fechaNacimiento}
+                                                </Modal.Content>
+                                                <Modal.Actions>
+                                                    <Button color='red' onClick={closeModal}>
+                                                        <Icon name='remove' /> Cerrar
+                                                        </Button>
+                                                </Modal.Actions>
+                                            </Modal>
+                                        </tr>)
+                                }else{
+                                    return (
+                                        <tr key={id}>
+                                            <Table.Cell>{objeto.id}</Table.Cell>
+                                            <Table.Cell>{objeto.fecha}</Table.Cell>
+                                            <Table.Cell>{objeto.hora}</Table.Cell>
+                                            <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                                            <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
+                                            <Table.Cell>{objeto.importe}</Table.Cell>
+                                            <Table.Cell>{objeto.observacion}</Table.Cell>
+                                            <Table.Cell>{objeto.idCliente}</Table.Cell>
+                                            <Table.Cell>
+                                                <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
+                                            </Table.Cell>
+                                            <Table.Cell>
+                                                <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
+                                            </Table.Cell>
+        
+                                            <Modal
+                                                onClose={() => closeModal}
+                                                size="mini"
+                                                onOpen={() => setIsOpen(true)}
+                                                open={open}
+                                            >
+                                                <Modal.Header>
+                                                    <Header icon='user' content='Informacion Del Cliente' />
+                                                </Modal.Header>
+                                                <Modal.Content>
+                                                    <Header>
+                                                        ID Cliente
+                                                        </Header>
+                                                    {cliente.id}
+                                                    <Header>
+                                                        Nombre
+                                                        </Header>
+                                                    {cliente.nombreCompleto}
+                                                    <Header>
+                                                        Celular
+                                                        </Header>
+                                                    {cliente.celular}
+                                                    <Header>
+                                                        Correo
+                                                        </Header>
+                                                    {cliente.correo}
+                                                    <Header>
+                                                        Direccion
+                                                        </Header>
+                                                    {cliente.direccion}
+                                                    <Header>
+                                                        Fecha De Nacimiento
+                                                        </Header>
+                                                    {cliente.fechaNacimiento}
+                                                </Modal.Content>
+                                                <Modal.Actions>
+                                                    <Button color='red' onClick={closeModal}>
+                                                        <Icon name='remove' /> Cerrar
+                                                        </Button>
+                                                </Modal.Actions>
+                                            </Modal>
+                                        </tr>)
+                                }
                         }
 
                     })}</TableBody>

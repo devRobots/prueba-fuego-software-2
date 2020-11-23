@@ -143,11 +143,76 @@ const CreateTherapist = () => {
                                             <Header icon='user' content='Editar Terapeuta' />
                                     </Modal.Header>
                                     <Modal.Content>
-                                        Aqui va los parametros para cambiar
+                                    <Header.Subheader>Nombre Completo</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='nombre'
+                                            name='nombre'
+                                            placeholder='Ingrese su nombre'
+                                            type='text'
+                                            value = {nombre}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        />
+
+                                        <Header.Subheader>Cedula</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='cedula'
+                                            name='id'
+                                            placeholder='Ingrese su identificación'
+                                            type='text'
+                                            value={id}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        />
+
+                                        <Header.Subheader>Telefono</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='telefono'
+                                            name='celular'
+                                            placeholder='Ingrese su numero celular'
+                                            type='text'
+                                            value= {celular}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+
+                                        />
+
+                                        <Header.Subheader>Correo</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='correo'
+                                            name='email'
+                                            placeholder='Ingrese su correo'
+                                            type='text'
+                                            value = {email}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        />
+
+                                        <Header.Subheader>Nombre de usuario</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='usuario'
+                                            name='usuario'
+                                            placeholder='Ingresa username'
+                                            type='text'
+                                            value = {usuario}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        />
+
+                                        <Header.Subheader>Contraseña</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='contraseña'
+                                            name='password'
+                                            placeholder='Ingrese su contraseña'
+                                            type='text'
+                                            value= {password}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                        />
                                     </Modal.Content>
                                     <Modal.Actions>
                                         <Button color='red' onClick={closeModal}>
-                                        <Icon name='remove' /> Cerrar
+                                        <Icon name='remove' /> Cancelar
                                         </Button>
                                         <Button color='green' onClick={() => handleEdit()}>
                                         <Icon name='checkmark' /> Editar

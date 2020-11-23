@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import Modal from 'react-modal';
 import Firebase from "../database/firebase";
 import {
     Input, Button, TableHeader, TableRow,
     Icon, TableHeaderCell, Table, TableBody,
-    Grid, Header, Divider, Segment
+    Grid, Modal, Header, Divider, Segment
 } from 'semantic-ui-react';
 
 const Citas = () => {
@@ -18,14 +17,12 @@ const Citas = () => {
     const [precio, setPrecio] = useState('');
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
-    Modal.setAppElement()
-
     function openModal(objeto) {
         setId(objeto.id)
-        setDescripcion(objeto.hora)
-        setDuracion(objeto.fecha)
-        setNombre(objeto.cobrada)
-        setPrecio(objeto.importe)
+        setDescripcion(objeto.descripcion)
+        setDuracion(objeto.duracion)
+        setNombre(objeto.nombre)
+        setPrecio(objeto.precio)
         setIsOpen(true);
     }
 
@@ -67,40 +64,46 @@ const Citas = () => {
                                     </Button.Group>
                                 </Table.Cell>
 
-                                <Modal isOpen={modalIsOpen}
-                                    onRequestClose={closeModal}
-                                    contentLabel="Example Modal"
-                                >
-                                    <modalBody>
-                                        <button onClick={closeModal}>close</button>
-                                        <div >Editar</div>
-                                        <form>
-                                            <center>
-                                                <div className="form-group">
-                                                    <Input id='nombre' name='nombre' className="form-control"
+                                <Modal
+                                        onClose={() => closeModal}
+                                        size = "mini"
+                                        onOpen={() => setIsOpen(true)}
+                                        open={modalIsOpen} 
+                                        >
+                                    <Modal.Header>
+                                            <Header icon='archive' content='Editar Cita' />
+                                    </Modal.Header>
+
+                                    <Modal.Content>
+                                        <Header>Nombre</Header>
+                                        <Input id='nombre' name='nombre' className="form-control"
                                                         placeholder='nombre' type='text' value={nombre}
                                                         onChange={(e) => handleChange(e.target.name, e.target.value)}
                                                     />
-                                                    <Input id='descripcion' name='descripcion' value={descripcion}
+                                        <Header>Descripcion</Header>
+                                        <Input id='descripcion' name='descripcion' value={descripcion}
                                                         placeholder='descripcion' type='text' className='regular-style'
                                                         onChange={(e) => handleChange(e.target.name, e.target.value)}
                                                     />
-                                                    <Input id='duracion' name='duracion' value={duracion}
+                                        <Header>Duracion</Header>
+                                        <Input id='duracion' name='duracion' value={duracion}
                                                         placeholder='duracion' type='text' className='regular-style'
                                                         onChange={(e) => handleChange(e.target.name, e.target.value)}
                                                     />
-                                                    <Input id='precio' name='precio' value={precio}
+                                        <Header>Precio</Header>
+                                        <Input id='precio' name='precio' value={precio}
                                                         placeholder='precio' type='text' className='regular-style'
                                                         onChange={(e) => handleChange(e.target.name, e.target.value)}
                                                     />
-                                                    <hr></hr>
-                                                    <Button onClick={(e) => handleEdit()}>
-                                                        Editar
-                            </Button>
-                                                </div>
-                                            </center>
-                                        </form>
-                                    </modalBody>
+                                        </Modal.Content>
+                                    <Modal.Actions>
+                                    <Button color='red' onClick={closeModal}>
+                                        <Icon name='remove' /> Cerrar
+                                        </Button>
+                                        <Button color='green' onClick={() => handleEdit()}>
+                                        <Icon name='checkmark' /> Editar
+                                        </Button>
+                                    </Modal.Actions>
                                 </Modal>
                             </tr>
                         )

@@ -29,6 +29,7 @@ const CreateTherapist = () => {
         setUser(objeto.usuario)
         setPassword(objeto.password)
         setEstado(objeto.estado)
+        setIsOpen(true)
     }
 
     function closeModal() {
@@ -132,10 +133,26 @@ const CreateTherapist = () => {
                                     </Button.Group>
                                 </Table.Cell>
 
-                                <Modal isOpen={modalIsOpen}
-                                    onRequestClose={closeModal}
-                                    contentLabel="Example Modal"
+                                <Modal 
+                                    onClose={() => closeModal}
+                                    size = "mini"
+                                    onOpen={() => setIsOpen(true)}
+                                    open={modalIsOpen} 
                                 >
+                                    <Modal.Header>
+                                            <Header icon='user' content='Editar Terapeuta' />
+                                    </Modal.Header>
+                                    <Modal.Content>
+                                        Aqui va los parametros para cambiar
+                                    </Modal.Content>
+                                    <Modal.Actions>
+                                        <Button color='red' onClick={closeModal}>
+                                        <Icon name='remove' /> Cerrar
+                                        </Button>
+                                        <Button color='green' onClick={() => handleEdit()}>
+                                        <Icon name='checkmark' /> Editar
+                                        </Button>
+                                    </Modal.Actions>
                                 </Modal>
                             </tr>
                         )
@@ -145,6 +162,12 @@ const CreateTherapist = () => {
         ReactDOM.render(element, document.getElementById('tablaTerapeutas'))
     })
 
+    function handleEdit(params) {
+        let account = { celular, password, email, estado, id, nombre, usuario }
+        Firebase.put("Sesiones", account)
+        handleChange('vaciar', null)
+    };
+    
     function handleSubmit(params) {
         let account = { celular, password, email, estado, id, nombre, usuario }
 

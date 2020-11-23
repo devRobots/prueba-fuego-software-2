@@ -12,7 +12,7 @@ const SearchUser = () => {
     const { usuario } = useContext(userContext)
 
     const [open, setIsOpen] = React.useState(false);
-    const [modalEdit, setEdit ] = useState(false)
+    const [modalEdit, setEdit ] = React.useState(false)
     const [informe, setInforme ] = useState(null)
     const [observacion, setInfo ] = useState('')
 
@@ -31,7 +31,6 @@ const SearchUser = () => {
     }
     function openEdit(objeto) {
         setInforme(objeto)
-        console.log(informe)
         setInfo(objeto.observacion)
         setEdit(true);
     }
@@ -73,10 +72,7 @@ const SearchUser = () => {
                     data.map((objeto, id) => {
                         if ((objeto.idTerapeuta + "").includes(usuario.id + "")) {
 
-                            if ( buscar.length > 0 && (
-                                (objeto.id + "").toLowerCase().includes(buscar.toLowerCase()) ||
-                                (objeto.idCliente + "").toLowerCase().includes(buscar.toLowerCase()) )
-                                ) {
+                           
                                     return (
                                         <tr key={id}>
                                             <Table.Cell>{objeto.id}</Table.Cell>
@@ -108,23 +104,22 @@ const SearchUser = () => {
                                                     <Header icon='user' content='Observacion del Cliente' />
                                                 </Modal.Header>
                                                 <Modal.Content>
-                                                <Header>{informe.idCliente}</Header>
                                                 <Input
                                                     fluid
                                                     id='observacion'
                                                     name='observacion'
                                                     placeholder='Ingrese una observacion'
                                                     type='text'
-                                                    value = {observacion}
+                                                    value={observacion}
                                                     onChange={(e) => setInfo(e.target.value)}
                                                 />
                                                 </Modal.Content>
                                                 <Modal.Actions>
-                                                    <Button color='red' onClick={setEdit(false)}>
+                                                    <Button color='red' onClick={()=>setEdit(false)}>
                                                         <Icon name='remove' /> Cancelar
                                                     </Button>
-                                                    <Button color='green' onClick={handleEdit()}>
-                                                        <Icon name='remove' /> Aceptar
+                                                    <Button color='green' onClick={() =>handleEdit()}>
+                                                        <Icon name='checkmark' /> Aceptar
                                                     </Button>
                                                 </Modal.Actions>
                                             </Modal>
@@ -170,70 +165,8 @@ const SearchUser = () => {
                                                         </Button>
                                                 </Modal.Actions>
                                             </Modal>
-
                                             
                                         </tr>)
-                                }else{
-                                    return (
-                                        <tr key={id}>
-                                            <Table.Cell>{objeto.id}</Table.Cell>
-                                            <Table.Cell>{objeto.fecha}</Table.Cell>
-                                            <Table.Cell>{objeto.hora}</Table.Cell>
-                                            <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
-                                            <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
-                                            <Table.Cell>{objeto.importe}</Table.Cell>
-                                            <Table.Cell>{objeto.observacion}</Table.Cell>
-                                            <Table.Cell>{objeto.idCliente}</Table.Cell>
-                                            <Table.Cell>
-                                                <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
-                                            </Table.Cell>
-        
-                                            <Modal
-                                                onClose={() => closeModal}
-                                                size="mini"
-                                                onOpen={() => setIsOpen(true)}
-                                                open={open}
-                                            >
-                                                <Modal.Header>
-                                                    <Header icon='user' content='Informacion Del Cliente' />
-                                                </Modal.Header>
-                                                <Modal.Content>
-                                                    <Header>
-                                                        ID Cliente
-                                                        </Header>
-                                                    {cliente.id}
-                                                    <Header>
-                                                        Nombre
-                                                        </Header>
-                                                    {cliente.nombreCompleto}
-                                                    <Header>
-                                                        Celular
-                                                        </Header>
-                                                    {cliente.celular}
-                                                    <Header>
-                                                        Correo
-                                                        </Header>
-                                                    {cliente.correo}
-                                                    <Header>
-                                                        Direccion
-                                                        </Header>
-                                                    {cliente.direccion}
-                                                    <Header>
-                                                        Fecha De Nacimiento
-                                                        </Header>
-                                                    {cliente.fechaNacimiento}
-                                                </Modal.Content>
-                                                <Modal.Actions>
-                                                    <Button color='red' onClick={closeModal}>
-                                                        <Icon name='remove' /> Cerrar
-                                                        </Button>
-                                                </Modal.Actions>
-                                            </Modal>
-                                        </tr>)
-                                }
                         }
 
                     })}</TableBody>

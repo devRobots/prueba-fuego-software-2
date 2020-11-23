@@ -18,15 +18,13 @@ const Home = () => {
     const [fecha, setFecha] = useState(new Date());
     const [cobrada, setCobro] = useState(false);
     const [importe, setImporte] = useState('');
-    const [cancelada, setCancelada] = useState(true);
+    const [cancelada, setCancelada] = useState(false);
     const [observacion, setObservacion] = useState('');
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const [modalCobrar, setModalCobro] = React.useState(false);
     const [idCliente, setIdCliente] = useState('');
     const [idTerapeuta, setIdTerapeuta] = useState('');
     const [idTerapia, setIdTerapia] = useState('');
-
-    const [refresh, setRefresh] = useState(false);
 
     Modal.setAppElement()
 
@@ -330,20 +328,12 @@ const Home = () => {
                 setFecha('')
                 setCobro(false)
                 setImporte('')
-                setCancelada(true)
+                setCancelada(false)
                 setObservacion('')
                 break;
             default:
                 console.log('no hay valores.')
         }
-    }
-
-    function handleRedirect(params) {
-
-        setRefresh(true)
-    }
-    if (refresh) {
-        return <Redirect to="/Citas" />
     }
 
     return (
@@ -358,9 +348,9 @@ const Home = () => {
                         </Header.Content>
                     </Header>
                     <div >
-                        Estado
+                        Cancelada
                     </div>
-                    <Checkbox toggle defaultChecked onClick={(e) => handleChange("cancelada", e.target.value)} />
+                    <Checkbox toggle onClick={(e) => handleChange("cancelada", e.target.value)} />
                     <div >
                         <label>Fecha</label> <br></br>
                         <TextField

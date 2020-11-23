@@ -3,21 +3,26 @@ import { Tab, Grid } from 'semantic-ui-react';
 
 import Home from "./Home";
 import Citas from "./Citas";
+import CreateUser from "./CreateUser";
 import CreateTherapist from "./CreateTherapist";
 
 const Gestionar = () => {
     const panes = [
         {
-            menuItem: 'Sesiones',
+            menuItem: 'Citas',
             render: () => <Tab.Pane attached={false}><Home /></Tab.Pane>,
         },
         {
-            menuItem: 'Citas',
+            menuItem: 'Sesiones',
             render: () => <Tab.Pane attached={false}><Citas /> </Tab.Pane>,
         },
         {
             menuItem: 'Terapeutas',
             render: () => <Tab.Pane attached={false}><CreateTherapist /></Tab.Pane>,
+        },
+        {
+            menuItem: 'Clientes',
+            render: () => <Tab.Pane attached={false}><CreateUser /></Tab.Pane>,
         },
     ]
 

@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import Firebase from "../database/firebase";
-import { Input, Button, TableHeader, TableRow, Icon, TableHeaderCell, Table, TableBody } from 'semantic-ui-react';
+import {
+    Input, Button, TableHeader, TableRow,
+    Icon, TableHeaderCell, Table, TableBody,
+    Grid, Header, Divider, Segment
+} from 'semantic-ui-react';
 
 const Citas = () => {
 
@@ -156,35 +160,49 @@ const Citas = () => {
     };
 
     return (
-        <center>
-            <Input id='id' name='id'
-                placeholder='id' type='text' className='regular-style'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            />
-            <Input id='nombre' name='nombre' className="form-control"
-                placeholder='nombre' type='text' value={nombre}
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            />
-            <Input id='descripcion' name='descripcion' value={descripcion}
-                placeholder='descripcion' type='text' className='regular-style'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            />
-            <Input id='duracion' name='duracion' value={duracion}
-                placeholder='duracion' type='text' className='regular-style'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            />
-            <Input id='precio' name='precio' value={precio}
-                placeholder='precio' type='text' className='regular-style'
-                onChange={(e) => handleChange(e.target.name, e.target.value)}
-            />
-            <hr></hr>
-            <Button onClick={(e) => handleSubmit()}>
-                Registrar Cita
-             </Button>
-
-            <hr></hr>
-            <table id="tablaTerapias"></table>
-        </center>
+        <Grid container columns={2} centered>
+            <Grid.Column width={5}>
+                <Header Icon>
+                    <Icon name='user' />
+                    <Header.Content>
+                        Gestionar Citas
+                            <Header.Subheader>Ingrese los parametros de la cita</Header.Subheader>
+                    </Header.Content>
+                </Header>
+                    Id
+                    <Input id='id' name='id' fluid
+                    placeholder='id' type='text' className='regular-style'
+                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                />
+                    Nombre
+                    <Input id='nombre' name='nombre' fluid className="form-control"
+                    placeholder='nombre' type='text' value={nombre}
+                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                />
+                    Descripcion
+                    <Input id='descripcion' name='descripcion' fluid value={descripcion}
+                    placeholder='descripcion' type='text' className='regular-style'
+                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                />
+                    Duracion
+                    <Input id='duracion' name='duracion' fluid value={duracion}
+                    placeholder='duracion' type='text' className='regular-style'
+                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                />
+                    Precio
+                    <Input id='precio' name='precio' fluid value={precio}
+                    placeholder='precio' type='text' className='regular-style'
+                    onChange={(e) => handleChange(e.target.name, e.target.value)}
+                />
+                <br></br>
+                <Button fluid primary onClick={(e) => handleSubmit()}>
+                    Registrar Cita
+                    </Button>
+            </Grid.Column>
+            <Grid.Column width={11}>
+                <table id="tablaTerapias"></table>
+            </Grid.Column>
+        </Grid>
     )
 }
 

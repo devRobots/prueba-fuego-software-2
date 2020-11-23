@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './CreateSecretary.css';
 import { Segment, Header, Label, Input, Button, Grid, Placeholder } from 'semantic-ui-react';
 import Firebase from '../database/firebase';
 

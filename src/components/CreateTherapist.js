@@ -240,6 +240,7 @@ const CreateTherapist = () => {
         let account = { celular, password, email, estado, id, nombre, usuario }
         Firebase.put("Sesiones", account)
         handleChange('vaciar', null)
+        closeModal()
     };
     
     function handleSubmit(params) {

@@ -6,22 +6,28 @@ import {
     TableRow, Icon, TableBody
 } from 'semantic-ui-react';
 import Firebase from '../database/firebase';
-
+import TextField from '@material-ui/core/TextField';
 import { Redirect } from "react-router-dom";
 
 const CreateUser = () => {
 
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
+    const [celular, setPhone] = useState('');
+    const [correo, setEmail] = useState('');
     const [direccion, setDireccion] = useState('');
-    const [birthDate, setbirthDate] = useState('');
+    const [fechaNacimiento, setbirthDate] = useState('');
     const [id, setId] = useState('');
-    const [nombre, setNombre] = useState('');
+    const [nombreCompleto, setNombre] = useState('');
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
 
     function openModal(objeto) {
-        setPhone(objeto.telefono)
+        setPhone(objeto.celular)
+        setEmail(objeto.correo)
+        setDireccion(objeto.direccion)
+        setbirthDate(objeto.fechaNacimiento)
+        setId(objeto.id)
+        setNombre(objeto.nombreCompleto)
+        setIsOpen(true)
     }
 
     function closeModal() {
@@ -30,9 +36,10 @@ const CreateUser = () => {
     }
 
     function handleEdit(params) {
-        let account = { phone, email, direccion, birthDate, id, nombre }
+        let account = { celular, correo, direccion, fechaNacimiento, id, nombreCompleto }
         Firebase.put("Clientes", account)
         handleChange('vaciar', null)
+        closeModal()
     };
 
     function handleChange(name, value) {
@@ -93,7 +100,7 @@ const CreateUser = () => {
     }
 
     function handleSubmit(params) {
-        let account = { phone, email, direccion, birthDate, id, nombre }
+        let account = { celular, correo, direccion, fechaNacimiento, id, nombreCompleto }
 
         Firebase.write("Clientes", account)
 
@@ -148,7 +155,73 @@ const CreateUser = () => {
                                         <Header icon='user' content='Editar Cliente' />
                                     </Modal.Header>
                                     <Modal.Content>
-                                        Aqui va los parametros para cambiar
+                                    <Header.Subheader>Nombre Completo</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='nombre'
+                                            name='nombre'
+                                            placeholder='Ingrese su nombre'
+                                            type='text'
+                                            value = {nombreCompleto}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                            className='input-error'
+                                        />
+                                        <Header.Subheader>Cedula</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='cedula'
+                                            name='id'
+                                            placeholder='Ingrese su cedula'
+                                            type='text'
+                                            value = {id}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                            className='input-error'
+                                        />
+                                        <Header.Subheader>Correo</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='correo'
+                                            name='email'
+                                            placeholder='Ingrese su correo'
+                                            type='text'
+                                            value = {correo}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                            className='regular-style'
+                                        />
+                                        <Header.Subheader>Fecha Nacimiento</Header.Subheader>
+                                        <TextField
+                                                id="date"
+                                                type="date"
+                                                fullWidth
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
+                                                onChange={(event) => setbirthDate(event.target.value)}
+                                        />
+                                        <Header.Subheader>Telefono</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='telefono'
+                                            name='phone'
+                                            placeholder='Ingrese su telefono'
+                                            type='text'
+                                            value = {celular}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                            className='regular-style'
+                                        />
+
+
+                                        <Header.Subheader>Direccion</Header.Subheader>
+                                        <Input
+                                            fluid
+                                            id='direccion'
+                                            name='direccion'
+                                            placeholder='Ingrese su direccion'
+                                            type='text'
+                                            value = {direccion}
+                                            onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                            className='regular-style'
+                                        />
                                     </Modal.Content>
                                     <Modal.Actions>
                                         <Button color='red' onClick={closeModal}>
@@ -208,15 +281,16 @@ const CreateUser = () => {
                     className='regular-style'
                 />
                 <Header.Subheader>Fecha Nacimiento</Header.Subheader>
-                <Input
-                    fluid
-                    id='Fecha_Nacimiento'
-                    name='birthDate'
-                    placeholder='Fecha Nacimiento'
-                    type='text'
-                    onChange={(e) => handleChange(e.target.name, e.target.value)}
-                    className='input-error'
-                />
+                <TextField
+                            id="date"
+                            type="date"
+                            fullWidth
+                            defaultValue={new Date()}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            onChange={(event) => setbirthDate(event.target.value)}
+                     />
                 <Header.Subheader>Telefono</Header.Subheader>
                 <Input
                     fluid

@@ -160,6 +160,7 @@ const Citas = () => {
 
         Firebase.put("Terapias", account)
         handleChange('vaciar', null)
+        closeModal()
     };
 
     return (

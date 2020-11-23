@@ -104,12 +104,11 @@ const Home = () => {
                         console.log('registrado 3')
                         Firebase.put("Sesiones", account)
                         handleChange('vaciar', null)
-
+                        closeModal()
                     }
                 }
             }
         }
-       
     };
 
     function handlePagar(params) {

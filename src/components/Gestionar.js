@@ -3,6 +3,7 @@ import { Tab, Grid } from 'semantic-ui-react';
 
 import Home from "./Home";
 import Citas from "./Citas";
+import CreateTherapist from "./CreateTherapist";
 
 const Gestionar = () => {
     const panes = [
@@ -16,7 +17,7 @@ const Gestionar = () => {
         },
         {
             menuItem: 'Terapeutas',
-            render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane>,
+            render: () => <Tab.Pane attached={false}><CreateTherapist /></Tab.Pane>,
         },
     ]
 

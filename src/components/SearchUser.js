@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react';
 import Firebase from '../database/firebase';
 import ReactDOM from 'react-dom';
 import { Redirect } from "react-router-dom";
-import Modal from 'react-modal';
-import { Input, Segment, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody, Header } from 'semantic-ui-react';
+import { Input,Icon,Modal, Segment, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody, Header } from 'semantic-ui-react';
 import userContext from './userContext'
 
 const SearchUser = () => {
@@ -26,11 +25,11 @@ const SearchUser = () => {
     const [buscar, setbuscar] = useState('')
     const { usuario } = useContext(userContext)
     
-    const [ modalIsOpen, setIsOpen] = React.useState(false);
+    const [ open, setIsOpen] = React.useState(false);
 
     console.log(usuario)
     if (usuario.length == 0) {
-        return <Redirect to="/Login" />
+        //return <Redirect to="/Login" />
     }
 
     function closeModal(){
@@ -63,6 +62,7 @@ const SearchUser = () => {
 
                     data.map((objeto, id) => {
                         if ( (objeto.idTerapeuta+"").includes(usuario.id+"")) {
+                            
                             return (
                                     <tr key={id}>
                                         <Table.Cell>{objeto.id}</Table.Cell>
@@ -80,25 +80,46 @@ const SearchUser = () => {
                                             <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
                                         </Table.Cell>
 
-                                        <Modal isOpen={modalIsOpen}
-                                            onRequestClose={closeModal}
-                                            contentLabel="Example Modal">
-                                                <modalBody>
-                                                        <button onClick={closeModal}>close</button>
-                                                        <div >Editar</div>
-                                                        <form>
-                                                        <div>
-                                                        <label> {cliente.id}</label><br></br>
-                                                        <label> {cliente.nombreCompleto}</label><br></br>
-                                                        <label> {cliente.celular}</label><br></br>
-                                                        <label> {cliente.correo}</label><br></br>
-                                                        <label> {cliente.direccion}</label><br></br>
-                                                        <label> {cliente.fechaNacimiento}</label><br></br>
-                                                        
-                                                        </div>
-                                                        <div>Hola</div>
-                                                </form>
-                                            </modalBody>
+                                        <Modal
+                                        onClose={() => closeModal}
+                                        size = "mini"
+                                        onOpen={() => setIsOpen(true)}
+                                        open={open}
+                                        >
+                                            <Modal.Header>
+                                                <Header icon='user' content='Informacion Del Cliente' />
+                                            </Modal.Header>
+                                            <Modal.Content>
+                                                <Header>
+                                                    ID Cliente
+                                                </Header>
+                                                {cliente.id}
+                                                <Header>
+                                                    Nombre
+                                                </Header>
+                                                {cliente.nombreCompleto}
+                                                <Header>
+                                                    Celular
+                                                </Header>
+                                                {cliente.celular}
+                                                <Header>
+                                                    Correo
+                                                </Header>
+                                                {cliente.correo}
+                                                <Header>
+                                                    Direccion
+                                                </Header>
+                                                {cliente.direccion}
+                                                <Header>
+                                                    Fecha De Nacimiento
+                                                </Header>
+                                                {cliente.fechaNacimiento}
+                                            </Modal.Content>
+                                            <Modal.Actions>
+                                                <Button color='red' onClick={closeModal}>
+                                                <Icon name='remove' /> Cerrar
+                                                </Button>
+                                            </Modal.Actions>
                                         </Modal>
                                     </tr>)
                         } 

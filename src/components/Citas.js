@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import Firebase from "../database/firebase";
-import {Input, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody} from 'semantic-ui-react';
+import { Input, Button, TableHeader, TableRow, Icon, TableHeaderCell, Table, TableBody } from 'semantic-ui-react';
 
 const Citas = () => {
-    
-    const [ id, setId ] = useState('');
-    const [ idCliente, setIdCliente ] = useState('');
-    const [ descripcion, setDescripcion ] = useState('');
-    const [ duracion, setDuracion ] = useState('');
-    const [ nombre, setNombre ] = useState('');
-    const [ precio, setPrecio ] = useState('');
-    const [ modalIsOpen,setIsOpen] = React.useState(false);
+
+    const [id, setId] = useState('');
+    const [idCliente, setIdCliente] = useState('');
+    const [descripcion, setDescripcion] = useState('');
+    const [duracion, setDuracion] = useState('');
+    const [nombre, setNombre] = useState('');
+    const [precio, setPrecio] = useState('');
+    const [modalIsOpen, setIsOpen] = React.useState(false);
 
     Modal.setAppElement()
 
@@ -24,84 +24,93 @@ const Citas = () => {
         setPrecio(objeto.importe)
         setIsOpen(true);
     }
-    
-    function closeModal(){
-        handleChange('vaciar',null)
+
+    function closeModal() {
+        handleChange('vaciar', null)
         setIsOpen(false);
     }
 
-    Firebase.readList("Terapias", function(data) {
+    Firebase.readList("Terapias", function (data) {
         var element = (
-        <Table celled>
-            <TableHeader>
-                <TableRow>
-                <TableHeaderCell>ID</TableHeaderCell>
-                <TableHeaderCell>Descripcion</TableHeaderCell>
-                <TableHeaderCell>Duracion</TableHeaderCell>
-                <TableHeaderCell>Nombre</TableHeaderCell>
-                <TableHeaderCell>Precio</TableHeaderCell>
-                </TableRow>
-            </TableHeader>
-            <TableBody>{
-                data.map((objeto, id) => {
-                return (
-                <tr key = {id}>
-                    <Table.Cell>{objeto.id}</Table.Cell>
-                    <Table.Cell>{objeto.descripcion}</Table.Cell>
-                    <Table.Cell>{objeto.duracion}</Table.Cell>
-                    <Table.Cell>{objeto.nombre}</Table.Cell>
-                    <Table.Cell>{objeto.precio}</Table.Cell>
-                    <Button onClick={(e) => Firebase.remove("Terapias",objeto)}>Eliminar</Button>
-                    <Button onClick={(e) => openModal(objeto)} id = "modal-create-thanks-you">Editar</Button>
+            <Table celled>
+                <TableHeader>
+                    <TableRow>
+                        <TableHeaderCell>ID</TableHeaderCell>
+                        <TableHeaderCell>Descripcion</TableHeaderCell>
+                        <TableHeaderCell>Duracion</TableHeaderCell>
+                        <TableHeaderCell>Nombre</TableHeaderCell>
+                        <TableHeaderCell>Precio</TableHeaderCell>
+                        <TableHeaderCell>Gestionar</TableHeaderCell>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>{
+                    data.map((objeto, id) => {
+                        return (
+                            <tr key={id}>
+                                <Table.Cell>{objeto.id}</Table.Cell>
+                                <Table.Cell>{objeto.descripcion}</Table.Cell>
+                                <Table.Cell>{objeto.duracion}</Table.Cell>
+                                <Table.Cell>{objeto.nombre}</Table.Cell>
+                                <Table.Cell>{objeto.precio}</Table.Cell>
+                                <Table.Cell>
+                                    <Button.Group>
+                                        <Button icon color="red" onClick={(e) => Firebase.remove("Terapias", objeto)}>
+                                            <Icon name='delete' />
+                                        </Button>
+                                        <Button icon color="yellow" onClick={(e) => openModal(objeto)} id="modal-create-thanks-you">
+                                            <Icon name='edit' />
+                                        </Button>
+                                    </Button.Group>
+                                </Table.Cell>
 
-                    <Modal isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        contentLabel="Example Modal"
-                        >
-                        <modalBody>
-                        <button onClick={closeModal}>close</button>
-                        <div >Editar</div>
-                        <form>
-                        <center>
-                        <div className="form-group"> 
-                            <Input id='nombre' name='nombre' className="form-control"
-                                placeholder='nombre' type='text' value = {nombre}
-                                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                            /> 
-                            <Input id='descripcion' name='descripcion' value = {descripcion}
-                                placeholder='descripcion' type='text' className='regular-style' 
-                                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                            /> 
-                            <Input id='duracion' name='duracion' value = {duracion}
-                                placeholder='duracion' type='text' className='regular-style' 
-                                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                            /> 
-                            <Input id='precio' name='precio' value = {precio}
-                                placeholder='precio' type='text' className='regular-style' 
-                                onChange={(e) => handleChange(e.target.name, e.target.value)}
-                            /> 
-                            <hr></hr>
-                            <Button onClick = {(e) => handleEdit()}>
-                                Editar
+                                <Modal isOpen={modalIsOpen}
+                                    onRequestClose={closeModal}
+                                    contentLabel="Example Modal"
+                                >
+                                    <modalBody>
+                                        <button onClick={closeModal}>close</button>
+                                        <div >Editar</div>
+                                        <form>
+                                            <center>
+                                                <div className="form-group">
+                                                    <Input id='nombre' name='nombre' className="form-control"
+                                                        placeholder='nombre' type='text' value={nombre}
+                                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                                    />
+                                                    <Input id='descripcion' name='descripcion' value={descripcion}
+                                                        placeholder='descripcion' type='text' className='regular-style'
+                                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                                    />
+                                                    <Input id='duracion' name='duracion' value={duracion}
+                                                        placeholder='duracion' type='text' className='regular-style'
+                                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                                    />
+                                                    <Input id='precio' name='precio' value={precio}
+                                                        placeholder='precio' type='text' className='regular-style'
+                                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
+                                                    />
+                                                    <hr></hr>
+                                                    <Button onClick={(e) => handleEdit()}>
+                                                        Editar
                             </Button>
-                            </div>
-                        </center>
-                        </form>
-                        </modalBody>
-                    </Modal>
-                </tr>
-                )
-        })}</TableBody>
-        </Table>
+                                                </div>
+                                            </center>
+                                        </form>
+                                    </modalBody>
+                                </Modal>
+                            </tr>
+                        )
+                    })}</TableBody>
+            </Table>
         )
         ReactDOM.render(element, document.getElementById('tablaTerapias'))
     })
-    
+
     /**
      * Registrar sesiones
      */
     function handleChange(name, value) {
-        switch(name) {
+        switch (name) {
             case 'id':
                 setId(value)
                 break;
@@ -130,7 +139,7 @@ const Citas = () => {
     }
 
     function handleSubmit(params) {
-        let account = {id, descripcion, duracion, nombre, precio}
+        let account = { id, descripcion, duracion, nombre, precio }
 
         Firebase.write("Terapias", account)
 
@@ -140,41 +149,41 @@ const Citas = () => {
     };
 
     function handleEdit(params) {
-        let account = {id, descripcion, duracion, nombre, precio}
+        let account = { id, descripcion, duracion, nombre, precio }
 
         Firebase.put("Citas", account)
-        handleChange('vaciar',null)
+        handleChange('vaciar', null)
     };
 
     return (
         <center>
-            <Input id='id' name='id' 
-                placeholder='id' type='text' className='regular-style' 
+            <Input id='id' name='id'
+                placeholder='id' type='text' className='regular-style'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
-            /> 
+            />
             <Input id='nombre' name='nombre' className="form-control"
-                placeholder='nombre' type='text' value = {nombre}
+                placeholder='nombre' type='text' value={nombre}
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
-            /> 
-            <Input id='descripcion' name='descripcion' value = {descripcion}
-                placeholder='descripcion' type='text' className='regular-style' 
+            />
+            <Input id='descripcion' name='descripcion' value={descripcion}
+                placeholder='descripcion' type='text' className='regular-style'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
-            /> 
-           <Input id='duracion' name='duracion' value = {duracion}
-                placeholder='duracion' type='text' className='regular-style' 
+            />
+            <Input id='duracion' name='duracion' value={duracion}
+                placeholder='duracion' type='text' className='regular-style'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
-             /> 
-           <Input id='precio' name='precio' value = {precio}
-                placeholder='precio' type='text' className='regular-style' 
+            />
+            <Input id='precio' name='precio' value={precio}
+                placeholder='precio' type='text' className='regular-style'
                 onChange={(e) => handleChange(e.target.name, e.target.value)}
-           /> 
+            />
             <hr></hr>
             <Button onClick={(e) => handleSubmit()}>
                 Registrar Cita
              </Button>
 
             <hr></hr>
-            <table id="tablaTerapias"></table> 
+            <table id="tablaTerapias"></table>
         </center>
     )
 }

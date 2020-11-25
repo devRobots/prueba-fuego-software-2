@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Tab, Grid } from 'semantic-ui-react';
+import { Redirect } from "react-router-dom";
 
 import Home from "./Home";
 import Citas from "./Citas";
 import CreateUser from "./CreateUser";
 import CreateTherapist from "./CreateTherapist";
+import userContext from './userContext'
 
 const Gestionar = () => {
     const panes = [
@@ -24,7 +26,18 @@ const Gestionar = () => {
             menuItem: 'Clientes',
             render: () => <Tab.Pane attached={false}><CreateUser /></Tab.Pane>,
         },
+        {
+            menuItem: 'Cerrar Sesion',
+            render: () => <Tab.Pane attached={false}><Redirect to="/Login" /></Tab.Pane>,
+        },
     ]
+
+    const { usuario } = useContext(userContext)
+
+    console.log(usuario)
+    if (usuario.length == 0) {
+        return <Redirect to="/Login" />
+    }
 
     return (
         <Grid centered columns={1} container>

@@ -1,35 +1,29 @@
-import React, {Component,useContext} from 'react';
+import React, { Component, useContext } from 'react';
 import './App.css';
 import HeaderMaster from "./components/HeaderMaster";
 import Login from "./components/Login";
-import CreateTherapist from "./components/CreateTherapist";
-import Home from "./components/Home";
 import CreateSecretary from "./components/CreateSecretary";
-import Citas from "./components/Citas";
 import SearchUser from "./components/SearchUser";
 import Gestionar from "./components/Gestionar"
-import {UserContextProvider} from './components/userContext'
+import { UserContextProvider } from './components/userContext'
 import { BrowserRouter as Routers, Route, Switch } from 'react-router-dom';
 
 export default class App extends Component {
   render() {
     return (
       <UserContextProvider>
-      <div className="App">
-      <HeaderMaster name={"Centro de Masajes y Terapias Alternativas"} />
-        <Routers>
-          <Switch>
-            <Route exact path = "/" component = {Login}/>
-            <Route path = "/login" component = {Login}/>
-            <Route path = "/createTherapist" component = {CreateTherapist}/>
-            <Route path = "/createSecretary" component = {CreateSecretary}/>
-            <Route path = "/Citas" component = {Citas}/>
-            <Route path = "/home" component = {Home}/>
-            <Route path = "/Gestionar" component = {Gestionar}/>
-            <Route path = "/searchUser" component = {SearchUser}/>
-          </Switch>
-        </Routers>
-      </div>
+        <div className="App">
+          <HeaderMaster name={"Centro de Masajes y Terapias Alternativas"} />
+          <Routers>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route path="/login" component={Login} />
+              <Route path="/createSecretary" component={CreateSecretary} />
+              <Route path="/Gestionar" component={Gestionar} />
+              <Route path="/searchUser" component={SearchUser} />
+            </Switch>
+          </Routers>
+        </div>
       </UserContextProvider>
     );
   }

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Firebase from '../database/firebase';
 import ReactDOM from 'react-dom';
-import { Redirect } from "react-router-dom";
+import { Redirect, BrowserRouter as Router } from "react-router-dom";
 import { Input, Icon, Modal, Segment, Button, TableHeader, TableRow, TableColumn, TableCell, TableHeaderCell, Table, TableBody, Header } from 'semantic-ui-react';
 import userContext from './userContext'
 
@@ -12,12 +12,13 @@ const SearchUser = () => {
     const { usuario } = useContext(userContext)
 
     const [open, setIsOpen] = React.useState(false);
-    const [modalEdit, setEdit ] = React.useState(false)
-    const [informe, setInforme ] = useState(null)
-    const [observacion, setInfo ] = useState('')
+    const [modalEdit, setEdit] = React.useState(false)
+    const [informe, setInforme] = useState(null)
+    const [observacion, setInfo] = useState('')
+    const [login, setLogin] = useState('')
 
     console.log(usuario)
-    if (usuario.length == 0) {
+    if (usuario.length == 0 || login == null) {
         return <Redirect to="/Login" />
     }
 
@@ -34,7 +35,7 @@ const SearchUser = () => {
         setInfo(objeto.observacion)
         setEdit(true);
     }
-    function handleEdit(){
+    function handleEdit() {
         var id = informe.id
         var hora = informe.hora
         var fecha = informe.fecha
@@ -72,101 +73,101 @@ const SearchUser = () => {
                     data.map((objeto, id) => {
                         if ((objeto.idTerapeuta + "").includes(usuario.id + "")) {
 
-                           
-                                    return (
-                                        <tr key={id}>
-                                            <Table.Cell>{objeto.id}</Table.Cell>
-                                            <Table.Cell>{objeto.fecha}</Table.Cell>
-                                            <Table.Cell>{objeto.hora}</Table.Cell>
-                                            <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
-                                            <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
-                                            <Table.Cell>{objeto.importe}</Table.Cell>
-                                            <Table.Cell>{objeto.observacion}</Table.Cell>
-                                            <Table.Cell>{objeto.idCliente}</Table.Cell>
-                                            <Table.Cell>
-                                                <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
-                                            </Table.Cell>
-                                            <Table.Cell>
-                                                <Button onClick={(e) => openEdit(objeto)}>Observacion</Button>
-                                            </Table.Cell>
+
+                            return (
+                                <tr key={id}>
+                                    <Table.Cell>{objeto.id}</Table.Cell>
+                                    <Table.Cell>{objeto.fecha}</Table.Cell>
+                                    <Table.Cell>{objeto.hora}</Table.Cell>
+                                    <Table.Cell>{objeto.cancelada ? "Si" : "No"}</Table.Cell>
+                                    <Table.Cell>{objeto.cobrada ? "Si" : "No"}</Table.Cell>
+                                    <Table.Cell>{objeto.importe}</Table.Cell>
+                                    <Table.Cell>{objeto.observacion}</Table.Cell>
+                                    <Table.Cell>{objeto.idCliente}</Table.Cell>
+                                    <Table.Cell>
+                                        <Button onClick={() => openModal(objeto.idCliente)}>Cliente</Button>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <Button onClick={(e) => seeSessions(objeto.idCliente)}>Detalle</Button>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <Button onClick={(e) => openEdit(objeto)}>Observacion</Button>
+                                    </Table.Cell>
 
 
-                                            <Modal
-                                                onClose={() => setEdit(false)}
-                                                size="mini"
-                                                onOpen={() => setEdit(true)}
-                                                open={modalEdit}
-                                            >
-                                                <Modal.Header>
-                                                    <Header icon='user' content='Observacion del Cliente' />
-                                                </Modal.Header>
-                                                <Modal.Content>
-                                                <Input
-                                                    fluid
-                                                    id='observacion'
-                                                    name='observacion'
-                                                    placeholder='Ingrese una observacion'
-                                                    type='text'
-                                                    value={observacion}
-                                                    onChange={(e) => setInfo(e.target.value)}
-                                                />
-                                                </Modal.Content>
-                                                <Modal.Actions>
-                                                    <Button color='red' onClick={()=>setEdit(false)}>
-                                                        <Icon name='remove' /> Cancelar
+                                    <Modal
+                                        onClose={() => setEdit(false)}
+                                        size="mini"
+                                        onOpen={() => setEdit(true)}
+                                        open={modalEdit}
+                                    >
+                                        <Modal.Header>
+                                            <Header icon='user' content='Observacion del Cliente' />
+                                        </Modal.Header>
+                                        <Modal.Content>
+                                            <Input
+                                                fluid
+                                                id='observacion'
+                                                name='observacion'
+                                                placeholder='Ingrese una observacion'
+                                                type='text'
+                                                value={observacion}
+                                                onChange={(e) => setInfo(e.target.value)}
+                                            />
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='red' onClick={() => setEdit(false)}>
+                                                <Icon name='remove' /> Cancelar
                                                     </Button>
-                                                    <Button color='green' onClick={() =>handleEdit()}>
-                                                        <Icon name='checkmark' /> Aceptar
+                                            <Button color='green' onClick={() => handleEdit()}>
+                                                <Icon name='checkmark' /> Aceptar
                                                     </Button>
-                                                </Modal.Actions>
-                                            </Modal>
-        
-                                            <Modal
-                                                onClose={() => closeModal}
-                                                size="mini"
-                                                onOpen={() => setIsOpen(true)}
-                                                open={open}
-                                            >
-                                                <Modal.Header>
-                                                    <Header icon='user' content='Informacion Del Cliente' />
-                                                </Modal.Header>
-                                                <Modal.Content>
-                                                    <Header>
-                                                        ID Cliente
+                                        </Modal.Actions>
+                                    </Modal>
+
+                                    <Modal
+                                        onClose={() => closeModal}
+                                        size="mini"
+                                        onOpen={() => setIsOpen(true)}
+                                        open={open}
+                                    >
+                                        <Modal.Header>
+                                            <Header icon='user' content='Informacion Del Cliente' />
+                                        </Modal.Header>
+                                        <Modal.Content>
+                                            <Header>
+                                                ID Cliente
                                                         </Header>
-                                                    {cliente.id}
-                                                    <Header>
-                                                        Nombre
+                                            {cliente.id}
+                                            <Header>
+                                                Nombre
                                                         </Header>
-                                                    {cliente.nombreCompleto}
-                                                    <Header>
-                                                        Celular
+                                            {cliente.nombreCompleto}
+                                            <Header>
+                                                Celular
                                                         </Header>
-                                                    {cliente.celular}
-                                                    <Header>
-                                                        Correo
+                                            {cliente.celular}
+                                            <Header>
+                                                Correo
                                                         </Header>
-                                                    {cliente.correo}
-                                                    <Header>
-                                                        Direccion
+                                            {cliente.correo}
+                                            <Header>
+                                                Direccion
                                                         </Header>
-                                                    {cliente.direccion}
-                                                    <Header>
-                                                        Fecha De Nacimiento
+                                            {cliente.direccion}
+                                            <Header>
+                                                Fecha De Nacimiento
                                                         </Header>
-                                                    {cliente.fechaNacimiento}
-                                                </Modal.Content>
-                                                <Modal.Actions>
-                                                    <Button color='red' onClick={closeModal}>
-                                                        <Icon name='remove' /> Cerrar
+                                            {cliente.fechaNacimiento}
+                                        </Modal.Content>
+                                        <Modal.Actions>
+                                            <Button color='red' onClick={closeModal}>
+                                                <Icon name='remove' /> Cerrar
                                                         </Button>
-                                                </Modal.Actions>
-                                            </Modal>
-                                            
-                                        </tr>)
+                                        </Modal.Actions>
+                                    </Modal>
+
+                                </tr>)
                         }
 
                     })}</TableBody>
@@ -222,18 +223,21 @@ const SearchUser = () => {
         })
     }
 
-
     return (
         <Segment color="teal">
             <div class="ui grid centered">
-                <div class="nine wide column centered">
+                <div class="eleven wide column centered">
                     <Header textAlign="center" as="h2">Clientes</Header>
-                    <div class="ui icon fluid input">
+                    <div class="ui icon input">
                         <input type="text" id='Buscar' name='Buscar' className='regular-style'
                             placeholder='Buscar...' onChange={(e) => setbuscar(e.target.value)}
                         />
                         <i class="search icon"></i>
                     </div>
+                    <Button color="red" floated="right" onClick={() => setLogin(null)}>
+                        Cerrar Sesion
+                    </Button>
+                    <br></br>
                     <br></br>
                     <table id="tablaClientes"></table>
                     <br></br>

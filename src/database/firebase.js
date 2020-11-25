@@ -45,7 +45,7 @@ class Firebase {
   }
 
   static readList(path, method) {
-    firebase.database().ref(path).on('value', function(snapshot) {
+    firebase.database().ref(path).once('value', function(snapshot) {
       var list = []
       snapshot.forEach(function(childsnapshot) {
         var childData = childsnapshot.val();

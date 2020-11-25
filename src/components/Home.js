@@ -133,7 +133,7 @@ const Home = () => {
     /**
      * Lista de Clientes
      */
-    Firebase.readList("Clientes", function (data) {
+    var lstClientes = () => Firebase.readList("Clientes", function (data) {
         var element = (
             <div>
                 <label>
@@ -156,7 +156,7 @@ const Home = () => {
     /**
      * Lista de Terapeutas
      */
-    Firebase.readList("Terapeutas", function (data) {
+    var lstTerapeutas = () => Firebase.readList("Terapeutas", function (data) {
         var element = (
             <div >
                 <label>
@@ -179,7 +179,7 @@ const Home = () => {
     /**
      * Sesiones
      */
-    Firebase.readList("Sesiones", function (data) {
+    var tblSesiones = () => Firebase.readList("Sesiones", function (data) {
         var element = (
             <Table celled>
                 <TableHeader>
@@ -298,7 +298,6 @@ const Home = () => {
                                 </Modal>
 
                                 <Modal
-                                    onClose={() => closeModal}
                                     size="mini"
                                     onOpen={() => setModalCobro}
                                     open={modalCobrar}
@@ -331,12 +330,11 @@ const Home = () => {
         )
         ReactDOM.render(element, document.getElementById('tablaSesiones'))
     })
-    setInterval(1000)
 
     /**
      * Lista de Terapias
      */
-    Firebase.readList("Terapias", function (data) {
+    var lstTerapias = () => Firebase.readList("Terapias", function (data) {
         var element = (
             <div>
                 <label>
@@ -395,6 +393,15 @@ const Home = () => {
                 console.log('no hay valores.')
         }
     }
+
+
+    var updateDB = () => {
+        lstClientes()
+        lstTerapeutas()
+        lstTerapias()
+        tblSesiones()
+    }
+    updateDB()
 
 
     return (

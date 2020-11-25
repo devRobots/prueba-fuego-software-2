@@ -7,8 +7,6 @@ import userContext from './userContext'
 
 const SearchUser = () => {
     const [cliente, setCliente] = useState([]);
-
-    const [buscar, setbuscar] = useState('')
     const { usuario } = useContext(userContext)
 
     const [open, setIsOpen] = React.useState(false);
@@ -228,12 +226,6 @@ const SearchUser = () => {
             <div class="ui grid centered">
                 <div class="eleven wide column centered">
                     <Header textAlign="center" as="h2">Clientes</Header>
-                    <div class="ui icon input">
-                        <input type="text" id='Buscar' name='Buscar' className='regular-style'
-                            placeholder='Buscar...' onChange={(e) => setbuscar(e.target.value)}
-                        />
-                        <i class="search icon"></i>
-                    </div>
                     <Button color="red" floated="right" onClick={() => setLogin(null)}>
                         Cerrar Sesion
                     </Button>
